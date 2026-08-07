@@ -1,0 +1,101 @@
+# Verification Ledger
+
+Checked date for initial entries: 2026-08-07.
+
+## Status vocabulary
+
+Evidence classes:
+
+- `PRIMARY_TECHNICAL`: vendor manual, ISA/ABI specification, or pinned vendor implementation configuration.
+- `PEER_REVIEWED`: published scholarly source.
+- `ACADEMIC_THESIS`: institutionally archived and examined thesis/capstone; not equivalent to peer-reviewed publication.
+- `PREPRINT`: versioned scholarly manuscript without verified final peer-reviewed publication metadata.
+- `VERSIONED_SOURCE`: pinned source code, artifact, or dataset.
+- `PROJECT_CONSTRAINT`: researcher-supplied scope/inventory statement.
+- `SECONDARY`: non-primary technical summary; discovery/context only.
+
+Verification statuses:
+
+- `VERIFIED`: atomic claim directly supported by the cited locator.
+- `PARTIAL`: supported only for part of the scope or requires device/toolchain confirmation.
+- `CONFLICTING`: cited records disagree or implementations differ materially.
+- `UNVERIFIED`: no sufficient source/configuration evidence yet.
+
+## Atomic claims
+
+| Claim ID | Claim | Scope | Evidence class | Status | Citation/source | Exact locator | Evidence summary / qualification |
+|---|---|---|---|---|---|---|---|
+| PRJ-001 | The intended physical target is described by the researcher as ESP32-C6-N4 with 4 MB flash. | Planned local hardware | PROJECT_CONSTRAINT | PARTIAL | User specification | Project brief §1 | Inventory statement accepted for planning; exact board, marking, flash topology, and read-back revision still need observation. |
+| HIST-001 | The Plauska experiment used an M5Stack Basic with ESP32-D0WDQ6-V3. | Historical platform | PEER_REVIEWED | VERIFIED | `plauska2023performance` | §2.5, pp. 9–10 | The paper explicitly names board and SoC. |
+| HIST-002 | The Plauska tests ran at 160 MHz. | Historical protocol | PEER_REVIEWED | VERIFIED | `plauska2023performance` | §2.4, p. 9 | Frequency was reported as configured/default and printed by each language. |
+| HIST-003 | The paper reports 100 iterations at 0,16,32,64,128,256,512,1024-byte input lengths. | Historical protocol | PEER_REVIEWED | VERIFIED | `plauska2023performance` | §2.4, p. 9; §3, p. 11 | Explicit method/result statement. |
+| HIST-004 | The closest traceable repository snapshot is commit `c42dba0d41d547960b73e63b3d4e09917d61e171`. | Historical source | VERSIONED_SOURCE | PARTIAL | Upstream Git repository | HEAD/`main` inspected 2026-08-07 | It is current HEAD and predates publication, but the paper does not declare a commit; exact flashed source is not proven. |
+| HIST-005 | The upstream CSV contains 100 all-OK CRC observations per language and input length. | Historical dataset | VERSIONED_SOURCE | VERIFIED | Pinned `tests_default(Os_Oz)_v2.csv` | SHA-256 `d006400b...d2ef82`; grouped row audit | 3,200 CRC rows: 4 languages × 8 sizes × 100; all `OK`. |
+| HIST-006 | The checked-in MicroPython launcher requests 5 iterations, not 100. | Historical source | VERSIONED_SOURCE | CONFLICTING | Pinned `uPython/main.py` | line 7 at initial and final commits | Conflicts with paper and 100-row CSV; production method for 100 rows is unavailable. |
+| CRC-001 | The upstream CRC uses reflected polynomial `0xEDB88320`, init `0xFFFFFFFF`, and final complement. | Historical CRC algorithm | VERSIONED_SOURCE | VERIFIED | Pinned C/Rust/MicroPython kernels | Paths in `references/original-study/CRC32_AUDIT.md` §1 | Code-level parameter recovery. |
+| CRC-002 | The fixed upstream vector contains 4,096 identical bytes across core-language/MATLAB copies. | Historical input | VERSIONED_SOURCE | VERIFIED | Pinned data sources | CRC audit §2 | Independent parsing found equality; byte SHA-256 is `5b6d630c...36f121`. |
+| CRC-003 | The upstream vector's RNG/generator and seed are documented. | Historical input provenance | VERSIONED_SOURCE | UNVERIFIED | Pinned repository | README plus full tree/history audit | README says random, but no generator, RNG, or seed was found. |
+| CRC-004 | The eight expected CRC values in the audit are present in upstream source. | Historical correctness | VERSIONED_SOURCE | VERIFIED | Pinned C/Rust/MicroPython data | CRC audit §2; C `a_data.cpp` lines 149–159 | Numeric expected values agree across copies. Independent oracle verification remains a next-phase gate. |
+| CRC-005 | Upstream C and Rust time only CRC calculation, excluding table construction/allocation/copy/validation/printing. | Historical timing | VERSIONED_SOURCE | VERIFIED | Pinned wrappers/timers | CRC audit §4 | Direct call-boundary inspection. |
+| CRC-006 | Upstream MicroPython includes prefix slice allocation/copy inside the timed CRC call. | Historical timing | VERSIONED_SOURCE | VERIFIED | Pinned `a_tests.py` | CRC audit §4; wrapper lines 9–36 | Python argument evaluation occurs after `timer.start()`, unlike C/Rust. |
+| CRC-007 | Warm-up behavior is equivalent across the historical core languages. | Historical timing | VERSIONED_SOURCE | CONFLICTING | Pinned runners | CRC audit §3 | C/Rust discard one call per size; MicroPython discards none. |
+| CRC-008 | Historical cycle values form a uniform cross-language hardware-counter metric. | Historical metrics | VERSIONED_SOURCE | CONFLICTING | Pinned timer implementations | CRC audit §5 | C/Rust read hardware; historical TinyGo derives from duration; MicroPython uses port-specific `ticks_cpu()`. |
+| CRC-009 | The upstream C++ CRC cleanup uses a matching allocator/deallocator. | Historical implementation | VERSIONED_SOURCE | CONFLICTING | Pinned C wrapper | `C-Cpp/src/a_tests.cpp`, allocation/cleanup around lines 14–35 | `calloc` is paired with scalar `delete`, which is undefined C++ behavior. |
+| ARCH-X-001 | ESP32 Series uses one or two 32-bit Xtensa LX6 cores; D0WDQ6-V3 is dual-core. | Historical SoC | PRIMARY_TECHNICAL | VERIFIED | `espressifESP32Datasheet` | Table 1-1 p. 11; §4.1.1 p. 26 | Vendor series configuration and CPU section. |
+| ARCH-X-002 | The ESP32 LX6 implementation has a seven-stage pipeline up to 240 MHz. | ESP32 CPU | PRIMARY_TECHNICAL | VERIFIED | `espressifESP32Datasheet` | §4.1.1 p. 26 | Vendor implementation statement. Historical study used 160 MHz. |
+| ARCH-X-003 | ESP32 implements mixed 16-/24-bit instructions. | ESP32 CPU | PRIMARY_TECHNICAL | VERIFIED | `espressifESP32Datasheet` | §4.1.1 p. 26 | Vendor calls out high-code-density 16/24-bit instruction set. |
+| ARCH-X-004 | ESP32 implements single-precision FPU and DSP facilities including multiply/divide and 40-bit MAC. | ESP32 CPU | PRIMARY_TECHNICAL | VERIFIED | `espressifESP32Datasheet`; `espidfEsp32CoreConfig` | Datasheet §4.1.1 p. 26; config feature macros | Concrete configuration has single-only FP; do not claim full double precision. |
+| ARCH-X-005 | The concrete ESP32 configuration exposes 16 address registers from 64 physical windowed registers. | ESP32 CPU | PRIMARY_TECHNICAL | VERIFIED | `cadenceXtensaISASummary`; `espidfEsp32CoreConfig` | Xtensa ISA §§3.3.1, 6.1; core config lines 42–49 | Generic mechanism plus pinned concrete option/count. |
+| ARCH-X-006 | The historical benchmark binaries used the windowed ABI. | Historical builds | VERSIONED_SOURCE | UNVERIFIED | Toolchain/ELF evidence required | TBD | Capability does not prove selected ABI. Verify compiler command, ELF attributes, and disassembly. |
+| ARCH-X-007 | Each original ESP32 CPU has a 32 KiB two-way cache with 32-byte blocks for external storage. | ESP32 memory | PRIMARY_TECHNICAL | VERIFIED | `espressifESP32Datasheet` | §4.1.5 p. 29 | Vendor cache statement; dynamic state/miss policy still requires protocol work. |
+| ARCH-X-008 | Public primary documentation establishes the LX6 branch-prediction policy used by the historical benchmark. | ESP32 CPU | PRIMARY_TECHNICAL | UNVERIFIED | `espidfEsp32CoreConfig` | `XCHAL_HAVE_PREDICTED_BRANCHES=0` | This macro concerns an instruction option and does not prove absence/presence of a microarchitectural predictor. |
+| ARCH-C6-001 | ESP32-C6 has one 32-bit HP ESP-RISC-V CPU, four-stage pipeline, up to 160 MHz. | C6 HP CPU | PRIMARY_TECHNICAL | VERIFIED | `espressifESP32C6Datasheet`; `espressifESP32C6TRM` | Datasheet §4.1.1.1 p. 37; TRM §§1.1–1.2 pp. 39–40 | LP CPU is a distinct low-power core, not a second equivalent application core. |
+| ARCH-C6-002 | The C6 HP CPU implements RV32IMAC. | C6 HP CPU | PRIMARY_TECHNICAL | VERIFIED | `espressifESP32C6Datasheet`; `espressifESP32C6TRM` | Datasheet §4.1.1.1 p. 37; TRM `misa` p. 45 | I/M/A/C explicitly documented. Record actual toolchain spelling separately. |
+| ARCH-C6-003 | RV32I has x0–x31 32-bit integer registers and x0 is fixed zero. | RISC-V architecture | PRIMARY_TECHNICAL | VERIFIED | `riscvUnprivV22` | §2.1 p. 13 | Generic ISA fact applicable because C6 implements RV32I. |
+| ARCH-C6-004 | The standard RISC-V ABI assigns x1 as return address, x2 as stack pointer, x10–x17 as arguments, and defined saved/temporary roles. | RISC-V ABI | PRIMARY_TECHNICAL | PARTIAL | `riscvPsABI10` | §1.1 integer register convention | ABI rule verified; actual C6 compiler ABI/target flags must be captured. Architectural x1/x2 are not physically dedicated. |
+| ARCH-C6-005 | The C6 HP CPU documents no ISA-level F, D, B, vector, or custom DSP extension. | C6 HP CPU | PRIMARY_TECHNICAL | VERIFIED | `espressifESP32C6TRM` | `misa` description p. 45 | Defensible implementation-scoped absence; do not generalize to RISC-V as an ISA family. |
+| ARCH-C6-006 | C6 mapped external flash uses one read-only 32 KiB four-way cache with 32-byte blocks for instruction/data access. | C6 memory | PRIMARY_TECHNICAL | VERIFIED | `espressifESP32C6TRM`; `espressifESP32C6Datasheet` | TRM §§5.1–5.3 pp. 169–173; datasheet §4.1.2 pp. 40–41 | Instructions and data use the cache one at a time; actual workload behavior remains empirical. |
+| ARCH-C6-007 | C6 HP CPU has a BTB with static branch prediction. | C6 HP CPU | PRIMARY_TECHNICAL | VERIFIED | `espressifESP32C6Datasheet` | §4.1.1.1 p. 37 | Explicit vendor statement. |
+| ARCH-C6-008 | C6 provides instruction trace and a custom programmable performance event counter. | C6 HP CPU | PRIMARY_TECHNICAL | VERIFIED | `espressifESP32C6TRM`; `espressifESP32C6Datasheet` | TRM pp. 42, 53–54 and §1.12 p. 82; datasheet §4.1.1.2 pp. 37–38 | Candidate instrumentation; access/reliability must be tested in selected runtime. |
+| ARCH-C6-009 | The C6 HP core's cycle/instruction counters can be assumed to be standard `mcycle`/`minstret`. | C6 HP CPU | PRIMARY_TECHNICAL | UNVERIFIED | `espressifESP32C6TRM` | HP CSR summary | Those CSRs are not listed; use only documented/tested counters. |
+| ARCH-CAUSAL-001 | A cross-chip execution-time difference isolates the effect of RISC-V versus Xtensa. | Study inference | PROJECT_CONSTRAINT | UNVERIFIED | Charter/methodology | The study design cannot identify that causal effect; such wording is prohibited. |
+
+## Literature inbox verification
+
+These entries verify bibliographic identity, source scope, and triage disposition. They do not automatically verify every result reported by a paper. The complete classification and authoritative links are in `literature/inbox/RISCV_ESP32_Papers_Links_review.md`.
+
+| Claim ID | Claim | Scope | Evidence class | Status | Citation/source | Exact locator | Evidence summary / qualification |
+|---|---|---|---|---|---|---|---|
+| LIT-001 | Seed entry 1 resolves to the Ariel OS DCOSS-IoT paper and includes cross-Xtensa/RISC-V embedded Rust microbenchmarks. | Literature identity/scope | PEER_REVIEWED | VERIFIED | `frank2025ariel` | DOI record; arXiv 2504.19662 full text | ESP32-S3 and ESP32-C3 are used, but timer, SoC, clock, and core-count differences remain confounders. |
+| LIT-002 | Seed entry 2 resolves to the 2022 IFAC-PapersOnLine FreeRTOS/ESP32 multicore study. | Literature identity/scope | PEER_REVIEWED | VERIFIED | `arm2022freertos` | DOI/publisher abstract | Abstract-level scope and bibliographic metadata verified; stable open full text was not acquired. |
+| LIT-003 | Seed entry 3 resolves to NanoCockpit and is a future TinyML systems source, not ESP32 inference evidence. | Literature identity/scope | PEER_REVIEWED | VERIFIED | `cereda2026nanocockpit` | DOI record; arXiv 2601.07476 full text | GAP8 performs inference; ESP32 primarily handles communication. |
+| LIT-004 | Seed entry 4 resolves to the peer-reviewed Femto-Containers runtime study across ARM, ESP32, and RISC-V MCUs. | Literature identity/scope | PEER_REVIEWED | VERIFIED | `zandberg2022femtocontainers` | DOI record; arXiv 2210.03432 full text | Useful runtime/memory/energy background; heterogeneous boards do not isolate ISA. |
+| LIT-005 | Seed entry 5 resolves to a hardware-preemptive-scheduler study on a custom RISC-V FPGA core. | Literature identity/scope | PEER_REVIEWED | VERIFIED | `zagan2025hardwarepreemptive` | DOI/publisher abstract | The scheduler/core extensions are not stock ESP32-C6 properties. |
+| LIT-006 | Seed entry 6 resolves to an ESP32/Xtensa LX compact-shadow-stack paper using register-window exception handlers. | Literature identity/scope | PEER_REVIEWED | PARTIAL | `lehniger2025shadowstacks` | DOI and institutional abstract records | Bibliography and abstract-level scope verified; quantitative claims require full-text review. |
+| LIT-007 | Seed entry 7 resolves to a peer-reviewed RT-Ibex context-switching study of register-window and parallel-context-stack mechanisms. | Literature identity/scope | PEER_REVIEWED | VERIFIED | `nurmi2025contextswitching` | DOI; Tampere full text | Comparative architecture background only; mechanisms are custom extensions, not C6 features. |
+| LIT-008 | Seed entry 8 resolves to a 2026 ASPLOS RISC-V/FreeRTOS co-exploration paper. | Literature identity/scope | PEER_REVIEWED | PARTIAL | `scheck2026rtosunit` | DOI; TU Darmstadt author manuscript | Metadata and content verified, but source records conflict on the conference ordinal; the ordinal is omitted. |
+| LIT-009 | Seed entry 9 resolves to the NorCAS 2024 parallel-context-stack paper on RT-Ibex. | Literature identity/scope | PEER_REVIEWED | VERIFIED | `nurmi2024parallelcontext` | DOI; Tampere accepted manuscript | Relevant to register/context design, not direct C6 evidence. |
+| LIT-010 | Seed entry 10 resolves to Brandon Freiberger's 2025 UBC MASc thesis on stateful custom-instruction management. | Literature identity/scope | ACADEMIC_THESIS | VERIFIED | `freiberger2025custominstructions` | DOI 10.14288/1.0448559; UBC record | Future extension management; low relevance to the current fixed C6 implementation. |
+| LIT-011 | Seed entry 11 is topically direct but has internally inconsistent publication/technical information. | Literature reliability | SECONDARY | CONFLICTING | Inbox review #11 | H-TSP article page and PDF | Incorrectly labels ESP8266 as RISC-V, has inconsistent journal headers, and lacks reproducible provenance; not promoted or cited. |
+| LIT-012 | Seed entry 12 resolves to the treVM arXiv preprint and an official DCOSS-IoT 2026 program listing. | Literature identity/scope | PREPRINT | PARTIAL | `lavandier2026trevm` | arXiv 2604.27570; conference program | Authors/title/preprint verified; final IEEE DOI and pagination remain unresolved. |
+| LIT-013 | Seed entry 13 resolves to the IEEE MCSoC 2025 CFU Proving Ground paper. | Literature identity/scope | PEER_REVIEWED | VERIFIED | `fujino2025cfu` | DOI/IEEE record | FPGA custom-function-unit work is future context, not stock ESP32-C6 Mode A. |
+| LIT-014 | Seed entry 14 resolves to the 2022 IEEE MECO position paper on embedded WebAssembly. | Literature identity/scope | PEER_REVIEWED | VERIFIED | `wallentowitz2022wasm` | DOI; arXiv 2405.09213 | Publication year is 2022; arXiv upload occurred in 2024. |
+| LIT-015 | Seed entry 15 resolves to a 2025 OpenPLC/VEGA benchmark article, but its comparative interpretation needs caution. | Literature identity/results | PEER_REVIEWED | CONFLICTING | `retnakumari2025openplc` | DOI/publisher full text | Metadata verified; millisecond timing, nominal-frequency normalization, heterogeneous tools, unavailable data, and incorrect ESP8266 ISA labeling limit reuse. |
+| LIT-016 | Seed entry 16 is a verified KPI master's thesis about human productivity and microclimate monitoring. | Literature disposition | ACADEMIC_THESIS | VERIFIED | KPI institutional record | Handle 123456789/64851; thesis PDF | It does not address processor architecture, language performance, or comparable benchmarks and is out of scope. |
+| LIT-017 | Seed entry 17 resolves to the IEEE MECO 2023 paper on JIT compilation for embedded WebAssembly. | Literature identity/scope | PEER_REVIEWED | PARTIAL | `moron2023wasmjit` | DOI/IEEE metadata | Bibliographic metadata verified; full technical findings remain to be reviewed. |
+| LIT-018 | Seed entry 18 resolves to the IEEE AICAS 2024 FlexBits paper. | Literature identity/scope | PEER_REVIEWED | PARTIAL | `xu2024flexbits` | DOI/official proceedings contents | Metadata verified; full technical claims were not independently reviewed, and the custom core is not C6. |
+| LIT-019 | Seed entry 19 resolves to the peer-reviewed MDPI data-alignment study spanning Xtensa ESP32 and RISC-V ESP32-C3 among other CPUs. | Literature identity/scope | PEER_REVIEWED | VERIFIED | `hubacz2022alignment` | DOI/publisher full text | Strong later microbenchmark/method source; CPDev VM and heterogeneous platforms remain limitations. |
+| LIT-020 | Seed entry 20 resolves to a Springer indoor-localization paper using ESP8266/ESP32-S3 application data. | Literature disposition | PEER_REVIEWED | VERIFIED | DOI 10.1007/s42486-025-00204-0 | Springer record | Online-first 2025/issue 2026; no C6 or low-level performance focus, so not promoted. |
+| LIT-021 | Seed entry 21 resolves to a 2025 UFSC capstone measuring time, energy, current, RAM, and flash for cryptography on ESP32-C6. | Literature identity/scope | ACADEMIC_THESIS | VERIFIED | `lima2025esp32c6signatures` | UFSC handle 123456789/271598; thesis PDF | Direct exact-SoC methodology source with non-peer-reviewed and no-Xtensa-control limitations. |
+| LIT-022 | Seed entry 22 resolves to a 2025 Uniandes thesis comparing PicoRV32 FPGA, classic ESP32, and ESP32-C6 sensor acquisition. | Literature identity/scope | ACADEMIC_THESIS | VERIFIED | `molano2025riscvfpga` | Handle 1992/77146; accepted thesis PDF | Direct cross-platform source, but application-specific and not a language or controlled ISA experiment. |
+
+## Priority verification backlog
+
+1. Observe exact board model, markings, board revision, chip revision, flash topology, and board-instance ID.
+2. Pin/download permitted manual versions and SHA-256 values for release.
+3. Verify selected C6 compiler target triples, psABI, extension strings, and floating helper behavior from actual builds.
+4. Obtain/build historical Xtensa C/C++ artifact and inspect ELF ABI attributes/disassembly.
+5. Verify performance-counter privilege, frequency, wrap, event semantics, and runtime accessibility on the actual C6.
+6. Keep unavailable LX6 issue width, latency, branch predictor, and detailed cache replacement/miss behavior unverified.
+7. Acquire and review the full text for `lehniger2025shadowstacks`, `moron2023wasmjit`, and `xu2024flexbits` before using technical or quantitative claims.
+8. Resolve the final publication record for `lavandier2026trevm` and preserve the arXiv version until then.

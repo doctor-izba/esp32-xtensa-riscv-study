@@ -1,0 +1,36 @@
+# Local editor and operating-system files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Secrets and machine-specific settings
+.env
+.env.*
+!.env.example
+
+# ESP-IDF / PlatformIO / Rust / MicroPython build products
+build/
+.pio/
+target/
+sdkconfig
+sdkconfig.old
+managed_components/
+dependencies.lock.tmp
+*.elf
+*.bin
+*.map
+*.o
+*.a
+*.pyc
+__pycache__/
+
+# MATLAB and generated publication products
+*.asv
+*.m~
+paper/build/
+website/public/
+
+# Raw data are intentionally NOT ignored. Never use this file to hide evidence.

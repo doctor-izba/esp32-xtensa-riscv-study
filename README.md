@@ -66,9 +66,10 @@ The additions `data/baselines/`, `data/validation/`, and `artifacts/` deliberate
 ## Start here
 
 1. Read [PROJECT_CHARTER.md](PROJECT_CHARTER.md), [RESEARCH_QUESTIONS.md](RESEARCH_QUESTIONS.md), and [METHODOLOGY.md](METHODOLOGY.md).
-2. Review the preliminary [CRC-32 source audit](references/original-study/CRC32_AUDIT.md) and [verification ledger](docs/verification_ledger.md).
-3. Review the [results schema](data/schemas/results_schema.md) and [ROADMAP.md](ROADMAP.md).
-4. Do not run or implement CRC-32 yet; no reproduction command is claimed at this phase.
+2. Review the [related-work deep review](literature/RELATED_WORK_DEEP_REVIEW.md), [novelty-gap analysis](docs/NOVELTY_GAP_ANALYSIS.md), and [claim boundaries](docs/CLAIM_BOUNDARIES.md).
+3. Review the preliminary [CRC-32 source audit](references/original-study/CRC32_AUDIT.md) and [verification ledger](docs/verification_ledger.md).
+4. Review the [results schema](data/schemas/results_schema.md) and [ROADMAP.md](ROADMAP.md).
+5. Do not run or implement CRC-32 yet; no reproduction command is claimed at this phase.
 
 ## Source status
 

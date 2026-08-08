@@ -28,6 +28,11 @@ dependencies.lock.tmp
 *.pyc
 __pycache__/
 
+# Exact accepted SHA-256 native binaries are evidence, not disposable builds.
+!artifacts/builds/sha256/**/*.elf
+!artifacts/builds/sha256/**/*.bin
+!artifacts/builds/sha256/**/*.map
+
 # CRC-32 static-analysis evidence is intentionally versioned. These files are
 # immutable build artifacts referenced by hashes and provenance manifests.
 !artifacts/assembly/crc32/**/*.elf
@@ -40,6 +45,10 @@ benchmarks/historical/crc32/test_vectors/v1/generated/
 benchmarks/historical/crc32/c/main/generated_vector.hpp
 benchmarks/historical/crc32/rust/src/generated_vector.rs
 benchmarks/historical/crc32/micropython/generated_vector.py
+benchmarks/historical/sha256/test_vectors/v1/generated/
+benchmarks/historical/sha256/c/main/generated_vector.hpp
+benchmarks/historical/sha256/rust/src/generated_vector.rs
+benchmarks/historical/sha256/micropython/generated_vector.py
 
 # MATLAB and generated publication products
 *.asv

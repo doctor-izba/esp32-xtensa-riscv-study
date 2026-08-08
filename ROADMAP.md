@@ -9,46 +9,46 @@ This is the authoritative task sequence. Phases are gated by evidence, not dates
 - [x] Create scoped repository structure.
 - [x] Pin and preliminarily audit the Plauska paper/repository.
 - [x] Start a primary-source verification ledger and literature database.
-- [ ] Review this scaffold with the researcher.
-- [ ] Make the initial user-controlled commit and record the approval decision.
+- [x] Review this scaffold with the researcher.
+- [x] Make the initial user-controlled commit and record the approval decision.
 
 **Exit evidence:** all links/schemas validate, no benchmark source or fabricated result exists, and explicit approval opens the CRC gate.
 
 ## Phase 1 — CRC-32 source and protocol freeze
 
-- [ ] Confirm the pinned upstream snapshot and redistribution/license policy.
-- [ ] Extract the canonical upstream byte vector and expected CRC values; record SHA-256.
-- [ ] Independently verify the CRC variant and every expected value.
-- [ ] Complete an exact/equivalent/deviation/unknown comparability matrix for C/C++, Rust, and MicroPython.
-- [ ] Resolve or explicitly freeze the paper/repository iteration discrepancy and cross-language warm-up asymmetry.
-- [ ] Pin feasible C6 C/C++, Rust, and MicroPython toolchains and capture all versions.
-- [ ] Review and approve `crc32-mode-a-v1` with correctness and timing boundaries.
+- [x] Confirm the pinned upstream snapshot and retain the vector without vendoring while redistribution remains unresolved.
+- [x] Extract the canonical upstream byte vector and expected CRC values; record SHA-256.
+- [x] Independently verify the CRC variant and every expected value.
+- [x] Complete an exact/equivalent/deviation/unknown comparability matrix for C/C++, Rust, and MicroPython.
+- [x] Resolve or explicitly freeze the paper/repository iteration discrepancy and cross-language warm-up asymmetry.
+- [x] Pin feasible C6 C/C++, Rust, and MicroPython toolchains and capture all versions.
+- [x] Review and approve `crc32-mode-a-v1` with correctness and timing boundaries.
 
 **Exit evidence:** signed-off protocol, vectors, oracle, toolchain plan, and unresolved fields visibly marked.
 
 ## Phase 2 — CRC-32 correctness-only implementations
 
-- [ ] Implement equivalent C/C++, Rust, and MicroPython kernels with no performance tuning beyond Mode A.
-- [ ] Run host/device correctness tests for every input size and negative test.
-- [ ] Verify that Mode A does not call a hardware CRC/crypto path.
-- [ ] Freeze implementation IDs and build profiles.
+- [x] Implement equivalent C/C++, Rust, and MicroPython kernels with no performance tuning beyond Mode A.
+- [x] Run host/device correctness tests for every input size and negative test.
+- [x] Verify that Mode A does not call a hardware CRC/crypto path.
+- [x] Freeze implementation IDs and build profiles.
 
 **Exit evidence:** all implementations produce the same expected 32-bit values; timing remains disabled until this gate passes.
 
 ## Phase 3 — CRC-32 acquisition pilot and Mode A collection
 
-- [ ] Implement run capture, manifest hashing, and schema validation.
-- [ ] Characterize timer resolution/overhead, frequency, scheduler/interrupt behavior, GC, and warm-up effects.
-- [ ] Choose and freeze independent-run count after the pilot.
-- [ ] Collect immutable C6 Mode A bundles, including a compatible 100-iteration dataset.
-- [ ] Transcribe/import the historical baseline with double-review provenance.
+- [x] Implement run capture, manifest hashing, and schema validation.
+- [x] Characterize timer resolution/overhead, frequency, scheduler/interrupt behavior, GC, and warm-up effects.
+- [x] Choose and freeze the first acquisition run plan after the pilot.
+- [x] Collect immutable C6 Mode A bundles, including a compatible 100-iteration dataset.
+- [x] Transcribe/import the historical baseline with provenance.
 
 **Exit evidence:** validated raw bundles and historical baseline remain separate and fully traceable.
 
 ## Phase 4 — CRC-32 analysis and first figures
 
 - [ ] Implement `matlab/import_results.m` and `matlab/validate_results.m`.
-- [ ] Implement statistics and CRC execution-time/normalized plots from CSV.
+- [x] Implement statistics and CRC execution-time/normalized plots from CSV.
 - [ ] Add build/code/RAM metrics where reproducible.
 - [ ] Rebuild outputs from a clean checkout and record lineage.
 
@@ -60,10 +60,10 @@ Add SHA-256, FFT, FIR, and IIR **one at a time**, repeating Phases 1–4 for eac
 
 ## Phase 6 — Static architecture and assembly analysis
 
-- [ ] Pin Xtensa and RISC-V C/C++ cross-toolchains.
-- [ ] Preserve ELF/object/assembly/disassembly/link maps and hashes.
-- [ ] Generate static instruction/byte/category metrics.
-- [ ] Relate patterns to primary-source claims while separating static from runtime evidence.
+- [x] Pin Xtensa and RISC-V C/C++ cross-toolchains.
+- [x] Preserve available ELF/object/assembly/disassembly/link maps and hashes, with the missing accepted Rust ELF disclosed.
+- [x] Generate static instruction/byte/category metrics.
+- [x] Relate patterns to primary-source claims while separating static from runtime evidence.
 
 ## Phase 7 — Mode B optimization
 

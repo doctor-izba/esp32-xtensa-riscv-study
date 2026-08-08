@@ -4,7 +4,12 @@ Version: `0.1.0-foundation`
 
 ## Current state
 
-The foundation is published on branch `main`. No build, flash, acquisition, validation, MATLAB, or paper command is claimed to work yet. Exact candidate toolchains are named in the proposed CRC protocol, but they are not treated as installed or feasible until version capture and correctness-only build checks succeed.
+The foundation and first CRC-32 Mode A vertical slice are published on branch
+`main`. Physical C++/Rust/MicroPython acquisition, validation, MATLAB analysis,
+and generated-code scripts have been exercised with pinned toolchains. The
+exact accepted Rust ELF was not retained; its hash/provenance remain recorded
+and static Rust inspection is explicitly labelled as a pinned-source rebuild.
+SHA-256 and Mode B have not started.
 
 ## Reproduction levels
 

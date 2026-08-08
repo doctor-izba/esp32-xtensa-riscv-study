@@ -82,7 +82,10 @@ AI answers, blogs, forums, and unsourced summaries are discovery aids only. An u
 
 ## Current authorization state
 
-The foundation may be created and audited. CRC-32 benchmark implementation is **not authorized yet**. Explicit user approval must be recorded under `docs/decisions/` before source implementation begins.
+CRC-32 Mode A implementation, physical acquisition, first MATLAB analysis, and
+low-level generated-code analysis are approved and complete. SHA-256 and Mode B
+remain closed until separately authorized. Approval records are under
+`docs/decisions/`.
 
 ## Governance
 

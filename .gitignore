@@ -28,6 +28,13 @@ dependencies.lock.tmp
 *.pyc
 __pycache__/
 
+# CRC-32 static-analysis evidence is intentionally versioned. These files are
+# immutable build artifacts referenced by hashes and provenance manifests.
+!artifacts/assembly/crc32/**/*.elf
+!artifacts/assembly/crc32/**/*.map
+!artifacts/assembly/crc32/**/*.o
+!artifacts/assembly/crc32/**/*.obj
+
 # CRC-32 vector representations generated from the pinned upstream source
 benchmarks/historical/crc32/test_vectors/v1/generated/
 benchmarks/historical/crc32/c/main/generated_vector.hpp

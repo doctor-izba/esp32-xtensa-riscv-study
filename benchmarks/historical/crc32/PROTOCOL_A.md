@@ -4,7 +4,7 @@
 - Vector set ID: `crc32-plauska-v1`
 - Status: approved by Decision 0002
 - Correctness implementation gate: open
-- Performance timing gate: passed by Decision 0003; main acquisition not yet started
+- Performance timing gate: passed by Decision 0003; first main acquisition complete
 - Applies to: ESP32-C6 C/C++, Rust, and MicroPython Mode A
 
 This is the minimum correctness and timing contract for implementation. It is a reproduction-oriented reconstruction/extension of the recoverable Plauska CRC-32 method, not an exact reproduction. Approval and the timing refinement are recorded in `docs/decisions/0002-crc32-mode-a-protocol-approval.md`.

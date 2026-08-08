@@ -2,7 +2,7 @@
 
 Version: `0.2.0-two-mode-design`
 
-Status: design contract; CRC protocol is proposed and implementation/measurement are not yet authorized.
+Status: design contract; CRC-32 Mode A protocol is approved and its first physical acquisition is complete.
 
 ## 1. Study design
 

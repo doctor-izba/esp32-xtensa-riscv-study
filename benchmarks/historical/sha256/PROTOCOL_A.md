@@ -1,6 +1,6 @@
 # SHA-256 Mode A protocol
 
-- Protocol ID: `sha256-mode-a-v1.1.0`
+- Protocol ID: `sha256-mode-a-v1.1.1`
 - Vector set: `sha256-plauska-v1`
 - Status: frozen; correctness and physical timing pilot passed 2026-08-08
 - Mode: A, software only
@@ -75,6 +75,11 @@ Observed timer quanta were 1 us for native `esp_timer_get_time()` and 6--7 us
 for MicroPython `ticks_us()`. The selection medians and pilot evidence are
 recorded in `TIMING_PILOT.md`. The pilot does not enter the performance
 dataset.
+
+After validation/output for each observation, every language performs a 1 ms
+scheduler-service delay. This pause is outside the timed interval and prevents
+long native serial runs from starving the FreeRTOS idle task. It is not part of
+`total_batch_time_us` or normalized execution time.
 
 Timers are `esp_timer_get_time()` for C/C++ and Rust, and wrap-safe
 `time.ticks_us()`/`time.ticks_diff()` for MicroPython. No timer overhead is

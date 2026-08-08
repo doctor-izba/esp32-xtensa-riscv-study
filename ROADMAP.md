@@ -61,7 +61,7 @@ Add SHA-256, FFT, FIR, and IIR **one at a time**, repeating Phases 1–4 for eac
 - [x] SHA-256 software Mode A full vertical slice.
 - [x] FFT Mode A complete.
 - [x] FIR Mode A complete under Decision 0011.
-- [ ] IIR (closed).
+- [x] IIR Mode A complete under Decision 0012; primary Mode A suite complete.
 
 ## Phase 6 — Static architecture and assembly analysis
 

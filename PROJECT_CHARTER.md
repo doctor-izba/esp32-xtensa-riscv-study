@@ -82,10 +82,10 @@ AI answers, blogs, forums, and unsourced summaries are discovery aids only. An u
 
 ## Current authorization state
 
-CRC-32, SHA-256, FFT, and FIR Mode A are complete full vertical slices,
+CRC-32, SHA-256, FFT, FIR, and IIR Mode A are complete full vertical slices,
 including physical acquisition, MATLAB analysis, and generated-code analysis.
-FIR was authorized under Decision 0011. IIR and Mode B remain closed. Approval
-records are under `docs/decisions/`.
+IIR was authorized under Decision 0012. The complete primary Mode A suite is
+stable; Mode B remains closed. Approval records are under `docs/decisions/`.
 
 ## Governance
 

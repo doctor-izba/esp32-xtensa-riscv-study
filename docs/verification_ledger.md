@@ -168,3 +168,17 @@ These entries verify bibliographic identity, source scope, and triage dispositio
 | FIR-ARCH-003 | No integer Xtensa MAC16/DSP or zero-overhead-loop instruction was found in the matched FIR object. | LOCAL_BUILD_EVIDENCE | VERIFIED | Artifact-scoped search in matched Xtensa disassembly |
 | FIR-ARCH-004 | The exact C6 Rust FIR symbol has four bounds-panic references and more static instructions/branches than exact C++, but this does not by itself establish dynamic cost. | LOCAL_BUILD_EVIDENCE | VERIFIED | `data/processed/fir_codegen_analysis.csv`; exact disassemblies |
 | FIR-ARCH-005 | Historical/local FIR timing and matched objects do not isolate pure ISA causality. | PROJECT_CONSTRAINT | VERIFIED | `reports/FIR_F32_LOW_LEVEL_ANALYSIS.md` |
+
+## IIR Mode A claims
+
+| Claim ID | Atomic claim | Evidence class | Status | Evidence locator |
+|---|---|---|---|---|
+| IIR-001 | The accepted ESP32-C6 Mode A IIR acquisition contains exactly 800 valid observations for each of C++, Rust, and MicroPython, with all frozen-vector checks passing. | LOCAL_MEASUREMENT | VERIFIED | `data/validation/iir_mode_a/validation_report.md`; processed SHA-256 `3b2c3c10...524609c9` |
+| IIR-002 | For non-empty IIR sizes, local Rust median time is 1.003–1.025 times C++ and MicroPython is 14.899–45.050 times C++. | LOCAL_MEASUREMENT | VERIFIED | `artifacts/matlab/iir_mode_a/iir_mode_a_summary.csv`; ratios CSV |
+| IIR-003 | The pinned Plauska CSV contains 100 all-OK IIR rows per language/size used to derive the separately stored historical aggregates. | VERSIONED_SOURCE | VERIFIED | Commit `c42dba0...d61e171`; `plauska_iir_historical_lineage.csv` |
+| IIR-004 | The exact physically measured C6 C++ and Rust ELFs are retained with SHA-256 `b74b8ebe...6e4a7d` and `f3b13892...e020b9`. | LOCAL_BUILD_EVIDENCE | VERIFIED | `artifacts/builds/iir/ARTIFACT_MANIFEST.md` |
+| IIR-ARCH-001 | Exact C6 C++ and Rust IIR kernels use five `__mulsf3`, two `__subsf3`, and two `__addsf3` call sites per static loop body, with no hardware floating instruction. | LOCAL_BUILD_EVIDENCE | VERIFIED | Exact disassemblies; `data/processed/iir_codegen_analysis.csv` |
+| IIR-ARCH-002 | The matched Xtensa IIR object emits two `msub.s`, one `mul.s`, and two `madd.s`, while matched RV32IMAC uses nine software-FP helper calls. | LOCAL_BUILD_EVIDENCE | VERIFIED | Matched disassemblies; `reports/IIR_BQ_F32_LOW_LEVEL_ANALYSIS.md` |
+| IIR-ARCH-003 | IIR state creates a loop-carried dependency from current `d0` through state update into the next sample, preventing cross-sample recurrence reordering under the frozen source semantics. | VERSIONED_SOURCE; LOCAL_BUILD_EVIDENCE | VERIFIED | Audited recurrence and matched disassemblies |
+| IIR-ARCH-004 | No integer Xtensa MAC16/DSP or zero-overhead-loop instruction appears in the matched IIR object. | LOCAL_BUILD_EVIDENCE | VERIFIED | Artifact-scoped matched Xtensa disassembly search |
+| IIR-ARCH-005 | Historical/local IIR timing and matched objects do not isolate pure ISA causality. | PROJECT_CONSTRAINT | VERIFIED | `reports/IIR_BQ_F32_LOW_LEVEL_ANALYSIS.md` |

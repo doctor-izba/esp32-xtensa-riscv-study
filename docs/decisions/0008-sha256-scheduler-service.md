@@ -1,7 +1,7 @@
 # Decision 0008: service the scheduler between SHA-256 observations
 
 - Date: 2026-08-08
-- Status: accepted
+- Status: superseded by Decision 0009 before accepted evidence
 - Protocol transition: `sha256-mode-a-v1.1.0` to `sha256-mode-a-v1.1.1`
 
 ## Evidence and decision

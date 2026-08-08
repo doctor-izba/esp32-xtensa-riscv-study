@@ -1,6 +1,6 @@
 # SHA-256 Mode A protocol
 
-- Protocol ID: `sha256-mode-a-v1.1.1`
+- Protocol ID: `sha256-mode-a-v1.1.2`
 - Vector set: `sha256-plauska-v1`
 - Status: frozen; correctness and physical timing pilot passed 2026-08-08
 - Mode: A, software only
@@ -76,8 +76,9 @@ for MicroPython `ticks_us()`. The selection medians and pilot evidence are
 recorded in `TIMING_PILOT.md`. The pilot does not enter the performance
 dataset.
 
-After validation/output for each observation, every language performs a 1 ms
-scheduler-service delay. This pause is outside the timed interval and prevents
+After validation/output for each observation, every language performs one
+FreeRTOS scheduler tick (10 ms at the frozen 100 Hz tick rate) of service delay.
+This pause is outside the timed interval and prevents
 long native serial runs from starving the FreeRTOS idle task. It is not part of
 `total_batch_time_us` or normalized execution time.
 

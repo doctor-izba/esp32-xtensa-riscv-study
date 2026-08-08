@@ -154,3 +154,17 @@ These entries verify bibliographic identity, source scope, and triage dispositio
 | FFT-ARCH-003 | No Xtensa MAC16/DSP or zero-overhead-loop instruction was found in the matched FFT object. | LOCAL_BUILD_EVIDENCE | VERIFIED | `artifacts/static/fft/xtensa/disassembly.txt`; `data/processed/fft_static_analysis.csv`; artifact-scoped negative search only |
 | FFT-ARCH-004 | The exact C6 Rust kernel retains five cold bounds-check panic paths and a larger frame than the exact C++ kernel. | LOCAL_BUILD_EVIDENCE | VERIFIED | `data/processed/fft_exact_kernel_analysis.csv`; exact disassemblies |
 | FFT-ARCH-005 | The matched objects cannot establish pure ISA causality for the historical-versus-C6 timing difference. | PROJECT_CONSTRAINT | VERIFIED | `reports/FFT_I16_LOW_LEVEL_ANALYSIS.md` |
+
+## FIR Mode A claims
+
+| Claim ID | Atomic claim | Evidence class | Status | Evidence locator |
+|---|---|---|---|---|
+| FIR-001 | The accepted ESP32-C6 Mode A FIR acquisition contains exactly 800 valid observations for each of C++, Rust, and MicroPython, with all frozen-vector checks passing. | LOCAL_MEASUREMENT | VERIFIED | `data/validation/fir_mode_a/validation_report.md`; processed SHA-256 `2e3372b2...eafdff70` |
+| FIR-002 | For non-empty FIR sizes, local Rust median time is 0.982–0.987 times C++ and MicroPython is 21.643–29.191 times C++. | LOCAL_MEASUREMENT | VERIFIED | `artifacts/matlab/fir_mode_a/fir_mode_a_summary.csv`; `fir_mode_a_ratios.csv` |
+| FIR-003 | Plauska Table 5 reports Rust faster than C for non-empty FIR inputs, while the published aggregates remain separate descriptive evidence rather than local samples. | PEER_REVIEWED | VERIFIED | DOI `10.3390/electronics12010143`, Table 5; `plauska_fir_historical_summary.csv` |
+| FIR-004 | The exact physically measured C6 C++ and Rust ELFs are retained with SHA-256 `fea5db04...481649` and `6b7d13c1...a70a4`. | LOCAL_BUILD_EVIDENCE | VERIFIED | `artifacts/builds/fir/ARTIFACT_MANIFEST.md` |
+| FIR-ARCH-001 | The exact C6 C++ and Rust FIR kernels use software `__mulsf3`/`__addsf3` helpers and contain no hardware floating-point instruction. | LOCAL_BUILD_EVIDENCE | VERIFIED | Exact disassemblies; `data/processed/fir_codegen_analysis.csv` |
+| FIR-ARCH-002 | The matched classic-ESP32 Xtensa object contains two hardware `madd.s` sites, while the matched RV32IMAC object uses software floating helpers. | LOCAL_BUILD_EVIDENCE | VERIFIED | `artifacts/static/fir/*/disassembly.txt`; `reports/FIR_F32_LOW_LEVEL_ANALYSIS.md` |
+| FIR-ARCH-003 | No integer Xtensa MAC16/DSP or zero-overhead-loop instruction was found in the matched FIR object. | LOCAL_BUILD_EVIDENCE | VERIFIED | Artifact-scoped search in matched Xtensa disassembly |
+| FIR-ARCH-004 | The exact C6 Rust FIR symbol has four bounds-panic references and more static instructions/branches than exact C++, but this does not by itself establish dynamic cost. | LOCAL_BUILD_EVIDENCE | VERIFIED | `data/processed/fir_codegen_analysis.csv`; exact disassemblies |
+| FIR-ARCH-005 | Historical/local FIR timing and matched objects do not isolate pure ISA causality. | PROJECT_CONSTRAINT | VERIFIED | `reports/FIR_F32_LOW_LEVEL_ANALYSIS.md` |

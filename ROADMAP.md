@@ -59,8 +59,8 @@ This is the authoritative task sequence. Phases are gated by evidence, not dates
 Add SHA-256, FFT, FIR, and IIR **one at a time**, repeating Phases 1–4 for each. Hardware SHA remains prohibited in Mode A.
 
 - [x] SHA-256 software Mode A full vertical slice.
-- [ ] FFT (closed).
-- [ ] FIR (closed).
+- [x] FFT Mode A complete.
+- [x] FIR Mode A complete under Decision 0011.
 - [ ] IIR (closed).
 
 ## Phase 6 — Static architecture and assembly analysis

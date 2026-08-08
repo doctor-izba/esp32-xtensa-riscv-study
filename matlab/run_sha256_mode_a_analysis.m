@@ -105,10 +105,12 @@ for target=[a,b]
     set(target,"YScale","log","FontSize",11,"Box","on"); grid(target,"on");
     xlabel(target,"Input prefix (bytes)");
 end
+commonYLimits=[10,10^ceil(log10(max([historicalMean(:);localMean(:)])))];
+ylim(a,commonYLimits); ylim(b,commonYLimits);
 ylabel(a,"Mean execution time (\mus, log scale)");
 title(a,"Historical Plauska: classic ESP32 Xtensa"); title(b,"This study Mode A: ESP32-C6 RISC-V");
 legend(a,"Location","northwest");
-title(layout,"Software SHA-256 historical context (protocols are not equivalent)","FontWeight","bold");
+title(layout,"Software SHA-256 historical context (shared scale; protocols are not equivalent)","FontWeight","bold");
 exportgraphics(f3,fullfile(outputDir,"figure3_sha256_historical_context.png"),"Resolution",300);
 exportgraphics(f3,fullfile(outputDir,"figure3_sha256_historical_context.pdf"),"ContentType","vector");
 savefig(f3,fullfile(outputDir,"figure3_sha256_historical_context.fig")); close(f3);

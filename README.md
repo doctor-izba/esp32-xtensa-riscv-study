@@ -2,7 +2,10 @@
 
 This repository is the reproducibility workspace for an academic comparison of the original Xtensa-based ESP32 historical results and new measurements on an ESP32-C6-N4 RISC-V platform.
 
-**Status:** CRC-32 Mode A protocol approved. Correctness and the timing-resolution pilot pass on the physical ESP32-C6 in C++, Rust, and MicroPython. Main performance acquisition has not started; no local performance rows exist.
+**Status:** CRC-32 and SHA-256 are complete Mode A vertical slices. SHA-256
+correctness, timing pilot, 2,400 accepted physical observations, MATLAB
+analysis, historical context, and exact-binary/static-code analysis are
+complete. FFT, FIR, IIR, and Mode B remain closed.
 
 ## Research focus
 
@@ -24,7 +27,7 @@ The exact questions and permitted interpretations are in [RESEARCH_QUESTIONS.md]
 
 | Family | Purpose | Current state |
 |---|---|---|
-| Historical suite | CRC-32, SHA-256, FFT, FIR, and IIR with a published ESP32 baseline | CRC correctness and timer pilot complete; main acquisition pending |
+| Historical suite | CRC-32, SHA-256, FFT, FIR, and IIR with a published ESP32 baseline | CRC-32 and SHA-256 Mode A vertical slices complete; later workloads gated |
 | Low-level analysis | Generated code, ABI, registers, loads/stores, branches, calls, spills, floating-point behavior, and code size | Analysis layer; not an experimental mode |
 | Future work | Additional microbenchmarks, AI/TinyML, languages, and VMs | Deferred beyond the first paper |
 
@@ -69,7 +72,8 @@ The additions `data/baselines/`, `data/validation/`, and `artifacts/` deliberate
 2. Review the [related-work deep review](literature/RELATED_WORK_DEEP_REVIEW.md), [novelty-gap analysis](docs/NOVELTY_GAP_ANALYSIS.md), and [claim boundaries](docs/CLAIM_BOUNDARIES.md).
 3. Review the preliminary [CRC-32 source audit](references/original-study/CRC32_AUDIT.md) and [verification ledger](docs/verification_ledger.md).
 4. Review the [results schema](data/schemas/results_schema.md) and [ROADMAP.md](ROADMAP.md).
-5. Review the approved CRC-32 Mode A protocol, Decision 0002, and the completed timing pilot. SHA-256 remains closed.
+5. Review the completed CRC-32 and SHA-256 Mode A protocols, result reports,
+   and decision records. FFT, FIR, IIR, and Mode B remain closed.
 
 ## Source status
 

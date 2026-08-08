@@ -12,6 +12,7 @@ Evidence classes:
 - `PREPRINT`: versioned scholarly manuscript without verified final peer-reviewed publication metadata.
 - `VERSIONED_SOURCE`: pinned source code, artifact, or dataset.
 - `LOCAL_BUILD_EVIDENCE`: locally generated compiler, ELF, object, assembly, disassembly, or manifest evidence with recorded hashes.
+- `LOCAL_MEASUREMENT`: immutable physical-device observations plus their validation and provenance records.
 - `FOCUSED_LITERATURE_AUDIT`: bounded synthesis across the explicitly screened literature corpus; supports only qualified "not identified in this corpus" findings, never proof of global absence.
 - `PROJECT_CONSTRAINT`: researcher-supplied scope/inventory statement.
 - `SECONDARY`: non-primary technical summary; discovery/context only.
@@ -140,3 +141,16 @@ These entries verify bibliographic identity, source scope, and triage dispositio
 6. Keep unavailable LX6 issue width, latency, branch predictor, and detailed cache replacement/miss behavior unverified.
 7. Acquire the conference full text for `lehniger2025shadowstacks` before attributing details beyond its abstract; keep the separately verified dissertation evidence separate. Also review full text for `moron2023wasmjit` and `xu2024flexbits` before technical or quantitative use.
 8. Resolve the final publication record for `lavandier2026trevm` and preserve the arXiv version until then.
+## FFT Mode A claims
+
+| Claim ID | Atomic claim | Evidence class | Status | Evidence locator |
+|---|---|---|---|---|
+| FFT-001 | The accepted ESP32-C6 Mode A FFT acquisition contains exactly 800 valid observations for each of C++, Rust, and MicroPython, with all frozen-vector checks passing. | LOCAL_MEASUREMENT | VERIFIED | `data/validation/fft_mode_a/validation_report.md`; processed CSV SHA-256 `4b990ef0...9d79af` |
+| FFT-002 | For non-empty FFT sizes, local Rust median time is 1.232–1.261 times C++ and MicroPython is 185.232–203.704 times C++. | LOCAL_MEASUREMENT | VERIFIED | `artifacts/matlab/fft_mode_a/fft_mode_a_summary.csv`; `fft_mode_a_ratios.csv` |
+| FFT-003 | Plauska Table 5 reports the same C–Rust–MicroPython ranking, but its published aggregate values are descriptive historical context rather than local samples. | PEER_REVIEWED | VERIFIED | DOI `10.3390/electronics12010143`, Table 5; `plauska_fft_historical_summary.csv` |
+| FFT-004 | The exact physically measured C6 C++ and Rust ELFs are retained with SHA-256 `2f563a88...90d165` and `a3b83f33...b4c8a`. | LOCAL_BUILD_EVIDENCE | VERIFIED | `artifacts/builds/fft/ARTIFACT_MANIFEST.md` |
+| FFT-ARCH-001 | The matched ESP32-C6 C++ FFT object contains scalar RV32 `mul`, arithmetic right shifts, and halfword loads/stores. | LOCAL_BUILD_EVIDENCE | VERIFIED | `artifacts/static/fft/riscv/disassembly.txt`; `data/processed/fft_static_analysis.csv` |
+| FFT-ARCH-002 | The matched classic-ESP32 C++ FFT object contains scalar Xtensa `mull`, arithmetic right shifts, halfword operations, and stack reloads in the butterfly. | LOCAL_BUILD_EVIDENCE | VERIFIED | `artifacts/static/fft/xtensa/disassembly.txt`; `reports/FFT_I16_LOW_LEVEL_ANALYSIS.md` |
+| FFT-ARCH-003 | No Xtensa MAC16/DSP or zero-overhead-loop instruction was found in the matched FFT object. | LOCAL_BUILD_EVIDENCE | VERIFIED | `artifacts/static/fft/xtensa/disassembly.txt`; `data/processed/fft_static_analysis.csv`; artifact-scoped negative search only |
+| FFT-ARCH-004 | The exact C6 Rust kernel retains five cold bounds-check panic paths and a larger frame than the exact C++ kernel. | LOCAL_BUILD_EVIDENCE | VERIFIED | `data/processed/fft_exact_kernel_analysis.csv`; exact disassemblies |
+| FFT-ARCH-005 | The matched objects cannot establish pure ISA causality for the historical-versus-C6 timing difference. | PROJECT_CONSTRAINT | VERIFIED | `reports/FFT_I16_LOW_LEVEL_ANALYSIS.md` |

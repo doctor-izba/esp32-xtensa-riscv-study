@@ -2,7 +2,7 @@
 
 Schema family version: `2.2.0-draft`
 
-Status: normative design; no result rows exist yet.
+Status: normative schema used by the first accepted CRC-32 Mode A acquisition.
 
 ## 1. Why there are multiple CSV files
 

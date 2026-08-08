@@ -20,15 +20,15 @@ The exact questions and permitted interpretations are in [RESEARCH_QUESTIONS.md]
 - TinyGo: historical context only; it is not part of the new study.
 - First workload: CRC-32 only. SHA-256, FFT, FIR, and IIR remain gated until the CRC pipeline is validated.
 
-## Experimental families
+## Experimental scope
 
 | Family | Purpose | Current state |
 |---|---|---|
-| Set A — Historical reproduction | Comparable software workloads and a published ESP32 baseline | CRC source audit started |
-| Set B — Microarchitectural | Explanatory kernels for calls, branches, register pressure, memory, arithmetic, and alignment | Deferred |
-| Set C — Modern compute / TinyML | Separate modern integer, vector, and inference workloads | Deferred |
+| Historical suite | CRC-32, SHA-256, FFT, FIR, and IIR with a published ESP32 baseline | CRC protocol proposed |
+| Low-level analysis | Generated code, ABI, registers, loads/stores, branches, calls, spills, floating-point behavior, and code size | Analysis layer; not an experimental mode |
+| Future work | Additional microbenchmarks, AI/TinyML, languages, and VMs | Deferred beyond the first paper |
 
-Set A has three non-interchangeable modes: `A` (fair/historical reproduction), `B1` (CPU/ISA optimized), and `B2` (full-SoC optimized). Despite their names, B1 and B2 are optimization modes for a workload and are not Benchmark Sets B and C. Every dataset must carry an explicit `benchmark_mode` value.
+There are exactly two non-interchangeable modes: `A` (fair, reproduction-oriented reconstruction/extension) and `B` (optimized). Mode B records every enabled optimization explicitly; it has no B1/B2 submodes. Published Plauska results remain historical baseline evidence rather than a local experimental mode.
 
 ## Evidence pipeline
 
@@ -69,7 +69,7 @@ The additions `data/baselines/`, `data/validation/`, and `artifacts/` deliberate
 2. Review the [related-work deep review](literature/RELATED_WORK_DEEP_REVIEW.md), [novelty-gap analysis](docs/NOVELTY_GAP_ANALYSIS.md), and [claim boundaries](docs/CLAIM_BOUNDARIES.md).
 3. Review the preliminary [CRC-32 source audit](references/original-study/CRC32_AUDIT.md) and [verification ledger](docs/verification_ledger.md).
 4. Review the [results schema](data/schemas/results_schema.md) and [ROADMAP.md](ROADMAP.md).
-5. Do not run or implement CRC-32 yet; no reproduction command is claimed at this phase.
+5. Review the proposed CRC-32 Mode A protocol. Do not implement CRC-32 until its approval is recorded.
 
 ## Source status
 

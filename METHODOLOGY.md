@@ -1,7 +1,8 @@
 # Methodology
 
-Version: `0.1.0-foundation`  
-Status: design contract; CRC implementation and measurement are not yet authorized.
+Version: `0.2.0-two-mode-design`
+
+Status: design contract; CRC protocol is proposed and implementation/measurement are not yet authorized.
 
 ## 1. Study design
 
@@ -22,25 +23,24 @@ The cross-platform contrast is not controlled for ISA alone. ISA, microarchitect
 
 Origins and grains are mandatory fields; directory names are not a substitute for metadata.
 
-## 3. Benchmark sets
+## 3. Benchmark scope
 
-- **Set A — Historical reproduction:** CRC-32, SHA-256, FFT, FIR, and IIR. CRC-32 is the only initial workload.
-- **Set B — Microarchitectural:** explanatory call, branch, register-pressure, arithmetic, memory, alignment, stack, and floating/fixed-point kernels. Deferred until Set A is stable.
-- **Set C — Modern compute / TinyML:** int8 matrix/vector, dense-layer, activation, convolution, and inference workloads. Separate from historical results and deferred.
+- **First-paper primary suite:** CRC-32, SHA-256, FFT, FIR, and IIR. CRC-32 is the only initial workload; the rest enter one at a time after its pipeline is validated.
+- **Low-level analysis:** generated Xtensa/RISC-V code, ABI/register behavior, loads/stores, branches, calls, spills, floating-point behavior, and code size explain experimental results. They are analysis layers, not experimental modes.
+- **Future Work:** AI/TinyML, Zig, mruby, WebAssembly, BlueScript, other runtimes/languages, and additional microbenchmark suites remain deferred beyond the first paper.
 
 ## 4. Experiment modes
 
 | Mode | Purpose | Allowed | Prohibited |
 |---|---|---|---|
-| `A` | Fair/historical reproduction | Matched algorithm, frozen vectors, types, sizes, correctness, and comparable timing boundary | C6-only acceleration, hardware SHA when the historical kernel is software, handwritten RISC-V assembly, opportunistic IRAM placement, unsupported overclocking |
-| `B1` | CPU/ISA optimized | Release tuning, justified compiler architecture options, data placement, loop work, intrinsics, architecture-specific code, scientifically useful inline assembly | Dedicated peripheral, DMA, or crypto offload; contamination of Mode A artifacts |
-| `B2` | Full-SoC optimized | B1 plus SHA/crypto accelerators, DMA, and other dedicated units | Presentation as a CPU/ISA-only result; mixing with A or B1 data |
+| `A` | Fair, reproduction-oriented reconstruction/extension | Matched algorithm, recoverable historical input, types, sizes, iteration policy, correctness, warm-up, preparation boundary, and timing scope across C/C++, Rust, and MicroPython | Architecture-specific tuning, C6-specific acceleration, hardware replacement of a historical software kernel, opportunistic placement, or any attempt to make C6 win |
+| `B` | Optimized C6 capability | Predeclared compiler/`-O3`, placement, memory/layout, RISC-V, intrinsic, assembly, peripheral, DMA, or hardware-accelerator choices | Presentation as Mode A, implicit/unrecorded optimization, post-hoc profile selection as a language result, or mixing distinct profiles |
 
-Each run records exactly one `benchmark_mode` and a versioned `protocol_id`. An implementation may participate in multiple modes only through distinct build and protocol identifiers.
+Each run records exactly one `benchmark_mode`, one versioned `protocol_id`, and explicit `optimization` metadata. Mode A uses `optimization=none`. Mode B records one or more protocol-defined optimization tokens such as `O3`, `IRAM`, or `HW_SHA`; combinations are explicit. Mode B has no submodes. An implementation may participate in both modes only through distinct build and protocol identifiers.
 
 ## 5. Core language policy
 
-C/C++, Rust, and MicroPython are the only new-measurement languages for the first paper. TinyGo is retained only when describing the historical study. Fair Mode A must match semantic work and timing scope across the three core languages as closely as each runtime permits; every deviation is documented before collection.
+C/C++, Rust, and MicroPython are the only new-measurement languages for the first paper. TinyGo is retained only when describing the historical study. Fair Mode A uses the same warm-up policy, input, correctness rules, preparation boundary, and timing scope across the three core languages as closely as each runtime permits; every unavoidable deviation is documented before collection.
 
 ## 6. Protocol freeze and comparability
 
@@ -72,7 +72,7 @@ The oracle must not be the same implementation translated into another language 
 
 ## 8. Timing and run policy
 
-- Serial output, allocation, test-vector copying, table construction, validation, and cleanup are outside the kernel timing boundary unless a frozen Mode A compatibility decision states otherwise.
+- Serial output, allocation, test-vector copying/slicing, table construction, validation, and cleanup are outside the Mode A kernel timing boundary.
 - Timing boundaries must represent equivalent semantic work in all languages.
 - Warm-ups are explicit and either recorded as `phase=warmup` or documented as unrecorded by the acquisition protocol. Warm-ups never masquerade as measured iterations.
 - A 100-iteration dataset compatible with the Plauska study will be retained for Mode A.
@@ -142,4 +142,4 @@ Every technical claim receives an atomic claim ID, evidence class, verification 
 
 ## 17. Methodology change control
 
-A material change requires a decision record and a new protocol/schema/implementation version before new data are collected. The record states rationale, affected evidence, compatibility, and whether recollection is required. Existing raw and baseline files are never rewritten. A corrected historical algorithm is a distinct protocol, not a silent replacement for Mode A.
+A material change requires a decision record and a new protocol/schema/implementation version before new data are collected. The record states rationale, affected evidence, compatibility, and whether recollection is required. Existing raw and baseline files are never rewritten. Mode A is a reconstruction/extension of the recoverable historical contract, not an exact reproduction and not a vehicle for silently correcting or emulating every historical inconsistency.

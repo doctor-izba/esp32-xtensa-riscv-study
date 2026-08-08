@@ -4,7 +4,7 @@ Version: `0.1.0-foundation`
 
 ## Current state
 
-The directory is a Git repository on branch `main`, but this scaffold has not been committed by Codex. No build, flash, acquisition, validation, MATLAB, or paper command is claimed to work yet. Toolchains are intentionally not guessed or pinned until the CRC protocol/toolchain feasibility task is approved.
+The foundation is published on branch `main`. No build, flash, acquisition, validation, MATLAB, or paper command is claimed to work yet. Exact candidate toolchains are named in the proposed CRC protocol, but they are not treated as installed or feasible until version capture and correctness-only build checks succeed.
 
 ## Reproduction levels
 

@@ -1,6 +1,7 @@
 # Research Data Schema
 
-Schema family version: `1.0.0-draft`  
+Schema family version: `2.0.0-draft`
+
 Status: normative design; no result rows exist yet.
 
 ## 1. Why there are multiple CSV files
@@ -25,7 +26,7 @@ The primary key names and hashes connect the tables. MATLAB and other parsers mu
 
 | Column | Type | Required | Definition/invariant |
 |---|---|---:|---|
-| `schema_version` | string | yes | Exact schema version, initially `1.0.0` after freeze |
+| `schema_version` | string | yes | Exact schema version, initially `2.0.0` after freeze |
 | `run_id` | UUID string | yes | Host-generated persistent run identity; primary key |
 | `started_at_utc` | timestamp | yes | Acquisition start |
 | `ended_at_utc` | timestamp | yes | Acquisition end; not earlier than start |
@@ -33,7 +34,7 @@ The primary key names and hashes connect the tables. MATLAB and other parsers mu
 | `suite` | enum | yes | `historical`, `microarchitecture`, or `modern` |
 | `benchmark_id` | string | yes | Version-independent workload name, e.g. `crc32` |
 | `protocol_id` | string | yes | Frozen timing/acquisition protocol version |
-| `benchmark_mode` | enum | yes | Exactly `A`, `B1`, or `B2` |
+| `benchmark_mode` | enum | yes | Exactly `A` or `B` |
 | `implementation_id` | string | yes | Immutable language implementation/version identifier |
 | `language` | enum | yes | For first paper: `c_cpp`, `rust`, or `micropython` |
 | `language_version` | string | yes | Standard/compiler language edition where applicable |
@@ -45,6 +46,7 @@ The primary key names and hashes connect the tables. MATLAB and other parsers mu
 | `sdk_version` | string | yes | Exact tag/commit/version |
 | `target_triple` | string | conditional | Required for compiled builds |
 | `optimization_profile_id` | string | yes | Versioned profile; not merely `release` |
+| `optimization` | string | yes | `none` for Mode A; one or more protocol-defined Mode B tokens joined by `;` in canonical order |
 | `compiler_flags` | string | conditional | Exact ordered flags/config encoded as a quoted field or referenced manifest |
 | `git_commit` | string | yes | 40-character repository commit |
 | `git_dirty` | boolean | yes | Whether authored tree differed from commit |
@@ -123,6 +125,7 @@ Required columns:
 
 ```text
 schema_version,metric_id,build_id,benchmark_id,protocol_id,benchmark_mode,
+optimization_profile_id,optimization,
 implementation_id,artifact_role,metric_name,metric_value,metric_unit,
 collection_tool,collection_tool_version,source_artifact_sha256,collected_at_utc,notes
 ```
@@ -135,6 +138,7 @@ Required columns:
 
 ```text
 schema_version,analysis_id,build_id,benchmark_id,protocol_id,benchmark_mode,
+optimization_profile_id,optimization,
 implementation_id,target_triple,isa,function_name,metric_name,metric_value,
 metric_unit,counting_rule_version,disassembler,disassembler_version,
 source_artifact_sha256,listing_sha256,collected_at_utc,notes
@@ -192,13 +196,14 @@ A many-input output uses one lineage row per input under the same `lineage_id`.
 
 ## 11. Core validation invariants
 
-- `benchmark_mode` is exactly one of `A`, `B1`, `B2` and never inferred from a folder.
+- `benchmark_mode` is exactly one of `A` or `B` and never inferred from a folder.
+- Mode A requires `optimization=none`; Mode B requires one or more protocol-defined optimization tokens and a matching versioned `optimization_profile_id`.
 - All observations in a bundle reference its one `run_id` and compatible schema version.
 - Measured iteration numbers are contiguous per input unless an explicit invalid/incomplete record accounts for a gap.
 - Expected measured row count equals the protocol/run plan; correctness passes for every included performance row.
 - Manifest hashes and sizes match exact files.
 - Mode A implementation/protocol/vector IDs belong to the approved comparability record.
-- A run cannot combine languages, builds, modes, protocols, vector sets, or hardware instances.
+- A run cannot combine languages, builds, modes, optimization profiles, protocols, vector sets, or hardware instances.
 - Historical and local origins cannot appear in the same raw table.
 - Units are homogeneous within any statistical group; conversions are explicit and derived.
 - `cycles` blank is acceptable; an inferred value is not.

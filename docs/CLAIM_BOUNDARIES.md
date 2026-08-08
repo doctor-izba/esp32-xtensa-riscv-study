@@ -3,7 +3,7 @@
 - Status: mandatory guardrails derived from the related-work and novelty audit
 - Effective date: 2026-08-08
 
-This document constrains future interpretation and writing. It does not change the approved research questions or methodology, and it does not open the CRC-32 or Protocol A gates.
+This document constrains future interpretation and writing. It does not open the CRC-32 implementation gate or approve the proposed Mode A protocol.
 
 ## Core rule
 
@@ -138,8 +138,8 @@ Hand interpretation must remain traceable to the exact ELF/disassembly hash. Gen
 ## Optimization modes
 
 - Mode A is reproduction-oriented and is analyzed only against Mode A/historical evidence.
-- B1 CPU/ISA optimization and B2 SoC-specific optimization are separate experimental groups.
-- Never merge modes, select the best mode post hoc as the language result, or describe a B1/B2 result as a Plauska reproduction.
+- Mode B contains explicitly identified optimization profiles; architecture/compiler and SoC/hardware choices remain distinguishable through metadata rather than submodes.
+- Never merge modes or profiles, select the best profile post hoc as the language result, or describe a Mode B result as a Plauska reproduction.
 - Any optimization must be symmetric where the mode requires symmetry, versioned, and justified before collection.
 
 ## Novelty claims
@@ -167,7 +167,7 @@ Before an empirical claim enters a paper table, abstract, conclusion, or website
 4. Is a platform observation being mistaken for ISA causality?
 5. Is a static property being mistaken for a dynamic metric?
 6. Are unlike RAM, flash, cycle, or energy definitions being compared?
-7. Are Mode A, B1, and B2 kept separate?
+7. Are Mode A, Mode B, and distinct Mode B optimization profiles kept separate?
 8. Is uncertainty, missing evidence, or a conflict disclosed?
 9. Would “consistent with” be more accurate than “caused by”?
 10. Does the claim survive the strongest prior-work overlap in `literature/RELATED_WORK_DEEP_REVIEW.md`?

@@ -21,8 +21,9 @@ These questions do not define an ISA-only causal contrast. Any cross-chip differ
 - New physical measurements on the user's ESP32-C6-N4, reported as a 4 MB flash device.
 - Published classic-ESP32 measurements from Plauska et al. as historical evidence.
 - C/C++, Rust, and MicroPython.
-- Set A: CRC-32, SHA-256, FFT, FIR, and IIR, introduced one at a time after validation gates.
-- Mode A fair/historical reproduction before any B1 or B2 optimization work.
+- Primary suite: CRC-32, SHA-256, FFT, FIR, and IIR, introduced one at a time after validation gates.
+- Mode A fair, reproduction-oriented reconstruction/extension before any Mode B optimization work.
+- Mode B optimized experiments with every compiler, architecture, placement, intrinsic, assembly, or hardware-accelerator choice recorded explicitly.
 - Static C/C++ Xtensa and RISC-V machine-code comparison when reproducible cross-toolchains are available.
 - Timing distributions, reliable cycle counts, build and memory metrics, static assembly metrics, and explicitly coarse board-level energy estimates.
 - Primary-source architectural verification, a literature database, MATLAB analysis, a LaTeX paper, and release-ready provenance.
@@ -31,9 +32,9 @@ These questions do not define an ISA-only causal contrast. Any cross-chip differ
 
 - Buying or physically testing an old ESP32.
 - TinyGo implementations or new TinyGo measurements.
-- Treating WebAssembly, BlueScript, or a host/device VM as directly interchangeable with native languages without a separate research design.
+- AI/TinyML, Zig, mruby, WebAssembly, BlueScript, additional VM/runtime comparisons, and additional microbenchmark suites; these remain Future Work.
 - Claiming pure ISA causality from a cross-chip comparison.
-- Mixing Mode A, B1, or B2 observations.
+- Mixing Mode A and Mode B observations or distinct Mode B optimization profiles.
 - Unsupported overclocking.
 - Presenting USB power-meter readings as MCU-core energy.
 - Implementing future targets such as ESP32-C5, ESP32-S31, ESP32-P4, or SBC systems in this study.
@@ -77,7 +78,7 @@ AI answers, blogs, forums, and unsourced summaries are discovery aids only. An u
 4. **CRC acquisition gate:** run capture, schema validation, toolchain manifests, and raw-data immutability pass a pilot.
 5. **CRC analysis gate:** Mode A dataset, MATLAB import/validation/statistics, and first figures reproduce from a clean checkout.
 6. **Suite expansion gate:** add SHA-256, then FFT, FIR, and IIR one at a time through the same gates.
-7. **Optimization gate:** B1 begins only after Mode A is stable; B2 begins only after B1 is separately stable.
+7. **Optimization gate:** Mode B begins only after Mode A is stable; each optimization combination has explicit metadata and a distinct build/profile identity.
 
 ## Current authorization state
 

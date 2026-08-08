@@ -22,7 +22,7 @@ This is the authoritative task sequence. Phases are gated by evidence, not dates
 - [ ] Complete an exact/equivalent/deviation/unknown comparability matrix for C/C++, Rust, and MicroPython.
 - [ ] Resolve or explicitly freeze the paper/repository iteration discrepancy and cross-language warm-up asymmetry.
 - [ ] Pin feasible C6 C/C++, Rust, and MicroPython toolchains and capture all versions.
-- [ ] Write and review `protocol-a-v1` with correctness and timing boundaries.
+- [ ] Review and approve `crc32-mode-a-v1` with correctness and timing boundaries.
 
 **Exit evidence:** signed-off protocol, vectors, oracle, toolchain plan, and unresolved fields visibly marked.
 
@@ -65,16 +65,16 @@ Add SHA-256, FFT, FIR, and IIR **one at a time**, repeating Phases 1–4 for eac
 - [ ] Generate static instruction/byte/category metrics.
 - [ ] Relate patterns to primary-source claims while separating static from runtime evidence.
 
-## Phase 7 — Optimized modes
+## Phase 7 — Mode B optimization
 
-- [ ] Design and run B1 only after Mode A is frozen.
-- [ ] Design and run B2 only after B1 is frozen.
-- [ ] Keep sources, build IDs, datasets, plots, and claims mode-specific.
+- [ ] Design and run Mode B only after Mode A is frozen.
+- [ ] Record every enabled optimization and combination in run metadata and CSV.
+- [ ] Keep sources, build IDs, datasets, plots, and claims mode/profile-specific.
 
 ## Phase 8 — Deferred extensions
 
-- [ ] Evaluate Set B microarchitectural kernels.
-- [ ] Evaluate Set C modern compute/TinyML workloads.
+- [ ] Evaluate additional microarchitectural kernels.
+- [ ] Evaluate modern compute/AI/TinyML workloads.
 - [ ] Conduct a feasibility review for mruby, Zig, WebAssembly runtimes, BlueScript, or other models without delaying the core paper.
 - [ ] Design coarse USB-meter board-energy experiments and later high-resolution instrumentation work.
 

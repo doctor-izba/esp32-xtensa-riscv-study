@@ -110,12 +110,57 @@ set(axes2, "YScale", "log", "FontSize", 12, "Box", "on");
 grid(axes2, "on");
 xlabel(axes2, "Input prefix (bytes)");
 ylabel(axes2, "Median execution time relative to C++ (\times, log scale)");
-title(axes2, "Mode A CRC-32 language overhead normalized to C++");
+title(axes2, "Mode A CRC-32 performance normalized to C++");
 legend(axes2, "Location", "northwest");
 exportgraphics(figure2, fullfile(outputDir, "figure2_crc32_normalized_to_cpp.png"), "Resolution", 300);
 exportgraphics(figure2, fullfile(outputDir, "figure2_crc32_normalized_to_cpp.pdf"), "ContentType", "vector");
 savefig(figure2, fullfile(outputDir, "figure2_crc32_normalized_to_cpp.fig"));
 close(figure2);
+
+historicalPath = fullfile(repositoryRoot, "data", "processed", ...
+    "plauska_crc32_historical_summary.csv");
+historical = readtable(historicalPath, TextType="string", VariableNamingRule="preserve");
+assert(height(historical) == 24 && all(historical.n == 100), ...
+    "CRC32:HistoricalRows", "Expected 24 verified Plauska summary rows.");
+historicalMean = zeros(numel(sizes), numel(languages));
+localMean = zeros(size(historicalMean));
+for languageIndex = 1:numel(languages)
+    for sizeIndex = 1:numel(sizes)
+        localMask = summaryRows.language == languages(languageIndex) & ...
+            summaryRows.input_bytes == sizes(sizeIndex);
+        historicalMask = historical.language == languages(languageIndex) & ...
+            historical.input_bytes == sizes(sizeIndex);
+        assert(nnz(localMask) == 1 && nnz(historicalMask) == 1, ...
+            "CRC32:HistoricalGrid", "Historical/local summary grid mismatch.");
+        localMean(sizeIndex,languageIndex) = summaryRows.mean_us(localMask);
+        historicalMean(sizeIndex,languageIndex) = historical.mean_us(historicalMask);
+    end
+end
+
+figure3 = figure("Visible", "off", "Color", "white", "Position", [100 100 1350 650]);
+layout = tiledlayout(figure3, 1, 2, "TileSpacing", "compact", "Padding", "compact");
+axes3a = nexttile(layout); hold(axes3a, "on");
+axes3b = nexttile(layout); hold(axes3b, "on");
+for languageIndex = 1:numel(languages)
+    plot(axes3a, sizes, historicalMean(:,languageIndex), "-o", "LineWidth", 1.8, ...
+        "MarkerSize", 6, "Color", colors(languageIndex,:), "DisplayName", labels(languageIndex));
+    plot(axes3b, sizes, localMean(:,languageIndex), "-o", "LineWidth", 1.8, ...
+        "MarkerSize", 6, "Color", colors(languageIndex,:), "DisplayName", labels(languageIndex));
+end
+for targetAxes = [axes3a, axes3b]
+    set(targetAxes, "YScale", "log", "YLim", [0.1 1e5], "FontSize", 11, "Box", "on");
+    grid(targetAxes, "on"); xlabel(targetAxes, "Input prefix (bytes)");
+end
+ylabel(axes3a, "Mean execution time (\mus, log scale)");
+title(axes3a, "Historical Plauska: classic ESP32 Xtensa");
+title(axes3b, "This study Mode A: ESP32-C6 RISC-V");
+legend(axes3a, "Location", "northwest");
+title(layout, "CRC-32 historical context (means; protocols are not equivalent)", ...
+    "FontWeight", "bold");
+exportgraphics(figure3, fullfile(outputDir, "figure3_crc32_historical_context.png"), "Resolution", 300);
+exportgraphics(figure3, fullfile(outputDir, "figure3_crc32_historical_context.pdf"), "ContentType", "vector");
+savefig(figure3, fullfile(outputDir, "figure3_crc32_historical_context.fig"));
+close(figure3);
 
 environment = table(string(version), string(computer), string(inputPath), ...
     height(data), datetime("now", "TimeZone", "UTC", "Format", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"), ...

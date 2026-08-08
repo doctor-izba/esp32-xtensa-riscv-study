@@ -60,8 +60,8 @@ for languageIndex = 1:numel(languages)
         q3Matrix(sizeIndex, languageIndex) = q3;
         row = table(languages(languageIndex), sizes(sizeIndex), numel(values), ...
             mean(values), med, std(values), q1, q3, min(values), max(values), ...
-            'VariableNames', {"language","input_bytes","n","mean_us", ...
-            "median_us","std_us","q1_us","q3_us","min_us","max_us"});
+            'VariableNames', {'language','input_bytes','n','mean_us', ...
+            'median_us','std_us','q1_us','q3_us','min_us','max_us'});
         summaryRows = [summaryRows; row]; %#ok<AGROW>
     end
 end
@@ -93,7 +93,7 @@ normalizedRows = table();
 for languageIndex = 1:numel(languages)
     rows = table(repmat(languages(languageIndex), numel(sizes), 1), sizes', ...
         ratios(:,languageIndex), 'VariableNames', ...
-        {"language","input_bytes","median_time_relative_to_cpp"});
+        {'language','input_bytes','median_time_relative_to_cpp'});
     normalizedRows = [normalizedRows; rows]; %#ok<AGROW>
 end
 writetable(normalizedRows, fullfile(outputDir, "crc32_mode_a_normalized_to_cpp.csv"));
@@ -119,7 +119,7 @@ close(figure2);
 
 environment = table(string(version), string(computer), string(inputPath), ...
     height(data), datetime("now", "TimeZone", "UTC", "Format", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"), ...
-    'VariableNames', {"matlab_version","computer","input_path","input_rows","generated_at_utc"});
+    'VariableNames', {'matlab_version','computer','input_path','input_rows','generated_at_utc'});
 writetable(environment, fullfile(outputDir, "analysis_environment.csv"));
 fprintf("CRC32_MATLAB_ANALYSIS_PASS rows=%d output=%s\n", height(data), outputDir);
 end

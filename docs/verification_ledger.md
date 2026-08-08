@@ -182,3 +182,13 @@ These entries verify bibliographic identity, source scope, and triage dispositio
 | IIR-ARCH-003 | IIR state creates a loop-carried dependency from current `d0` through state update into the next sample, preventing cross-sample recurrence reordering under the frozen source semantics. | VERSIONED_SOURCE; LOCAL_BUILD_EVIDENCE | VERIFIED | Audited recurrence and matched disassemblies |
 | IIR-ARCH-004 | No integer Xtensa MAC16/DSP or zero-overhead-loop instruction appears in the matched IIR object. | LOCAL_BUILD_EVIDENCE | VERIFIED | Artifact-scoped matched Xtensa disassembly search |
 | IIR-ARCH-005 | Historical/local IIR timing and matched objects do not isolate pure ISA causality. | PROJECT_CONSTRAINT | VERIFIED | `reports/IIR_BQ_F32_LOW_LEVEL_ANALYSIS.md` |
+## Cross-workload Mode A claims
+
+| Claim ID | Atomic claim | Evidence class | Status | Evidence / locator | Notes |
+|---|---|---|---|---|---|
+| SYN-A-001 | Each accepted Mode A dataset has 2,400 correct valid observations: 8 sizes × 100 × 3 languages. | LOCAL_MEASUREMENT | VERIFIED | data/validation/mode_a_cross_workload/validation_report.md | Regenerated from processed observations. |
+| SYN-A-002 | Largest-input Plauska/C6 native mean ratios exceed one for CRC-32, SHA-256 and FFT, but are below one for FIR and IIR. | LOCAL_MEASUREMENT; HISTORICAL_EVIDENCE | VERIFIED | data/processed/mode_a_largest_input_summary.csv | Descriptive, not ISA-causal. |
+| SYN-A-003 | C6 largest-input Rust/C++ medians cross parity across workloads (0.692–1.260). | LOCAL_MEASUREMENT | VERIFIED | data/processed/mode_a_largest_input_summary.csv | No universal language ranking. |
+| SYN-A-004 | Matched FIR/IIR Xtensa objects emit FP instructions while exact C6 RV32IMAC kernels reference software-FP helpers. | LOCAL_BUILD_EVIDENCE | VERIFIED | fir_codegen_analysis.csv; iir_codegen_analysis.csv | Reconstructed Xtensa is not Plauska binary. |
+| SYN-A-005 | Software FP is a major contributor to the native FIR/IIR gap. | JOINT_INTERPRETATION | PARTIAL | reports/MODE_A_CROSS_WORKLOAD_SYNTHESIS.md | Other platform/protocol factors are not isolated. |
+| SYN-A-006 | Plauska and local C6 ran at 160 MHz; 240 MHz is a maximum ESP32 capability, not the baseline frequency. | PEER_REVIEWED; LOCAL_MEASUREMENT | VERIFIED | HIST-002; accepted local run metadata | Derived time×frequency is not measured cycles. |

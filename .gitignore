@@ -13,6 +13,7 @@ Thumbs.db
 
 # ESP-IDF / PlatformIO / Rust / MicroPython build products
 build/
+build-mode-b/
 cmake-build-*/
 .pio/
 target/

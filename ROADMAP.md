@@ -73,9 +73,9 @@ Add SHA-256, FFT, FIR, and IIR **one at a time**, repeating Phases 1–4 for eac
 ## Phase 7 — Mode B optimization
 
 - [x] Complete cross-workload Mode A synthesis and design the minimal Mode B question set without executing it.
-- [ ] Design and run Mode B only after Mode A is frozen.
-- [ ] Record every enabled optimization and combination in run metadata and CSV.
-- [ ] Keep sources, build IDs, datasets, plots, and claims mode/profile-specific.
+- [x] Design and run the frozen minimal Mode B campaign after Mode A was frozen.
+- [x] Record every enabled optimization and combination in run metadata and CSV.
+- [x] Keep sources, build IDs, datasets, plots, and claims mode/profile-specific.
 
 ## Phase 8 — Deferred extensions
 

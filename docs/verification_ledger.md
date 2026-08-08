@@ -192,3 +192,14 @@ These entries verify bibliographic identity, source scope, and triage dispositio
 | SYN-A-004 | Matched FIR/IIR Xtensa objects emit FP instructions while exact C6 RV32IMAC kernels reference software-FP helpers. | LOCAL_BUILD_EVIDENCE | VERIFIED | fir_codegen_analysis.csv; iir_codegen_analysis.csv | Reconstructed Xtensa is not Plauska binary. |
 | SYN-A-005 | Software FP is a major contributor to the native FIR/IIR gap. | JOINT_INTERPRETATION | PARTIAL | reports/MODE_A_CROSS_WORKLOAD_SYNTHESIS.md | Other platform/protocol factors are not isolated. |
 | SYN-A-006 | Plauska and local C6 ran at 160 MHz; 240 MHz is a maximum ESP32 capability, not the baseline frequency. | PEER_REVIEWED; LOCAL_MEASUREMENT | VERIFIED | HIST-002; accepted local run metadata | Derived time×frequency is not measured cycles. |
+
+## Minimal Mode B claims
+
+| Claim ID | Atomic claim | Evidence class | Status | Evidence / locator |
+|---|---|---|---|---|
+| MODE-B-001 | The accepted campaign contains 8,000 COMPILER_PERF, 800 HW_SHA, and 800 RUST_UNCHECKED physical observations with frozen correctness passing. | LOCAL_MEASUREMENT | VERIFIED | `data/validation/mode_b/validation_report.md`; raw logs |
+| MODE-B-002 | Actual C++ kernel commands use ESP-IDF performance `-O2`; Rust uses release opt-level 3. | LOCAL_BUILD_EVIDENCE | VERIFIED | preserved compile commands; build scripts; `BUILD_PROVENANCE.md` |
+| MODE-B-003 | FIR and IIR optimized C6 kernels retain their software-FP helper call sites. | LOCAL_BUILD_EVIDENCE | VERIFIED | `data/processed/mode_b_codegen_metrics.csv`; exact disassemblies |
+| MODE-B-004 | Exact safe Rust FFT retains five kernel bounds-panic references, while audited RUST_UNCHECKED removes kernel-local references and is 22.7% faster than safe COMPILER_PERF at 1024 points. | LOCAL_BUILD_EVIDENCE; LOCAL_MEASUREMENT | VERIFIED | exact disassemblies; `mode_b_summary.csv` |
+| MODE-B-005 | Exact HW_SHA code routes through ESP SHA hardware/DMA/HAL and is 8.70x faster than C++ Mode A software at 1024 bytes. | LOCAL_BUILD_EVIDENCE; LOCAL_MEASUREMENT | VERIFIED | HW SHA exact disassembly; `mode_b_summary.csv` |
+| MODE-B-006 | Mode B effects are compiler/profile/peripheral observations and do not isolate pure ISA causality. | PROJECT_CONSTRAINT | VERIFIED | `reports/MODE_B_RESULTS.md` |

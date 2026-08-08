@@ -2,4 +2,4 @@
 
 Create one immutable, numbered Markdown record for any material scope, protocol, schema, vector, toolchain, acquisition, exclusion, or analysis decision. Include date, status, context, decision, alternatives, consequences, affected versions/evidence, and approver.
 
-The CRC implementation gate is currently closed. Opening it after explicit user approval must be the first decision record.
+The CRC-32 correctness implementation gate was opened by Decision 0002. Decision 0003 records successful three-language correctness and the timing-resolution pilot; main performance acquisition is permitted but has not started.

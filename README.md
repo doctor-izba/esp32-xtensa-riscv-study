@@ -2,7 +2,7 @@
 
 This repository is the reproducibility workspace for an academic comparison of the original Xtensa-based ESP32 historical results and new measurements on an ESP32-C6-N4 RISC-V platform.
 
-**Status:** foundation phase. The research contracts and data schemas exist, but there is no benchmark implementation and there are no locally measured results. The CRC-32 implementation gate remains closed until explicit approval.
+**Status:** CRC-32 Mode A protocol approved. Correctness and the timing-resolution pilot pass on the physical ESP32-C6 in C++, Rust, and MicroPython. Main performance acquisition has not started; no local performance rows exist.
 
 ## Research focus
 
@@ -14,7 +14,7 @@ The exact questions and permitted interpretations are in [RESEARCH_QUESTIONS.md]
 
 ## Scope
 
-- Physical measurement target: the user's ESP32-C6-N4 with 4 MB flash. Exact board model, board revision, chip revision, and board-instance identifier still need to be recorded.
+- Physical measurement target: DoIT ESPC6-32 N4 on an `ESP32-C6_Relay_X1_V1.1` carrier, 4 MiB flash, ESP32-C6 revision v0.2. The public record omits the device MAC; a pseudonymous instance ID is still required before main acquisition.
 - Historical comparator: published measurements and archived source material from Plauska, Liutkevičius, and Janavičiūtė (2023), not a locally tested classic ESP32.
 - Core languages: C/C++, Rust, and MicroPython.
 - TinyGo: historical context only; it is not part of the new study.
@@ -24,7 +24,7 @@ The exact questions and permitted interpretations are in [RESEARCH_QUESTIONS.md]
 
 | Family | Purpose | Current state |
 |---|---|---|
-| Historical suite | CRC-32, SHA-256, FFT, FIR, and IIR with a published ESP32 baseline | CRC protocol proposed |
+| Historical suite | CRC-32, SHA-256, FFT, FIR, and IIR with a published ESP32 baseline | CRC correctness and timer pilot complete; main acquisition pending |
 | Low-level analysis | Generated code, ABI, registers, loads/stores, branches, calls, spills, floating-point behavior, and code size | Analysis layer; not an experimental mode |
 | Future work | Additional microbenchmarks, AI/TinyML, languages, and VMs | Deferred beyond the first paper |
 
@@ -69,7 +69,7 @@ The additions `data/baselines/`, `data/validation/`, and `artifacts/` deliberate
 2. Review the [related-work deep review](literature/RELATED_WORK_DEEP_REVIEW.md), [novelty-gap analysis](docs/NOVELTY_GAP_ANALYSIS.md), and [claim boundaries](docs/CLAIM_BOUNDARIES.md).
 3. Review the preliminary [CRC-32 source audit](references/original-study/CRC32_AUDIT.md) and [verification ledger](docs/verification_ledger.md).
 4. Review the [results schema](data/schemas/results_schema.md) and [ROADMAP.md](ROADMAP.md).
-5. Review the proposed CRC-32 Mode A protocol. Do not implement CRC-32 until its approval is recorded.
+5. Review the approved CRC-32 Mode A protocol, Decision 0002, and the completed timing pilot. SHA-256 remains closed.
 
 ## Source status
 

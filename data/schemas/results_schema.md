@@ -1,6 +1,6 @@
 # Research Data Schema
 
-Schema family version: `2.0.0-draft`
+Schema family version: `2.1.0-draft`
 
 Status: normative design; no result rows exist yet.
 
@@ -59,6 +59,8 @@ The primary key names and hashes connect the tables. MATLAB and other parsers mu
 | `chip` | string | yes | Exact SoC/variant marking |
 | `chip_revision` | string | yes | Read-back silicon revision; blank fails strict validation |
 | `flash_size_bytes` | integer | yes | Physical detected flash capacity in bytes |
+| `flash_mode` | string | yes | Exact configured/read-back flash I/O mode, e.g. `dio`; blank if not verified fails strict validation |
+| `flash_frequency_hz` | integer | yes | Exact configured/read-back flash clock in Hz; blank if not verified fails strict validation |
 | `isa` | string | yes | Exact implemented/target ISA string supported by evidence |
 | `core` | string | yes | Executing CPU/core name |
 | `cpu_frequency_hz` | integer | yes | Configured and read-back frequency in Hz |

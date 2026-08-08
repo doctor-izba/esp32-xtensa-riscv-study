@@ -1,12 +1,13 @@
 # CRC-32 Mode A Protocol
 
-- Protocol ID: `crc32-mode-a-v1.0.0-proposed`
+- Protocol ID: `crc32-mode-a-v1.1.0`
 - Vector set ID: `crc32-plauska-v1`
-- Status: proposed; methodological approval required
-- Implementation gate: closed
+- Status: approved by Decision 0002
+- Correctness implementation gate: open
+- Performance timing gate: passed by Decision 0003; main acquisition not yet started
 - Applies to: ESP32-C6 C/C++, Rust, and MicroPython Mode A
 
-This is the minimum correctness and timing contract needed before implementation. It is a reproduction-oriented reconstruction/extension of the recoverable Plauska CRC-32 method, not an exact reproduction. Approval of this document must be recorded before benchmark source is written.
+This is the minimum correctness and timing contract for implementation. It is a reproduction-oriented reconstruction/extension of the recoverable Plauska CRC-32 method, not an exact reproduction. Approval and the timing refinement are recorded in `docs/decisions/0002-crc32-mode-a-protocol-approval.md`.
 
 ## 1. Algorithm
 
@@ -61,7 +62,7 @@ Warm-up output must pass correctness. It is represented in metadata as `warmup_i
 
 ## 4. Timing boundary and timer
 
-The timed boundary contains only one CRC kernel call over an already prepared contiguous prefix/view and the minimum timer-call overhead surrounding it.
+The timed boundary contains only the approved number of repeated CRC kernel calls over an already prepared contiguous prefix/view and the minimum timer-call overhead surrounding the batch. Single-kernel timing remains the default until the pilot demonstrates that batching is required.
 
 Outside timing: table construction, imports/startup, allocation, prefix copying or slicing, view construction, garbage collection, validation, serial output, and cleanup. MicroPython must therefore create its prefix view before the start timestamp. Compiled builds must consume the result so the compiler cannot remove the call.
 
@@ -75,12 +76,14 @@ Primary elapsed-time primitives:
 
 The primary stored metric is integer microseconds. These are equivalent monotonic microsecond semantics, not an assertion that the three call paths have identical overhead. Timer resolution and paired empty-boundary overhead are characterized in the pilot and recorded without subtracting overhead from observations. No cross-language cycle metric is part of this minimum Mode A CRC protocol; cycles may be added only by a separately approved, directly measured counter protocol.
 
+For each language/input-size condition, the pilot first tests `operations_per_observation=1` over 100 diagnostic intervals. Single-kernel timing is accepted only if at least 99 intervals are non-zero and the median is at least 100 empirically observed timer quanta. Otherwise use the smallest power-of-two operation count meeting both criteria. This prospective rule is applied to every language and size; counts are frozen before main acquisition and are never selected to improve a ranking. A batched observation returns the result of every kernel execution to a consuming accumulator, validates outside timing, records the batch count, and leaves per-operation division to downstream analysis.
+
 ## 5. Device state
 
 - CPU frequency: **160,000,000 Hz**, configured and read back before acquisition.
 - Dynamic frequency scaling and automatic light sleep: disabled.
 - Wi-Fi, Bluetooth LE, and IEEE 802.15.4: disabled and their application stacks not started.
-- Execution: ESP32-C6 single high-performance core; exact task priority, scheduler configuration, board identity, chip revision, and flash readback must be captured in `run.csv` before a run is valid.
+- Execution: ESP32-C6 single high-performance core; exact task priority, scheduler configuration, board identity, chip revision, flash size, flash mode, and flash frequency readback must be captured in `run.csv` before a run is valid.
 - MicroPython: run `gc.collect()` before the warm-up for each input condition; do not force collection inside the warm-up/measured sequence. Record the GC policy.
 
 ## 6. Correctness gate
@@ -91,26 +94,43 @@ The primary stored metric is integer microseconds. These are equivalent monotoni
 - Run a correctness-only negative test showing that a one-byte mutation is rejected; it is not a timed condition.
 - Any mismatch invalidates the build/run for performance analysis. Timing remains disabled until all three implementations pass the correctness-only gate.
 
-## 7. Mode A build/toolchain proposal
+## 7. Mode A build/toolchain feasibility pins
 
-All dependencies, commits, locks, flags, firmware images, and complete version outputs must be captured. The proposed common SDK base is ESP-IDF 5.5.1 because it supports ESP32-C6 and is supported by the proposed MicroPython release.
+All dependencies, commits, locks, flags, firmware images, and complete version outputs must be captured. Exact pins are frozen after the approved physical feasibility checks; different language SDK patch releases are recorded as toolchain differences, not silently normalized.
 
-| Path | Proposed exact pin | Mode A build profile |
+| Path | Feasibility pin | Mode A build profile |
 |---|---|---|
-| C/C++ | ESP-IDF `v5.5.1`; bundled `riscv32-esp-elf` package `esp-14.2.0_20241119` | `-Os`; LTO off; no target-specific tuning beyond the SDK's required ESP32-C6 target; software CRC only |
-| Rust | Rust toolchain `1.97.1`; `esp-idf-sys` `0.37.2`; ESP-IDF `v5.5.1`; target `riscv32imac-esp-espidf` | `opt-level="z"`; LTO off; software CRC only; dependency lock required |
-| MicroPython | source tag `v1.28.0`; board `ESP32_GENERIC_C6`; ESP-IDF `v5.5.1` | ordinary bytecode/interpreter path; no native/viper decorator or native CRC helper |
+| C/C++ | ESP-IDF `v5.5.5` commit `b774170ff46c393eeb5e495ea37936038d3f4f4f`; GCC 14.2.0 package `esp-14.2.0_20260121` | `-Os`; LTO off; no target-specific tuning beyond the SDK's required ESP32-C6 target; software CRC only |
+| Rust | Rust `1.97.1` plus `rust-src` and explicit bootstrap `build-std`; `esp-idf-sys` `0.37.2`; `embuild` `0.33.3`; ESP-IDF `v5.5.5` at the same commit; target `riscv32imac-esp-espidf` | `opt-level="z"`; LTO off; software CRC only; committed dependency lock required |
+| MicroPython | official `ESP32_GENERIC_C6` firmware `v1.28.0`, SHA-256 `d338042d2dd87a00dad2163071f44bf67da1401e1d1d0686f2bb2e336e78f0e6`; built on ESP-IDF `v5.5.1` | ordinary bytecode/interpreter path; no native/viper decorator or native CRC helper |
 
-These are protocol pins, not claims that the tools are installed. Before implementation, a feasibility capture must verify the exact release commits, compiler/linker/version outputs, target, configuration, and dependency locks. A failed feasibility check requires a new protocol proposal; it must not be silently replaced with a newer tool.
+ESP-IDF v6.0.2 is not a common-base candidate because MicroPython v1.28.0 documents support only through ESP-IDF v5.5.1. Feasibility details and retained failures are in `TOOLCHAIN_FEASIBILITY.md`; Decision 0003 records the prospective substitutions made before accepted timing. Rust main acquisition must use exact flashed build artifacts rather than the convenience bootloader supplied by `espflash` during feasibility testing.
+
+## 7.1 Frozen batching result
+
+The completed pilot froze these `operations_per_observation` values:
+
+| Bytes | C/C++ | Rust | MicroPython |
+|---:|---:|---:|---:|
+| 0 | 1024 | 512 | 64 |
+| 16 | 64 | 128 | 2 |
+| 32 | 32 | 64 | 1 |
+| 64 | 16 | 32 | 1 |
+| 128 | 8 | 16 | 1 |
+| 256 | 4 | 8 | 1 |
+| 512 | 2 | 4 | 1 |
+| 1024 | 1 | 2 | 1 |
+
+The diagnostic observations and timer characterization are recorded in `TIMING_PILOT.md`. Main acquisition stores batch elapsed time, not normalized time.
 
 ## 8. Required CSV values and fields
 
-Use results schema family `2.0.0` after it is frozen. `run.csv` must include all normative fields, with at least these protocol values:
+Use results schema family `2.1.0` after it is frozen. `run.csv` must include all normative fields, with at least these protocol values:
 
 ```text
 suite=historical
 benchmark_id=crc32
-protocol_id=crc32-mode-a-v1.0.0
+protocol_id=crc32-mode-a-v1.1.0
 benchmark_mode=A
 optimization_profile_id=mode-a-size-profile-v1
 optimization=none
@@ -125,7 +145,7 @@ radio_state=wifi_off;ble_off;ieee802154_off
 
 It also records implementation/language/runtime/compiler/SDK versions, target, complete flags, repository/build/firmware hashes, board/chip/flash identity, timer and measured resolution, power/scheduler/GC state, host/capture tool, and timestamps.
 
-Each `observations.csv` measured row records `input_id`, byte size, iteration 1–100, `phase=measured`, `execution_us`, `result_kind=crc32_u32_hex`, actual and expected values, correctness, and measurement status. There is one row per invocation; setup and validation are not separate timed rows.
+Each `observations.csv` measured row records `input_id`, byte size, iteration 1–100, `phase=measured`, `operations_per_observation`, batch elapsed `execution_us`, `result_kind=crc32_u32_hex`, actual and expected values, correctness, and measurement status. There is one row per timed observation; setup and validation are not separate timed rows. If batching is required, normalized per-operation time is derived downstream and never overwrites raw elapsed time.
 
 ## 9. Known Plauska limitations
 
@@ -141,4 +161,4 @@ These limitations are disclosed against the published historical baseline. They 
 
 ## 10. Approval boundary
 
-Approval must cover the harmonized one-warm-up policy, kernel-only timing boundary, equivalent timer choice, 160 MHz/radios-off device state, 100-iteration policy, canonical vector/outputs, and proposed toolchain pins. Approval opens only the correctness-first implementation step; timing still remains gated on correctness.
+Decision 0002 approved the harmonized one-warm-up policy, kernel-only timing boundary, equivalent timer choice, 160 MHz/radios-off device state, 100-observation policy, canonical vector/outputs, feasibility-gated toolchains, flash metadata, and prospective quantization rule. Decision 0003 records successful three-language correctness, exact feasible toolchains, timer characterization, and frozen batching. Main performance acquisition is now permitted but has not started.

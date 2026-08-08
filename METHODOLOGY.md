@@ -124,7 +124,7 @@ Binary/file size, section sizes, static RAM, heap, peak heap, and stack high-wat
 
 ## 14. Power and energy
 
-The current USB meter supports coarse board-level estimates only. Workloads will be repeated for a stable, sufficiently long interval; raw voltage/current/power readings, duration, operation count, idle/control window, meter model, sampling behavior, and board configuration will be recorded. Energy per operation is derived downstream.
+The available KWS-V20 USB meter supports coarse board-level estimates only. The unmodified relay carrier has no identified removable module-rail measurement jumper or exposed series shunt, so this setup cannot measure exact ESP32-C6 module/chip energy. Workloads will be repeated for a stable, sufficiently long interval; raw voltage/current/power readings, duration, operation count, idle/control window, meter model, sampling behavior, and board configuration will be recorded. Energy per operation is derived downstream.
 
 Limitations include meter sampling rate and precision, regulator loss, USB interface and LEDs, peripherals, background tasks, and the distinction between board input energy and MCU-core energy. Higher-resolution equipment is future work.
 

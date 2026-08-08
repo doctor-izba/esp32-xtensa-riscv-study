@@ -27,6 +27,12 @@ dependencies.lock.tmp
 *.pyc
 __pycache__/
 
+# CRC-32 vector representations generated from the pinned upstream source
+benchmarks/historical/crc32/test_vectors/v1/generated/
+benchmarks/historical/crc32/c/main/generated_vector.hpp
+benchmarks/historical/crc32/rust/src/generated_vector.rs
+benchmarks/historical/crc32/micropython/generated_vector.py
+
 # MATLAB and generated publication products
 *.asv
 *.m~

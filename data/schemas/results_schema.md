@@ -1,6 +1,6 @@
 # Research Data Schema
 
-Schema family version: `2.1.0-draft`
+Schema family version: `2.2.0-draft`
 
 Status: normative design; no result rows exist yet.
 
@@ -98,6 +98,7 @@ Exactly one data row is allowed. A validator rejects a missing required value ra
 | `iteration` | integer | yes | One-based within `(run_id,input_id,phase)` |
 | `phase` | enum | yes | `warmup` or `measured` |
 | `execution_us` | decimal | conditional | Elapsed microseconds; required for a valid measured row |
+| `normalized_execution_us` | decimal | conditional | Required for a valid batched measured row; exactly `execution_us / operations_per_observation`, serialized to nine decimal places and independently rechecked by validation |
 | `cycles` | integer | no | Direct reliable counter delta only; never derived from time |
 | `result_kind` | string | yes | e.g. `crc32_u32_hex` |
 | `result_value` | string | yes | Actual result encoded by the protocol |
@@ -203,6 +204,7 @@ A many-input output uses one lineage row per input under the same `lineage_id`.
 - All observations in a bundle reference its one `run_id` and compatible schema version.
 - Measured iteration numbers are contiguous per input unless an explicit invalid/incomplete record accounts for a gap.
 - Expected measured row count equals the protocol/run plan; correctness passes for every included performance row.
+- For every measured CRC-32 row, `normalized_execution_us` agrees with `execution_us / operations_per_observation` to the declared nine-decimal-place representation; normalization never replaces batch elapsed time.
 - Manifest hashes and sizes match exact files.
 - Mode A implementation/protocol/vector IDs belong to the approved comparability record.
 - A run cannot combine languages, builds, modes, optimization profiles, protocols, vector sets, or hardware instances.

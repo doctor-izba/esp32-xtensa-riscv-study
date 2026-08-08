@@ -1,6 +1,6 @@
 # CRC-32 Mode A Protocol
 
-- Protocol ID: `crc32-mode-a-v1.1.0`
+- Protocol ID: `crc32-mode-a-v1.1.1`
 - Vector set ID: `crc32-plauska-v1`
 - Status: approved by Decision 0002
 - Correctness implementation gate: open
@@ -121,16 +121,16 @@ The completed pilot froze these `operations_per_observation` values:
 | 512 | 2 | 4 | 1 |
 | 1024 | 1 | 2 | 1 |
 
-The diagnostic observations and timer characterization are recorded in `TIMING_PILOT.md`. Main acquisition stores batch elapsed time, not normalized time.
+The diagnostic observations and timer characterization are recorded in `TIMING_PILOT.md`. Main acquisition preserves whole-batch elapsed time and operation count. It also stores a checked, redundant per-operation value without replacing either raw input to that calculation.
 
 ## 8. Required CSV values and fields
 
-Use results schema family `2.1.0` after it is frozen. `run.csv` must include all normative fields, with at least these protocol values:
+Use results schema family `2.2.0`. `run.csv` must include all normative fields, with at least these protocol values:
 
 ```text
 suite=historical
 benchmark_id=crc32
-protocol_id=crc32-mode-a-v1.1.0
+protocol_id=crc32-mode-a-v1.1.1
 benchmark_mode=A
 optimization_profile_id=mode-a-size-profile-v1
 optimization=none
@@ -145,7 +145,7 @@ radio_state=wifi_off;ble_off;ieee802154_off
 
 It also records implementation/language/runtime/compiler/SDK versions, target, complete flags, repository/build/firmware hashes, board/chip/flash identity, timer and measured resolution, power/scheduler/GC state, host/capture tool, and timestamps.
 
-Each `observations.csv` measured row records `input_id`, byte size, iteration 1–100, `phase=measured`, `operations_per_observation`, batch elapsed `execution_us`, `result_kind=crc32_u32_hex`, actual and expected values, correctness, and measurement status. There is one row per timed observation; setup and validation are not separate timed rows. If batching is required, normalized per-operation time is derived downstream and never overwrites raw elapsed time.
+Each `observations.csv` measured row records `input_id`, byte size, iteration 1–100, `phase=measured`, `operations_per_observation`, whole-batch elapsed `execution_us`, checked `normalized_execution_us`, `result_kind=crc32_u32_hex`, actual and expected values, correctness, and measurement status. There is one row per timed observation; setup and validation are not separate timed rows. `normalized_execution_us` is serialized to nine decimal places, must equal `execution_us / operations_per_observation`, and never overwrites either source value.
 
 ## 9. Known Plauska limitations
 
@@ -161,4 +161,4 @@ These limitations are disclosed against the published historical baseline. They 
 
 ## 10. Approval boundary
 
-Decision 0002 approved the harmonized one-warm-up policy, kernel-only timing boundary, equivalent timer choice, 160 MHz/radios-off device state, 100-observation policy, canonical vector/outputs, feasibility-gated toolchains, flash metadata, and prospective quantization rule. Decision 0003 records successful three-language correctness, exact feasible toolchains, timer characterization, and frozen batching. Main performance acquisition is now permitted but has not started.
+Decision 0002 approved the harmonized one-warm-up policy, kernel-only timing boundary, equivalent timer choice, 160 MHz/radios-off device state, 100-observation policy, canonical vector/outputs, feasibility-gated toolchains, flash metadata, and prospective quantization rule. Decision 0003 records successful three-language correctness, exact feasible toolchains, timer characterization, and frozen batching. Decision 0004 adds the checked normalized-time column while retaining the two raw batch values. Main performance acquisition is now permitted but has not started.

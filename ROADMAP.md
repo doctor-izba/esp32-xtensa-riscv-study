@@ -86,7 +86,7 @@ Add SHA-256, FFT, FIR, and IIR **one at a time**, repeating Phases 1–4 for eac
 
 ## Phase 9 — Paper and release
 
-- [ ] Complete the English LaTeX manuscript, threats to validity, and reproducibility appendix.
+- [x] Complete the English manuscript draft, threats to validity, claim audit, and reproducibility checklist.
 - [ ] Produce archival manifests, licenses, citation metadata, dataset/code release, and PDF.
 - [ ] Build the multi-paper GitHub Pages site.
 - [ ] Create a versioned GitHub release and, when ready, a Zenodo DOI.

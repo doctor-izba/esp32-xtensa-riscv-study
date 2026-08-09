@@ -1,0 +1,30 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.8in]{geometry}
+\usepackage{booktabs,array,longtable,hyperref,microtype}
+\title{Supplement: Reproducing and Extending ESP32 Workload Benchmarks on ESP32-C6}
+\author{Anonymous for review}
+\date{}
+\begin{document}\maketitle
+\section{Reader map}
+Frozen protocols and vectors are under \path{benchmarks/historical/}; Mode B contracts are under \path{benchmarks/optimized/}; raw captures and metadata are under \path{data/raw/}; validated data are under \path{data/processed/}; exact binaries and hashes are under \path{artifacts/builds/}; disassemblies are under \path{artifacts/assembly/}; analysis is under \path{matlab/}. The figure manifest maps publication images to SHA-256 hashes.
+
+\section{Historical-contract limitations}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.19\linewidth}>{\raggedright\arraybackslash}p{0.34\linewidth}>{\raggedright\arraybackslash}p{0.37\linewidth}@{}}
+\toprule Area & Recovered issue & Treatment \\ \midrule\endhead
+Warm-up & Published prose and source behavior are not fully consistent. & One unmeasured warm-up is applied uniformly to new C6 implementations; historical values remain untouched.\\
+MicroPython boundary & Slicing and preparation differ among historical implementations. & All new preparation, allocation, GC, and validation are outside the timed kernel.\\
+Launcher iterations & Historical launcher behavior is not recoverable uniformly. & New C6 uses 100 accepted samples per size/language after correctness and pilot gates.\\
+Validation & Historical validation coverage is incomplete. & Independent host/MATLAB oracles gate every new workload and language before timing.\\
+Raw samples & Plauska reports aggregates rather than compatible per-invocation rows. & Published means remain aggregate evidence and are never expanded into invented samples.\\
+\bottomrule
+\end{longtable}
+
+\section{Artifact interpretation}
+Exact C6 measured-build evidence is distinguished from matched reconstructed objects. The reconstruction fixes matched source and declared policies but not compiler backend, ABI, or implementation. Static instruction counts are not dynamic counts. The accepted Mode A Rust CRC ELF is the single disclosed preservation exception; its generated-code analysis is reconstruction only.
+
+\section{Reproduction contract}
+The experimental anchor is commit \texttt{933363b342ac960c0d364b4c6379b1ac884dec9f}. C6 ran at fixed/read-back 160 MHz with DFS, sleep, Wi-Fi, BLE, and IEEE 802.15.4 disabled; flash was 4 MB DIO at 80 MHz. One warm-up preceded 100 accepted observations at each of eight frozen sizes. Raw rows retain batch count, total batch duration, normalized duration, checksum, toolchain, vector hash, board, flash, and control metadata where defined by the workload schema.
+
+\section{Interpretation boundary}
+The study supports claims about the observed board/build combinations. It does not identify a pure ISA treatment effect, population hardware effect, energy result, dynamic instruction count, CPI, or cache behavior. Hardware SHA is a complete peripheral/API path. The Rust FFT transformation is a whole generated-kernel change rather than an isolated cost of checks.
+\end{document}

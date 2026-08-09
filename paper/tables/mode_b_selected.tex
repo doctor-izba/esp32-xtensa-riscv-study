@@ -1,0 +1,12 @@
+\begin{tabular}{@{}llrr@{}}
+\toprule
+Workload/profile & Language & Median (\(\mu\)s) & B/A \\
+\midrule
+CRC GCC -O2 & c\_cpp & 78.000 & 0.750 \\
+CRC Rust opt-3 & rust & 77.500 & 1.076 \\
+SHA GCC -O2 & c\_cpp & 626.000 & 0.934 \\
+SHA Rust opt-3 & rust & 628.000 & 0.883 \\
+FFT audited transform & rust & 1134.250 & 0.759 \\
+SHA hardware path & c\_cpp & 77.000 & 0.115 \\
+\bottomrule
+\end{tabular}

@@ -1,0 +1,12 @@
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Workload & C++ med. & Rust med. & MicroPython med. & Published C++ mean \\
+ & \multicolumn{4}{c}{Time (\(\mu\)s)} \\
+\midrule
+CRC-32 & 104.000 & 72.000 & 25078 & 117.630 \\
+SHA-256 & 670.000 & 711.000 & 596238 & 701.090 \\
+FFT (Q15) & 1185.562 & 1493.750 & 241504 & 1821.500 \\
+FIR (binary32) & 188774 & 186340 & 4157999 & 30055 \\
+IIR (binary32) & 3268.000 & 3277.500 & 84702 & 214.320 \\
+\bottomrule
+\end{tabular}

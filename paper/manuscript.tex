@@ -61,7 +61,7 @@ Our engineering reading asks four concrete questions of each kernel: what is the
 \end{table}
 
 \section{Related Work}
-Plauska et al. provide the baseline \citep{plauska2023performance}. Ionescu and Enescu compare C and MicroPython on ESP32/STM32 \citep{ionescu2020micropythonc}; Tan et al. broaden ESP32 scripting-runtime comparisons \citep{tan2025scripting}. Cross-platform work demonstrates why heterogeneous boards do not identify ISA effects: Ariel OS evaluates embedded Rust across several architectures \citep{frank2025ariel}, while Femto-Containers studies portable isolation across heterogeneous microcontrollers \citep{zandberg2022femtocontainers}. Our distinction is the combination of an audited historical contract, common C6 rules, artifact lineage, labelled matched reconstruction, and separated optimization profiles. Energy and modern runtimes remain adjacent, not measured claims: C6 cryptographic energy methodology appears in \citet{lima2025esp32c6signatures}, and constrained WebAssembly including C6 in \citet{has2025wasmiot}.
+Plauska et al. provide the baseline \citep{plauska2023performance}. Ionescu and Enescu compare C and MicroPython on ESP32/STM32 \citep{ionescu2020micropythonc}; Tan et al. broaden ESP32 scripting-runtime comparisons \citep{tan2025scripting}. Cross-platform work demonstrates why heterogeneous boards do not identify ISA effects: Ariel OS evaluates embedded Rust across several architectures \citep{frank2025ariel}, while Femto-Containers studies portable isolation across heterogeneous microcontrollers \citep{zandberg2022femtocontainers}. Most directly, Molano Rodr\'iguez physically benchmarks ESP32-WROOM-32 and ESP32-C6-WROOM-1 with separately adapted Dhrystone 2.1 implementations \citep{molano2025riscvfpga}. That undergraduate thesis establishes prior classic-ESP32/C6 performance comparison, but does not reconstruct Plauska's workloads, compare C/C++--Rust--MicroPython, preserve matched native artifacts, or separate reproduction and optimization modes. Our distinction is that narrower combination, not first-ever hardware comparison. Energy and modern runtimes remain adjacent, not measured claims: C6 cryptographic energy methodology appears in \citet{lima2025esp32c6signatures}, and constrained WebAssembly including C6 in \citet{has2025wasmiot}.
 
 \section{Research Questions and Scope}
 \textbf{RQ1.} What generated-code differences are observed between exact measured C6 RV32IMAC artifacts and matched reconstructed classic-ESP32 Xtensa artifacts, and which documented target mechanisms are consistent with C6 observations and published historical direction?
@@ -94,7 +94,7 @@ Static disassembly records symbol size, instruction rows, loads, stores, branche
 \section{Mode A Results}
 \begin{table}[t]
 \centering\scriptsize
-\caption{Largest-input central results. Plauska values are published means from a different experiment; local columns are medians.}
+\caption{Largest-input local C6 medians. The language-consistent historical/local matrix is in the supplement; cross-study ratios appear in \cref{fig:historical}.}
 \label{tab:headline}
 \input{tables/headline_results.tex}
 \end{table}
@@ -111,7 +111,7 @@ Within C6, ordering also varies (\cref{fig:language}). CRC medians are 104\,\us 
 
 \begin{figure}[t]
 \centering\includegraphics[width=\linewidth]{mode_a_rust_cpp.pdf}
-\caption{Within-C6 Mode A Rust/C++ median ratios. The shared x-axis follows frozen size labels; units and work differ by workload. Parity is not an equivalence test.}
+\caption{Within-C6 Mode A Rust/C++ median ratios for nonzero frozen sizes. Size 0 remains in repository evidence but is omitted here because it primarily exposes fixed/timer overhead. Units and work differ by workload; parity is not an equivalence test.}
 \label{fig:language}
 \end{figure}
 
@@ -166,12 +166,10 @@ The SHA hardware profile yields 77\,\us at 1024 bytes: 8.70$\times$ faster than 
 
 Safe Rust performance FFT has 125 static instructions, 398 bytes, 18 branches, five calls, and five panic references. The audited transform has 83 instructions, 246 bytes, eight branches, no calls or panic references (\cref{tab:fft}); its median is 1134.250\,\us, 22.7\% below safe performance Rust. Since the transformation changes the entire kernel, it is not an isolated bounds-check price.
 
-\begin{table}[t]
-\centering\small
-\caption{Exact C6 Rust FFT generated-kernel profiles.}
-\label{tab:fft}
+\begin{center}\small
+\captionof{table}{Exact C6 Rust FFT generated-kernel profiles.}\label{tab:fft}
 \input{tables/fft_transformation.tex}
-\end{table}
+\end{center}
 
 \section{Discussion}
 \paragraph{RQ1.} Target-specific contrasts appear in address formation, rotate lowering, safe control structure, and floating-point lowering. They show how matched workloads present different compiler-visible mechanisms, but not how much each mechanism contributed to Plauska's timings.
@@ -201,5 +199,5 @@ A matched physical classic-ESP32 rerun with current toolchains would strengthen 
 This ESP32-C6 extension contributes a correctness-gated physical dataset, a separated optimization campaign, preserved artifacts, and labelled matched Xtensa/RV32IMAC generated-code evidence. It is not a controlled Xtensa-versus-RISC-V performance experiment. Historical/local direction and within-C6 language ordering vary by workload. C6 FIR/IIR software helpers versus reconstructed Xtensa floating instructions form the strongest emitted-code contrast and a plausible, unquantified explanation for the binary32 direction. The Rust FFT transformation and C6 SHA peripheral expose distinct source-safety and SoC-capability effects. The supported conclusion is narrow: on this board and these frozen implementations, timing and generated structure depend on workload, language implementation, compiler profile, and platform facility; published classic-ESP32 values provide context rather than causal attribution.
 
 \bibliographystyle{plainnat}
-\begingroup\small\setlength{\bibsep}{2pt}\bibliography{references}\endgroup
+\begingroup\scriptsize\setlength{\bibsep}{0pt}\bibliography{references}\endgroup
 \end{document}

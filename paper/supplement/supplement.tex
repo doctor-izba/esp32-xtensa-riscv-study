@@ -1,10 +1,8 @@
 \documentclass[10pt]{article}
-\usepackage[margin=0.8in]{geometry}
+\usepackage[margin=0.62in]{geometry}
 \usepackage{booktabs,array,longtable,hyperref,microtype}
-\title{Supplement: Reproducing and Extending ESP32 Workload Benchmarks on ESP32-C6}
-\author{Anonymous for review}
-\date{}
-\begin{document}\maketitle
+\begin{document}
+\begin{center}\Large\bfseries Supplement: Reproducing and Extending ESP32 Workload Benchmarks on ESP32-C6\end{center}
 \section{Reader map}
 Frozen protocols and vectors are under \path{benchmarks/historical/}; Mode B contracts are under \path{benchmarks/optimized/}; raw captures and metadata are under \path{data/raw/}; validated data are under \path{data/processed/}; exact binaries and hashes are under \path{artifacts/builds/}; disassemblies are under \path{artifacts/assembly/}; analysis is under \path{matlab/}. The figure manifest maps publication images to SHA-256 hashes.
 
@@ -20,11 +18,30 @@ Raw samples & Plauska reports aggregates rather than compatible per-invocation r
 \end{longtable}
 
 \section{Artifact interpretation}
-Exact C6 measured-build evidence is distinguished from matched reconstructed objects. The reconstruction fixes matched source and declared policies but not compiler backend, ABI, or implementation. Static instruction counts are not dynamic counts. The accepted Mode A Rust CRC ELF is the single disclosed preservation exception; its generated-code analysis is reconstruction only.
+Exact C6 measured-build evidence is distinguished from matched reconstructed objects. The reconstruction fixes matched source and declared policies but not compiler backend, ABI, or implementation. Static instruction counts are not dynamic counts. The accepted Mode A Rust CRC ELF is the single disclosed preservation exception; its generated-code analysis is reconstruction only. The study supports claims about the observed board/build combinations, not a pure ISA treatment, population hardware effect, energy, dynamic instruction count, CPI, or cache behavior. Hardware SHA is a complete peripheral/API path; Rust FFT is a whole generated-kernel transformation.
+
+\section{Claim-to-evidence map}
+\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.17\linewidth}>{\raggedright\arraybackslash}p{0.32\linewidth}>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.14\linewidth}@{}}
+\toprule Claim layer & Evidence, artifact, and integrity locator & Reproduction command & Permitted use \\ \midrule\endhead
+Mode A timing & \path{data/processed/}; raw-bundle manifests under \path{data/raw/} & workload processor; \path{run_publication_analysis.m} & One-board observation\\
+Historical timing & frozen Plauska transcription; DOI 10.3390/electronics12010143 & \path{build_mode_a_cross_workload_summary.py} & Descriptive comparison\\
+FFT exact code & \path{artifacts/builds/fft/ARTIFACT_MANIFEST.md}; C++ ELF \texttt{2f563a88...90d165}; Rust \texttt{a3b83f33...8b4c8a} & verify manifest hashes; apply stored disassembly rules & Static measured-build evidence\\
+FIR exact code & \path{artifacts/builds/fir/ARTIFACT_MANIFEST.md}; C++ ELF \texttt{fea5db04...81649}; Rust \texttt{6b7d13c1...0a70a4} & verify manifest hashes; apply stored disassembly rules & Static measured-build evidence\\
+IIR exact code & \path{artifacts/builds/iir/ARTIFACT_MANIFEST.md}; C++ ELF \texttt{b74b8ebe...e4a7d}; Rust \texttt{f3b13892...020b9} & verify manifest hashes; apply stored disassembly rules & Static measured-build evidence\\
+Matched targets & reconstruction manifests under \path{artifacts/static/} and \path{artifacts/assembly/} & pinned invocation beside each object & Mechanism only\\
+Mode B & \path{data/processed/mode_b_summary.csv}; exact profile builds & \path{run_mode_b_analysis.m} & Declared profile only\\
+Figures & \path{paper/PUBLICATION_FIGURE_MANIFEST.csv} & \path{run_publication_analysis.m}; \path{build_publication_assets.py} & Derived display\\
+Claims/citations & \path{paper/CLAIM_AUDIT.md}; \path{paper/references.bib} & \path{validate_manuscript.py}; \path{validate_publication.py} & Audited statement\\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\section{Complete historical/local matrix}
+The main paper uses a compact local-only headline table. This full matrix applies the same historical evidence field to every language and retains the published/local boundary.
+\small\input{historical_local_matrix.tex}\normalsize
 
 \section{Reproduction contract}
 The experimental anchor is commit \texttt{933363b342ac960c0d364b4c6379b1ac884dec9f}. C6 ran at fixed/read-back 160 MHz with DFS, sleep, Wi-Fi, BLE, and IEEE 802.15.4 disabled; flash was 4 MB DIO at 80 MHz. One warm-up preceded 100 accepted observations at each of eight frozen sizes. Raw rows retain batch count, total batch duration, normalized duration, checksum, toolchain, vector hash, board, flash, and control metadata where defined by the workload schema.
 
-\section{Interpretation boundary}
-The study supports claims about the observed board/build combinations. It does not identify a pure ISA treatment effect, population hardware effect, energy result, dynamic instruction count, CPI, or cache behavior. Hardware SHA is a complete peripheral/API path. The Rust FFT transformation is a whole generated-kernel change rather than an isolated cost of checks.
 \end{document}

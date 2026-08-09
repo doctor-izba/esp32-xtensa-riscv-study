@@ -9,8 +9,10 @@ names=unique(cp.workload,'stable'); vals=nan(numel(names),2);
 for i=1:numel(names)
  for j=1:2, lang=["c_cpp","rust"]; r=cp(cp.workload==names(i)&cp.language==lang(j),:); vals(i,j)=r.mode_b_over_mode_a_median; end
 end
-f=figure('Visible','off','Color','w'); bar(vals); yline(1,'k--'); grid on
+f=figure('Visible','off','Color','w'); b=bar(vals); yline(1,'k--'); grid on
 set(gca,'XTickLabel',replace(names,'_','\_')); ylabel('Mode B / Mode A median'); legend('C++','Rust','Location','best'); title('COMPILER\_PERF response at largest input');
+subtitle('Language-specific profiles: C++ -O2; Rust opt-level 3'); ylim([0.68 1.12]);
+for i=1:numel(names), for j=1:2, text(b(j).XEndPoints(i),vals(i,j),sprintf('%.3f',vals(i,j)),'HorizontalAlignment','center','VerticalAlignment','bottom','FontSize',8); end, end
 savefig(f,fullfile(out,'compiler_perf_ratio.fig')); exportgraphics(f,fullfile(out,'compiler_perf_ratio.png'),'Resolution',300); exportgraphics(f,fullfile(out,'compiler_perf_ratio.pdf'),'ContentType','vector'); close(f)
 
 f=figure('Visible','off','Color','w'); bar(vals(:,2)./vals(:,1)); yline(1,'k--'); grid on
@@ -19,12 +21,19 @@ savefig(f,fullfile(out,'language_response.fig')); exportgraphics(f,fullfile(out,
 
 sha=largest((largest.workload=="SHA256"|largest.workload=="SHA256_HW")&largest.language=="c_cpp",:);
 a=sha.mode_a_median_us(1); perf=sha.mode_b_median_us(sha.optimization=="COMPILER_PERF"); hw=sha.mode_b_median_us(sha.optimization=="HW_SHA");
-f=figure('Visible','off','Color','w'); bar([a perf hw]); set(gca,'YScale','log','XTickLabel',{'Mode A software','COMPILER\_PERF','HW\_SHA'}); ylabel('Median time (us, log scale)'); grid on; title('SHA-256, 1024 bytes');
+f=figure('Visible','off','Color','w','Position',[100 100 1050 500]); tiledlayout(1,2,'TileSpacing','compact');
+nexttile; vsha=[a perf hw]; b=bar(vsha); set(gca,'YScale','log','XTickLabel',{'Mode A SW','COMPILER\_PERF SW','HW\_SHA'}); ylabel('Median time (us, log scale)'); grid on; ylim([50 900]); title('All profiles');
+for i=1:3, text(i,vsha(i),sprintf('%.0f us',vsha(i)),'HorizontalAlignment','center','VerticalAlignment','bottom','FontSize',9); end
+nexttile; vsw=[a perf]; b=bar(vsw); set(gca,'XTickLabel',{'Mode A SW','PERF SW'},'FontSize',9); ylabel('Median time (us)'); grid on; ylim([0 750]); title('Software detail');
+for i=1:2, text(i,vsw(i),sprintf('%.0f us',vsw(i)),'HorizontalAlignment','center','VerticalAlignment','bottom','FontSize',9); end
+sgtitle('SHA-256, 1024 bytes: C6 software profiles and SoC HW\_SHA');
 savefig(f,fullfile(out,'sha_profiles.fig')); exportgraphics(f,fullfile(out,'sha_profiles.png'),'Resolution',300); exportgraphics(f,fullfile(out,'sha_profiles.pdf'),'ContentType','vector'); close(f)
 
 fp=cp(cp.workload=="FIR_F32"|cp.workload=="IIR_BQ_F32",:); workloads=unique(fp.workload,'stable'); v=nan(2,2);
 for i=1:2, for j=1:2, lang=["c_cpp","rust"]; r=fp(fp.workload==workloads(i)&fp.language==lang(j),:); v(i,j)=r.mode_b_over_mode_a_median; end, end
-f=figure('Visible','off','Color','w'); bar(v); yline(1,'k--'); ylim([0.85 1.05]); grid on; set(gca,'XTickLabel',replace(workloads,'_','\_')); ylabel('Mode B / Mode A median'); legend('C++','Rust','Location','best'); title('Software-FP workloads');
+f=figure('Visible','off','Color','w'); b=bar(v); yline(1,'k--'); ylim([0.90 1.02]); grid on; set(gca,'XTickLabel',replace(workloads,'_','\_')); ylabel('Mode B / Mode A median'); legend('C++','Rust','Location','best'); title('Software-FP workloads');
+subtitle('One-board ratios; near one is not equivalence');
+for i=1:2, for j=1:2, text(b(j).XEndPoints(i),v(i,j),sprintf('%.3f',v(i,j)),'HorizontalAlignment','center','VerticalAlignment','bottom','FontSize',9); end, end
 savefig(f,fullfile(out,'software_fp_response.fig')); exportgraphics(f,fullfile(out,'software_fp_response.png'),'Resolution',300); exportgraphics(f,fullfile(out,'software_fp_response.pdf'),'ContentType','vector'); close(f)
 
 writetable(largest,fullfile(out,'largest_input_plot_data.csv'));

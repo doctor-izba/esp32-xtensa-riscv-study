@@ -22,11 +22,18 @@ end
 
 f=figure(Color="w",Position=[100 100 1050 560]);
 b=bar(categorical(workloads,workloads),M); set(gca,YScale="log",FontSize=11,TickLabelInterpreter="none");
+ymin=min(M,[],'all'); ymax=max(M,[],'all'); ylim([10^(floor(log10(ymin))-0.1) 10^(ceil(log10(ymax))+0.1)]);
 yline(1,"k--","equal mean time",LabelHorizontalAlignment="left",HandleVisibility="off");
 ylabel("Plauska mean / ESP32-C6 mean (log scale)"); xlabel("Workload");
 legend(b,["C/C++","Rust","MicroPython"],Location="best"); grid on;
 title("Mode A historical/local timing ratio at largest common input");
-subtitle("Descriptive cross-study comparison; values above 1 favor local ESP32-C6");
+subtitle("Published Plauska mean / new physical C6 mean; descriptive, not a treatment effect");
+for i=1:numel(workloads)
+    for j=1:numel(languages)
+        text(b(j).XEndPoints(i),M(i,j),sprintf('%.3g',M(i,j)), ...
+            HorizontalAlignment="center",VerticalAlignment="bottom",FontSize=8);
+    end
+end
 exportgraphics(f,fullfile(outDir,"figure1_historical_local_ratio.png"),Resolution=300);
 exportgraphics(f,fullfile(outDir,"figure1_historical_local_ratio.pdf"),ContentType="vector");
 savefig(f,fullfile(outDir,"figure1_historical_local_ratio.fig")); close(f);
@@ -36,7 +43,7 @@ for i=1:numel(workloads)
     q=T.workload==workloads(i) & T.language=="c_cpp";
     plot((1:sum(q))',T.rust_over_cpp_median(q),"-o",LineWidth=1.5,DisplayName=workloads(i));
 end
-yline(1,"k--","parity",HandleVisibility="off"); xlabel("Frozen input-size position (ascending)");
+yline(1,"k--","parity",HandleVisibility="off"); xlabel("Frozen input-size position (0, 16, 32, 64, 128, 256, 512, 1024)");
 ylabel("Rust / C++ median time"); grid on; set(gca,FontSize=11);
 legend(Location="best",Interpreter="none"); title("ESP32-C6 Mode A Rust/C++ ratio across workloads");
 exportgraphics(f,fullfile(outDir,"figure2_rust_cpp_ratio.png"),Resolution=300);
@@ -59,7 +66,8 @@ scatter(1:5,N(:,2),90,"filled",DisplayName="Rust");
 set(gca,YScale="log",XTick=1:5,XTickLabel=workloads,FontSize=11,TickLabelInterpreter="none"); grid on;
 yline(1,"k--","equal mean time",HandleVisibility="off"); ylabel("Plauska mean / ESP32-C6 mean (log scale)");
 xlabel("Workload (first three integer/fixed; last two binary32)"); legend(Location="best");
-title("Native historical/local direction changes with workload arithmetic");
+title("Descriptive native historical/local pattern by workload arithmetic");
+subtitle("Five-workload pattern is hypothesis-generating; no arithmetic or ISA treatment is isolated");
 exportgraphics(f,fullfile(outDir,"figure4_arithmetic_class_contrast.png"),Resolution=300);
 exportgraphics(f,fullfile(outDir,"figure4_arithmetic_class_contrast.pdf"),ContentType="vector");
 savefig(f,fullfile(outDir,"figure4_arithmetic_class_contrast.fig")); close(f);

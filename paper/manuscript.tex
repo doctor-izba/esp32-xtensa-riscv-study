@@ -10,7 +10,7 @@
 \lstset{basicstyle=\ttfamily\footnotesize,backgroundcolor=\color{shade},frame=single,columns=fullflexible,breaklines=true}
 \newcommand{\us}{\ensuremath{\mu\mathrm{s}}\xspace}
 \newcommand{\eclass}[1]{\textsc{#1}}
-\title{Reproducing and Extending ESP32 Workload Benchmarks on ESP32-C6:\\Performance and Generated-Code Evidence}
+\title{Reproducing and Extending ESP32 Workload Benchmarks on ESP32-C6:\\Performance and Generated-Code Results}
 \author{Izbassar Yesbol}
 \date{Technical report, September 2026}
 
@@ -125,7 +125,7 @@ Within C6, ordering also varies (\cref{fig:language}). CRC medians are 104\,\us 
 
 Largest-input within-acquisition variation is small for most native groups (for example CRC C++ mean 103.69\,\us, SD 0.884\,\us; FFT C++ mean 1185.568\,\us, SD 0.050\,\us), but says nothing about between-board or between-session uncertainty.
 
-\section{Generated-Code Evidence}
+\section{Generated-Code Results}
 \subsection{Integer and fixed-point kernels}
 Matched CRC loops expose address formation. Xtensa uses a scaled add while RV32IMAC synthesizes it; both excerpts are copied verbatim from the matched disassemblies under \path{artifacts/assembly/crc32/cpp/}:
 \begin{lstlisting}[caption={Matched CRC table addressing; static reconstruction only.}]

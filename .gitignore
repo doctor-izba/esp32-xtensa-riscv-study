@@ -60,3 +60,4 @@ website/public/
 # Raw data are intentionally NOT ignored. Never use this file to hide evidence.
 .tools/
 paper/build/
+.reasonix/

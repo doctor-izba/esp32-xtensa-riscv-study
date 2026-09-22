@@ -1,84 +1,56 @@
-# ESP32 Xtensa–RISC-V Workload Study
+# ESP32 workload study: classic Xtensa and ESP32-C6
 
-This repository is the reproducibility workspace for an academic comparison of the original Xtensa-based ESP32 historical results and new measurements on an ESP32-C6-N4 RISC-V platform.
+Research by **Izbassar Yesbol** · 2026 · [Technical report (PDF)](paper/review-manuscript.pdf) · [Supplement (PDF)](paper/review-supplement.pdf)
 
-**Status:** CRC-32 and SHA-256 are complete Mode A vertical slices. SHA-256
-correctness, timing pilot, 2,400 accepted physical observations, MATLAB
-analysis, historical context, and exact-binary/static-code analysis are
-complete. FFT, FIR, IIR, and Mode B remain closed.
+I reproduced five embedded workloads on a physical ESP32-C6, then compared the results with published measurements on the classic ESP32. The comparison is useful for understanding where the workloads changed; it does not isolate the instruction set. The two platforms also differ in memory, peripherals, toolchains, runtimes, and experimental procedure.
 
-## Research focus
+This repository holds the protocols, measurements, build artifacts, disassemblies, analysis, and manuscript. The report is a **working technical report, not an externally peer-reviewed publication**.
 
-The study asks how low-level differences between the Xtensa LX6 used in the original ESP32 and the ESP32-C6 high-performance RISC-V CPU appear in real workloads, and how the observed behavior of C/C++, Rust, and MicroPython has changed across those platforms.
+## What was measured
 
-This is not an ISA-only experiment. The chips also differ in microarchitecture, frequency, core count, memory hierarchy, compiler generation, SDK, runtimes, and peripherals. Accordingly, the project will describe observations on a platform and possible consistency with architectural mechanisms; it will not report cross-chip timing ratios as pure ISA effects.
+One ESP32-C6 revision 0.2 board ran CRC-32, SHA-256, Q15 FFT, binary32 FIR, and binary32 IIR in C/C++, Rust, and MicroPython. Mode A used a common correctness gate and timing boundary: eight input sizes and 100 accepted observations per size, giving **12,000 local observations**. Mode B recorded **9,600 additional observations** under declared native performance builds, a SHA peripheral path, and an audited Rust FFT transformation.
 
-The exact questions and permitted interpretations are in [RESEARCH_QUESTIONS.md](RESEARCH_QUESTIONS.md).
+Published classic-ESP32 means from [Plauska, Liutkevičius, and Janavičiūtė (2023)](https://doi.org/10.3390/electronics12010143) are kept as historical aggregates. Their [source repository](https://github.com/ignasp/ProgLangComp_onESP32) was audited at [commit `c42dba0`](https://github.com/ignasp/ProgLangComp_onESP32/tree/c42dba0d41d547960b73e63b3d4e09917d61e171). I did not rerun their original board or treat their published means as local samples.
 
-## Scope
+## What the results show
 
-- Physical measurement target: DoIT ESPC6-32 N4 on an `ESP32-C6_Relay_X1_V1.1` carrier, 4 MiB flash, ESP32-C6 revision v0.2. The public record omits the device MAC; a pseudonymous instance ID is still required before main acquisition.
-- Historical comparator: published measurements and archived source material from Plauska, Liutkevičius, and Janavičiūtė (2023), not a locally tested classic ESP32.
-- Core languages: C/C++, Rust, and MicroPython.
-- TinyGo: historical context only; it is not part of the new study.
-- First workload: CRC-32 only. SHA-256, FFT, FIR, and IIR remain gated until the CRC pipeline is validated.
+At the largest shared input, native C6 CRC-32, SHA-256, and FFT means fall below the published classic-ESP32 means; FIR and IIR means go the other way. Within the C6 experiment, Rust is faster than C++ for CRC-32, slower for SHA-256 and FFT, and close to C++ for FIR and IIR. Those observations depend on the workload and the complete software and hardware setup.
 
-## Experimental scope
+The exact C6 FIR/IIR binaries call software floating-point routines, while matched reconstructed Xtensa binaries emit floating-point instructions. This is a plausible contributor to the historical contrast, not a measured attribution of that contrast. The Rust FFT transformation lowered its median by 22.7% relative to the safe performance build but changed the whole kernel. The C6 SHA peripheral path was 8.70× faster than Mode A software; that is a peripheral result.
 
-| Family | Purpose | Current state |
-|---|---|---|
-| Historical suite | CRC-32, SHA-256, FFT, FIR, and IIR with a published ESP32 baseline | CRC-32 and SHA-256 Mode A vertical slices complete; later workloads gated |
-| Low-level analysis | Generated code, ABI, registers, loads/stores, branches, calls, spills, floating-point behavior, and code size | Analysis layer; not an experimental mode |
-| Future work | Additional microbenchmarks, AI/TinyML, languages, and VMs | Deferred beyond the first paper |
+![Published classic-ESP32 mean divided by the local ESP32-C6 mean for each workload and language](paper/figures/mode_a_historical_local.png)
 
-There are exactly two non-interchangeable modes: `A` (fair, reproduction-oriented reconstruction/extension) and `B` (optimized). Mode B records every enabled optimization explicitly; it has no B1/B2 submodes. Published Plauska results remain historical baseline evidence rather than a local experimental mode.
+*Figure 1. Ratios compare two different experiments. A value above one means a lower local C6 mean.*
 
-## Evidence pipeline
+![Rust to C++ median time ratio within the measured ESP32-C6](paper/figures/mode_a_rust_cpp.png)
+
+*Figure 2. Within-board Mode A ratios. Parity is not an equivalence test.*
+
+## Read the study
+
+- [Manuscript](paper/manuscript.tex), [PDF](paper/review-manuscript.pdf), and [supplement](paper/review-supplement.pdf)
+- [Methods](METHODOLOGY.md), [research questions](RESEARCH_QUESTIONS.md), and [reproduction contract](REPRODUCIBILITY.md)
+- [Related-work comparison](literature/RELATED_WORK_DEEP_REVIEW.md) and [September 2026 positioning update](literature/2026-09-positioning-update.md)
+- [Processed results](data/processed/), [raw acquisition bundles](data/raw/), and [historical aggregates](data/baselines/)
+- [Exact and reconstructed code artifacts](artifacts/assembly/) and [figure manifest](paper/PUBLICATION_FIGURE_MANIFEST.csv)
+
+The manuscript's claim boundaries matter: only the C6 was newly timed; reconstructed Xtensa objects were not executed; one accepted Rust CRC binary was not retained and is labelled as a reconstruction. The internal files in `paper/reviews/` are quality-control notes, **not external peer reviews**.
+
+## Reproduce the paper
+
+The [paper guide](paper/README.md) gives the build order and prerequisites. The shortest validation path from the repository root is:
 
 ```text
-versioned protocol + test vectors
-  -> build and correctness gate
-  -> immutable raw run bundle
-  -> non-mutating validation report
-  -> derived CSV statistics
-  -> MATLAB figures/tables
-  -> LaTeX paper and release archive
+python paper/tools/build_final_synthesis.py
+python paper/tools/build_repeatability_summary.py
+python paper/tools/build_publication_assets.py
+python paper/tools/validate_manuscript.py
+python paper/tools/validate_publication.py
+powershell -File paper/tools/build_review_pdf.ps1
 ```
 
-Published historical aggregates live under `data/baselines/`; locally observed iteration data live under `data/raw/`. They must never be represented as the same evidence class.
+Figure regeneration additionally requires MATLAB R2024b; PDF compilation uses Tectonic. The figures committed here are checked against [recorded hashes](paper/PUBLICATION_FIGURE_MANIFEST.csv). Raw observations and historical baselines are never rewritten to make a figure or claim pass.
 
-## Repository map
+## Next experiments
 
-| Path | Role |
-|---|---|
-| `benchmarks/` | Versioned benchmark sources, protocols, and test vectors |
-| `literature/` | BibTeX, literature matrix, and source notes |
-| `references/` | Provenance records and source audits |
-| `data/raw/` | Immutable local acquisition bundles |
-| `data/baselines/` | Published or externally acquired historical evidence |
-| `data/validation/` | Validator output that never rewrites evidence |
-| `data/processed/` | Reproducible derived CSV files |
-| `data/schemas/` | Normative file-format contracts |
-| `artifacts/assembly/` | Disassembly and static machine-code evidence |
-| `matlab/` | CSV-driven validation, statistics, and plotting functions |
-| `paper/` | LaTeX manuscript and generated inputs |
-| `website/` | Future multi-paper research site |
-
-The additions `data/baselines/`, `data/validation/`, and `artifacts/` deliberately separate different evidence grains and write stages. See [REPRODUCIBILITY.md](REPRODUCIBILITY.md).
-
-## Start here
-
-1. Read [PROJECT_CHARTER.md](PROJECT_CHARTER.md), [RESEARCH_QUESTIONS.md](RESEARCH_QUESTIONS.md), and [METHODOLOGY.md](METHODOLOGY.md).
-2. Review the [related-work deep review](literature/RELATED_WORK_DEEP_REVIEW.md), [novelty-gap analysis](docs/NOVELTY_GAP_ANALYSIS.md), and [claim boundaries](docs/CLAIM_BOUNDARIES.md).
-3. Review the preliminary [CRC-32 source audit](references/original-study/CRC32_AUDIT.md) and [verification ledger](docs/verification_ledger.md).
-4. Review the [results schema](data/schemas/results_schema.md) and [ROADMAP.md](ROADMAP.md).
-5. Review the completed CRC-32 and SHA-256 Mode A protocols, result reports,
-   and decision records. FFT, FIR, IIR, and Mode B remain closed.
-
-## Source status
-
-The Plauska paper and upstream repository are pinned in the source audit. Two material issues are already visible: the paper and released results contain 100 iterations per CRC condition, while the checked-in MicroPython launcher requests 5; and the static random input bytes are present, but their generator seed is not documented. These are recorded as discrepancies, not resolved by assumption.
-
-## Citation and license
-
-The seed paper has a verified BibTeX record in `literature/references.bib`. A repository citation file, project license, dataset license, and third-party redistribution decision are still pending. Do not redistribute upstream source or PDFs until their licensing and provenance have been reviewed.
+Another ESP32 board could strengthen the comparison. It would need its own versioned protocol, build records, and raw acquisition cohort. Its observations would be reported alongside this C6 study rather than folded into the existing 21,600 rows.

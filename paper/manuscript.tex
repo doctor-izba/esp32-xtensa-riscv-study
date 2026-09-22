@@ -11,15 +11,19 @@
 \newcommand{\us}{\ensuremath{\mu\mathrm{s}}\xspace}
 \newcommand{\eclass}[1]{\textsc{#1}}
 \title{Reproducing and Extending ESP32 Workload Benchmarks on ESP32-C6:\\Performance and Generated-Code Evidence}
-\author{Anonymous for review}
-\date{}
+\author{Izbassar Yesbol}
+\date{Technical report, September 2026}
 
 \begin{document}
 \maketitle
 \begin{abstract}
-Published classic-ESP32 benchmarks invite comparison with the ESP32-C6, but a historical-to-new comparison changes processor, memory system, software generation, and protocol simultaneously. We present a reproduction-oriented ESP32-C6 extension of Plauska et al., not a controlled Xtensa-versus-RISC-V experiment. CRC-32, SHA-256, Q15 FFT, binary32 FIR, and binary32 IIR were implemented in C/C++, Rust, and MicroPython under common correctness and timing rules. One physical ESP32-C6 produced 12,000 Mode A observations; 9,600 Mode B observations cover native performance builds, the C6 SHA peripheral, and an audited Rust FFT transformation. Published classic-ESP32 aggregates remain separate historical evidence. Exact measured C6 binaries and provenance-preserving matched Xtensa/RV32IMAC reconstructions provide static code-generation evidence, not historical execution measurements.
+\textbf{Introduction.} Plauska et al. measured five workloads in four languages on the classic ESP32. Their published results provide a historical comparison for ESP32-C6, but changes in hardware, software, and protocol prevent an ISA-only interpretation. We ask how these workloads behave under a common C6 protocol and what the preserved binaries can explain.
 
-Results are workload-dependent. At the largest input, local native CRC-32, SHA-256, and FFT means are lower than published values, whereas local FIR and IIR means are substantially higher. Within the measured C6, C++ and Rust ordering crosses parity. Exact C6 FIR/IIR kernels call software-floating-point helpers; matched Xtensa objects emit floating-point instructions. This is consistent with software floating point contributing materially to the historical/local FIR/IIR direction, but does not quantify that contribution. An audited unchecked Rust FFT transformation is 22.7\% faster than its safe performance build at 1024 points, while changing the entire generated kernel. Hardware SHA is 8.70$\times$ faster than Mode A software and is explicitly a SoC-peripheral result. The evidence supports a single-board case study and workload-specific mechanism hypotheses, not pure-ISA causality or population-level hardware generalization.
+\textbf{Methods.} We implemented CRC-32, SHA-256, Q15 FFT, binary32 FIR, and binary32 IIR in C/C++, Rust, and MicroPython. Correctness-gated runs on one ESP32-C6 produced 12,000 reproduction-oriented observations and 9,600 observations under declared performance transformations. We compared local summaries descriptively with Plauska's published aggregates and inspected exact C6 binaries alongside matched, unmeasured Xtensa and RV32IMAC reconstructions.
+
+\textbf{Results.} At the largest input, local native CRC-32, SHA-256, and FFT means were lower than the published means, while FIR and IIR means were higher. Within C6, the C++ and Rust ordering changed by workload. Exact C6 FIR/IIR binaries call software floating-point helpers; matched Xtensa objects emit floating-point instructions. An audited Rust FFT transformation reduced the median by 22.7\% relative to its safe performance build but changed the whole kernel. The C6 SHA peripheral reduced the Mode A software time by a factor of 8.70.
+
+\textbf{Conclusions.} The workload-dependent results and generated code support specific mechanism hypotheses, including a possible software floating-point contribution to the FIR/IIR contrast. They cannot quantify that contribution or isolate ISA effects across the two platforms. This is a single-board C6 case study with a separate historical comparator.
 \end{abstract}
 
 \section{Introduction}
@@ -40,7 +44,7 @@ Quantitative computer architecture treats performance as a measured property of 
 
 RISC-V began at Berkeley in 2010 through work led by Krste Asanovi\'c, Yunsup Lee, Andrew Waterman, and David Patterson; early motivation emphasized a free, extensible research and implementation ISA \citep{asanovic2014free,patterson2017reader}. John Hennessy's role belongs to the Stanford RISC/MIPS lineage and to the quantitative methodology co-developed with Patterson, not to RISC-V co-creation. This distinction matters because the paper relies on their methodological tradition rather than a founder narrative.
 
-Xtensa is explicitly configurable and extensible \citep{gonzalez2000xtensa}; a generic Xtensa manual therefore cannot prove a particular ESP32 feature. Vendor records describe the classic ESP32 configuration \citep{espressifESP32Datasheet,espressifESP32TRM}. For C6, vendor records identify RV32IMAC without the standard single-precision floating-point extension \citep{espressifESP32C6Datasheet,espressifESP32C6TRM}. The current unprivileged specification defines instruction semantics \citep{riscvUnpriv2026}; exact binaries, not documentation, establish what was emitted.
+Xtensa is explicitly configurable and extensible \citep{gonzalez2000xtensa}; a generic Xtensa manual \citep{cadenceXtensaISASummary} therefore cannot prove a particular ESP32 feature. Vendor records describe the classic ESP32 configuration \citep{espressifESP32Datasheet,espressifESP32TRM}. For C6, vendor records identify RV32IMAC without the standard single-precision floating-point extension \citep{espressifESP32C6Datasheet,espressifESP32C6TRM}. The current unprivileged specification defines instruction semantics \citep{riscvUnpriv2026}; exact binaries, not documentation, establish what was emitted.
 
 Our engineering reading asks four concrete questions of each kernel: what is the representation, what is the critical loop, what memory and control operations surround it, and which abstraction costs survive compilation? This resembles performance-aware programming practice, but all academic claims rest on measured artifacts and primary architecture sources.
 
@@ -61,7 +65,11 @@ Our engineering reading asks four concrete questions of each kernel: what is the
 \end{table}
 
 \section{Related Work}
-Plauska et al. provide the baseline \citep{plauska2023performance}. Ionescu and Enescu compare C and MicroPython on ESP32/STM32 \citep{ionescu2020micropythonc}; Tan et al. broaden ESP32 scripting-runtime comparisons \citep{tan2025scripting}. Cross-platform work demonstrates why heterogeneous boards do not identify ISA effects: Ariel OS evaluates embedded Rust across several architectures \citep{frank2025ariel}, while Femto-Containers studies portable isolation across heterogeneous microcontrollers \citep{zandberg2022femtocontainers}. Most directly, Molano Rodr\'iguez physically benchmarks ESP32-WROOM-32 and ESP32-C6-WROOM-1 with separately adapted Dhrystone 2.1 implementations \citep{molano2025riscvfpga}. That undergraduate thesis establishes prior classic-ESP32/C6 performance comparison, but does not reconstruct Plauska's workloads, compare C/C++--Rust--MicroPython, preserve matched native artifacts, or separate reproduction and optimization modes. Our distinction is that narrower combination, not first-ever hardware comparison. Energy and modern runtimes remain adjacent, not measured claims: C6 cryptographic energy methodology appears in \citet{lima2025esp32c6signatures}, and constrained WebAssembly including C6 in \citet{has2025wasmiot}.
+Plauska et al. supply the five workloads and the published classic-ESP32 baseline used here \citep{plauska2023performance}. Earlier ESP32 language comparisons also matter: Ionescu and Enescu study C and MicroPython on ESP32 and STM32 \citep{ionescu2020micropythonc}; Tan et al. compare scripting runtimes on ESP32 \citep{tan2025scripting}; and Tan and Hakala examine C and MicroPython on ESP32-C3 \citep{tan2026eventdriven}. These studies establish language and runtime precedents, but use different workload contracts.
+
+Two studies overlap more directly with the platform question. Molano Rodr\'iguez measures classic ESP32 and ESP32-C6 using separately adapted Dhrystone implementations \citep{molano2025riscvfpga}. Embuena et al. compare C and Rust across classic ESP32, ESP32-C3, and Arm boards, measuring execution time and energy for sorting, FIR, PID, and state-machine workloads \citep{embuena2026platforms}. Neither study reconstructs Plauska's five-workload protocol on C6 or combines its three retained languages with the matched code artifacts reported here. We therefore claim neither the first physical ESP32/C6 comparison nor the first cross-architecture language comparison.
+
+Other work explains why hardware and runtime context must remain explicit. Ariel OS evaluates embedded Rust on heterogeneous targets \citep{frank2025ariel}; Femto-Containers studies portable isolation across microcontrollers \citep{zandberg2022femtocontainers}. Lima reports a C6 cryptographic energy methodology \citep{lima2025esp32c6signatures}, whereas constrained WebAssembly work includes C6 in a different runtime setting \citep{has2025wasmiot}. Our measurements address execution time and generated code. Energy, scheduling, and virtual-machine behavior remain outside their scope.
 
 \section{Research Questions and Scope}
 \textbf{RQ1.} What generated-code differences are observed between exact measured C6 RV32IMAC artifacts and matched reconstructed classic-ESP32 Xtensa artifacts, and which documented target mechanisms are consistent with C6 observations and published historical direction?
@@ -85,7 +93,7 @@ The 12,000 observations are $5\times3\times8\times100$ sequential repetitions. T
 Mode B retains workload semantics while declaring transformations. C++ uses ESP-IDF v5.5.5's performance configuration (GCC 14.2.0 \texttt{-O2}); Rust uses rustc/cargo 1.97.1 release opt-level 3 with \texttt{esp-idf-sys} 0.37.2. These are language-specific policies, not equivalent treatments. \texttt{HW\_SHA} times the full one-shot \texttt{mbedtls\_sha256} path, including setup/finalization, arbitration, DMA, and HAL. \texttt{RUST\_UNCHECKED} was allowed after frozen FFT preconditions proved all indexes valid; it changes checks, control flow, layout, and register allocation, so it is a whole-transformation result. CRC IRAM placement was rejected for lack of a prior fetch/cache hypothesis. Mode B contains 9,600 observations.
 
 \subsection{Validation, statistics, and artifacts}
-C++ used ESP-IDF v5.5.5/GCC 14.2.0; Rust used rustc/cargo 1.97.1 and \texttt{esp-idf-sys} 0.37.2; MicroPython used ESP32\_GENERIC\_C6 v1.28.0 (2026-04-06). Run bundles record target, versions, configuration, vectors, timer, batch, board, flash, radios, correctness, and artifact hashes. Exact measured native artifacts are retained except the accepted Mode A Rust CRC ELF; that case is labelled pinned-source reconstruction.
+C++ used ESP-IDF v5.5.5/GCC 14.2.0; Rust used rustc/cargo 1.97.1 and \texttt{esp-idf-sys} 0.37.2; MicroPython used ESP32\_GENERIC\_C6 v1.28.0 (2026-04-06). Run captures record target, versions, configuration, vectors, timer, batch, board, flash, radios, correctness, and artifact hashes; the normalized one-context-row, per-observation, manifest bundle form is implemented for the CRC-32 and SHA-256 Mode A acquisitions, while the later workloads and Mode B retain the same metadata in console captures and processed run-metadata tables. Exact measured native artifacts are retained except the accepted Mode A Rust CRC ELF; that case is labelled pinned-source reconstruction.
 
 Processing checks row counts, correctness, unique size/iteration keys, metadata, and reconstruction of normalized time. We report mean, median, sample SD, percentiles, IQR, range, and coefficient of variation. No confidence interval is presented as board-population uncertainty. Cross-study ratios use published mean/local mean because only aggregates exist; within-C6 and Mode B ratios use medians. A ratio near one is not an equivalence test.
 
@@ -107,7 +115,7 @@ Static disassembly records symbol size, instruction rows, loads, stores, branche
 \label{fig:historical}
 \end{figure}
 
-Within C6, ordering also varies (\cref{fig:language}). CRC medians are 104\,\us for C++ and 72\,\us for Rust (Rust/C++ 0.692). SHA gives 670 and 711\,\us (1.061). FFT gives 1185.563 and 1493.750\,\us (1.260). FIR gives 188774 and 186340\,\us (0.987), while IIR gives 3268 and 3277.5\,\us (1.003). FIR/IIR are therefore near-parity observations, not a language ranking. MicroPython is 22--890$\times$ C++ locally, but interpreter generation, numeric objects, SDK, and implementation details preclude an architectural reading.
+Within C6, ordering also varies (\cref{fig:language}). CRC medians are 104\,\us for C++ and 72\,\us for Rust (Rust/C++ 0.692). SHA gives 670 and 711\,\us (1.061). FFT gives 1185.562 and 1493.750\,\us (1.260). FIR gives 188774 and 186340\,\us (0.987), while IIR gives 3268 and 3277.5\,\us (1.003). FIR/IIR are therefore near-parity observations, not a language ranking. MicroPython is 22--890$\times$ C++ locally, but interpreter generation, numeric objects, SDK, and implementation details preclude an architectural reading.
 
 \begin{figure}[t]
 \centering\includegraphics[width=\linewidth]{mode_a_rust_cpp.pdf}
@@ -119,25 +127,33 @@ Largest-input within-acquisition variation is small for most native groups (for 
 
 \section{Generated-Code Evidence}
 \subsection{Integer and fixed-point kernels}
-Matched CRC loops expose address formation. Xtensa uses a scaled add while RV32IMAC synthesizes it:
-\begin{lstlisting}[caption={Representative matched CRC table addressing; static reconstruction only.}]
-# Xtensa profile                 # RV32IMAC profile
-addx4 a8, a8, a10                slli a5, a5, 2
-l32i.n a8, a8, 0                 add  a5, a5, a0
-                                  lw   a5, 0(a5)
+Matched CRC loops expose address formation. Xtensa uses a scaled add while RV32IMAC synthesizes it; both excerpts are copied verbatim from the matched disassemblies under \path{artifacts/assembly/crc32/cpp/}:
+\begin{lstlisting}[caption={Matched CRC table addressing; static reconstruction only.}]
+# matched Xtensa
+addx4 a8, a8, a4
+l32i.n a8, a8, 0
+# matched RV32IMAC
+slli a5,a5,0x2
+add  a5,a5,a2
+lw   a5,0(a5)
 \end{lstlisting}
 Matched SHA rotate idioms use Xtensa \texttt{ssai/src} versus RV32IMAC shifts and ORs. Exact Rust SHA also retains more storage/control structure than C++. These observations reveal different lowering, but no dynamic instruction count or cycle contribution.
 
 For Q15 FFT, both targets emit scalar multiplies and shifts. No Xtensa DSP/MAC or zero-overhead-loop instruction appeared in the matched artifact. Safe Rust retains five panic references and larger control structure. The absence is a property of this binary, not evidence that Xtensa lacks such facilities.
 
+\newpage
 \subsection{Binary32 kernels and recurrence}
-Exact C6 FIR contains two \texttt{\_\_mulsf3} and two \texttt{\_\_addsf3} static call sites; IIR contains five \texttt{\_\_mulsf3}, two \texttt{\_\_addsf3}, and two \texttt{\_\_subsf3}. Matched Xtensa FIR emits \texttt{madd.s}; matched IIR emits \texttt{mul.s}, \texttt{madd.s}, and \texttt{msub.s}. Representative structure is:
-\begin{lstlisting}[caption={Floating-point lowering profiles. Call-site counts are static; reconstructed Xtensa code was not timed.}]
-# exact C6 RV32IMAC             # matched Xtensa reconstruction
-call __mulsf3                   mul.s  f4, f2, f3
-call __addsf3                   madd.s f0, f4, f1
-call __subsf3                   msub.s f5, f2, f6
+Exact C6 FIR contains two \texttt{\_\_mulsf3} and two \texttt{\_\_addsf3} static call sites; IIR contains five \texttt{\_\_mulsf3}, two \texttt{\_\_addsf3}, and two \texttt{\_\_subsf3}. Because the selected target has no hardware floating-point extension, binary32 arithmetic is lowered to compiler-runtime software floating-point routines \citep{gccSoftFloat1420}. Matched Xtensa FIR emits \texttt{madd.s}; matched IIR emits \texttt{mul.s}, \texttt{madd.s}, and \texttt{msub.s}. Verbatim excerpts are copied from the preserved disassemblies under \path{artifacts/builds/} and \path{artifacts/static/}:
+\begin{lstlisting}[caption={Floating-point lowering, copied from the preserved disassemblies under \texttt{artifacts/builds/} and \texttt{artifacts/static/}. Call-site counts are static; reconstructed Xtensa code was not timed.}]
+# exact C6 RV32IMAC
+42008f0c: jalr -1184(ra) # <__mulsf3>
+42008f18: jalr -1308(ra) # <__addsf3>
+42008eb6: jalr -1082(ra) # <__subsf3>
+# matched Xtensa reconstruction
+43: madd.s f0, f2, f1
+19: msub.s f1, f2, f0
 \end{lstlisting}
+The two strategies are not numerically equivalent in general. Xtensa \texttt{MADD.S} and \texttt{MSUB.S} perform no intermediate rounding (\citealp{cadenceXtensaISASummary} \S8.3.159, \S8.3.197), while the C6 target uses separate routines. The reconstructed and the measured kernels therefore need not agree bit-for-bit beyond the frozen tolerance.
 IIR additionally has loop-carried state, constraining cross-sample reordering and lengthening the dependence chain. Compiler scheduling may differ, but the present static evidence cannot quantify its timing effect.
 
 \section{Mode B Results}
@@ -176,7 +192,7 @@ Safe Rust performance FFT has 125 static instructions, 398 bytes, 18 branches, f
 
 \paragraph{RQ2.} No uniform direction emerges. Local native CRC/SHA/FFT means are below published means; FIR/IIR means are above them. Within C6, Rust/C++ ordering varies and FIR/IIR are near parity. MicroPython remains much slower locally while its local means are below published means for all five kernels. Runtime and implementation changes prevent an ISA interpretation.
 
-\paragraph{Best-supported mechanism.} \eclass{Observed}: exact C6 FIR/IIR binaries call software-FP helpers; matched Xtensa artifacts emit FP instructions; optimized C6 artifacts retain helpers; historical/native timing points in the corresponding direction. \eclass{Documented}: C6 is RV32IMAC without standard \texttt{F}; classic ESP32 has configured floating-point facilities. \eclass{Inferred}: distinct FP execution strategies plausibly contribute materially to the historical/local FIR/IIR gap. Neither helper contribution nor pure FP-unit effect is isolated. IIR recurrence is a further plausible constraint, not a quantified cause.
+\paragraph{Best-supported mechanism.} \eclass{Observed}: exact C6 FIR/IIR binaries call software-FP helpers; matched Xtensa artifacts emit FP instructions; optimized C6 artifacts retain helpers; historical/native timing points in the corresponding direction. \eclass{Documented}: C6 is RV32IMAC without standard \texttt{F}, and targets without hardware floating point lower such arithmetic through compiler-runtime software routines \citep{gccSoftFloat1420}; classic ESP32 has configured floating-point facilities. \eclass{Inferred}: distinct FP execution strategies plausibly contribute materially to the historical/local FIR/IIR gap. Neither helper contribution nor pure FP-unit effect is isolated. IIR recurrence is a further plausible constraint, not a quantified cause.
 
 Mode B reinforces interaction: native profiles help, harm, or scarcely change different kernels; the FFT source transformation changes code structure and timing; hardware SHA demonstrates a much larger peripheral opportunity while answering a different question from CPU software.
 

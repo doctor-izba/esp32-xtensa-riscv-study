@@ -4,7 +4,7 @@ Research by **Izbassar Yesbol** · 2026 · [Technical report (PDF)](paper/review
 
 I reproduced five embedded workloads on a physical ESP32-C6, then compared the results with published measurements on the classic ESP32. The comparison is useful for understanding where the workloads changed; it does not isolate the instruction set. The two platforms also differ in memory, peripherals, toolchains, runtimes, and experimental procedure.
 
-This repository holds the protocols, measurements, build artifacts, disassemblies, analysis, and manuscript. The report is a **working technical report, not an externally peer-reviewed publication**.
+This repository holds the protocols, measurements, build artifacts, disassemblies, analysis, and manuscript. The report is a **working technical report, not an externally peer-reviewed publication**. Before a public archive, [third-party vector redistribution and repository licensing](references/original-study/REDISTRIBUTION_REVIEW.md) require an explicit decision. The [reading ledger](literature/READING_LEDGER.md) is a discovery record, not a systematic literature review.
 
 ## What was measured
 
@@ -31,7 +31,7 @@ The exact C6 FIR/IIR binaries call software floating-point routines, while match
 - [Manuscript](paper/manuscript.tex), [PDF](paper/review-manuscript.pdf), and [supplement](paper/review-supplement.pdf)
 - [Methods](METHODOLOGY.md), [research questions](RESEARCH_QUESTIONS.md), and [reproduction contract](REPRODUCIBILITY.md)
 - [Related-work comparison](literature/RELATED_WORK_DEEP_REVIEW.md) and [September 2026 positioning update](literature/2026-09-positioning-update.md)
-- [Processed results](data/processed/), [raw acquisition bundles](data/raw/), and [historical aggregates](data/baselines/)
+- [Processed results](data/processed/), including the transcribed [historical aggregates](data/processed/plauska_crc32_historical_summary.csv), and [raw acquisition bundles](data/raw/)
 - [Exact and reconstructed code artifacts](artifacts/assembly/) and [figure manifest](paper/PUBLICATION_FIGURE_MANIFEST.csv)
 
 The manuscript's claim boundaries matter: only the C6 was newly timed; reconstructed Xtensa objects were not executed; one accepted Rust CRC binary was not retained and is labelled as a reconstruction. The internal files in `paper/reviews/` are quality-control notes, **not external peer reviews**.

@@ -2,7 +2,7 @@
 \usepackage[margin=0.62in]{geometry}
 \usepackage{booktabs,array,longtable,hyperref,microtype}
 \begin{document}
-\begin{center}\Large\bfseries Supplement: Reproducing and Extending ESP32 Workload Benchmarks on ESP32-C6\end{center}
+\begin{center}\Large\bfseries Supplement: Reproducing and Extending ESP32 Workload Benchmarks on ESP32-C6:\\ Performance and Generated-Code Results\end{center}
 \section{Reader map}
 Frozen protocols and vectors are under \path{benchmarks/historical/}; Mode B contracts are under \path{benchmarks/optimized/}; raw captures and metadata are under \path{data/raw/}; validated data are under \path{data/processed/}; exact binaries and hashes are under \path{artifacts/builds/}; disassemblies are under \path{artifacts/assembly/}; analysis is under \path{matlab/}. The figure manifest maps publication images to SHA-256 hashes.
 
@@ -25,14 +25,14 @@ Exact C6 measured-build evidence is distinguished from matched reconstructed obj
 \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.17\linewidth}>{\raggedright\arraybackslash}p{0.32\linewidth}>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.14\linewidth}@{}}
 \toprule Claim layer & Evidence, artifact, and integrity locator & Reproduction command & Permitted use \\ \midrule\endhead
 Mode A timing & \path{data/processed/}; raw-bundle manifests under \path{data/raw/} & workload processor; \path{run_publication_analysis.m} & One-board observation\\
-Historical timing & frozen Plauska transcription; DOI 10.3390/electronics12010143 & \path{build_mode_a_cross_workload_summary.py} & Descriptive comparison\\
+Historical timing & external-source locator and derived hashes: \path{data/baselines/plauska_sources_v1.csv}; numeric summaries and original lineage: \path{data/processed/plauska_*_historical_*.csv} & \path{build_source_manifest.py}; \path{build_mode_a_cross_workload_summary.py} & Descriptive comparison\\
 FFT exact code & \path{artifacts/builds/fft/ARTIFACT_MANIFEST.md}; C++ ELF \texttt{2f563a88...90d165}; Rust \texttt{a3b83f33...8b4c8a} & verify manifest hashes; apply stored disassembly rules & Static measured-build evidence\\
 FIR exact code & \path{artifacts/builds/fir/ARTIFACT_MANIFEST.md}; C++ ELF \texttt{fea5db04...81649}; Rust \texttt{6b7d13c1...0a70a4} & verify manifest hashes; apply stored disassembly rules & Static measured-build evidence\\
 IIR exact code & \path{artifacts/builds/iir/ARTIFACT_MANIFEST.md}; C++ ELF \texttt{b74b8ebe...e4a7d}; Rust \texttt{f3b13892...020b9} & verify manifest hashes; apply stored disassembly rules & Static measured-build evidence\\
 Matched targets & reconstruction manifests under \path{artifacts/static/} and \path{artifacts/assembly/} & pinned invocation beside each object & Mechanism only\\
 Mode B & \path{data/processed/mode_b_summary.csv}; exact profile builds & \path{run_mode_b_analysis.m} & Declared profile only\\
 Figures & \path{paper/PUBLICATION_FIGURE_MANIFEST.csv} & \path{run_publication_analysis.m}; \path{build_publication_assets.py} & Derived display\\
-Claims/citations & \path{paper/CLAIM_AUDIT.md}; \path{paper/references.bib} & \path{validate_manuscript.py}; \path{validate_publication.py} & Audited statement\\
+Claims/citations & \path{paper/CLAIM_AUDIT_2.md} for this report; \path{paper/CLAIM_AUDIT.md} for the Markdown lineage; \path{paper/references.bib} & \path{validate_manuscript.py}; \path{validate_publication.py} & Audited statement\\
 \bottomrule
 \end{longtable}
 \normalsize

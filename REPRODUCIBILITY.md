@@ -100,6 +100,8 @@ Three explicit seams were added:
 - `data/validation/` lets validators report problems without mutating evidence.
 - `artifacts/` stores build/disassembly evidence separately from measured observations.
 
+Decision 0014 gives `data/baselines/` an external-source-locator manifest, without redistributing the publisher PDF or upstream CSV. Plauska historical numeric summaries and their original lineage remain under `data/processed/`; the manifest pins each summary's exact SHA-256. The source-versus-derived distinction is normative in `METHODOLOGY.md` version `0.3.0`. No accepted historical or local measurement was moved or edited.
+
 Placeholder directories use scoped `README.md` contracts instead of bare `.gitkeep` files.
 
 ## Release checklist

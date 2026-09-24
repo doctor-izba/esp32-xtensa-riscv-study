@@ -1,8 +1,8 @@
 # Methodology
 
-Version: `0.2.0-two-mode-design`
+Version: `0.3.0-historical-source-separation`
 
-Status: design contract; CRC-32 Mode A protocol is approved and its first physical acquisition is complete.
+Status: normative two-mode contract; all five Mode A slices and the declared minimal Mode B campaign are complete. Historical source/derivation mapping clarified by Decision 0014.
 
 ## 1. Study design
 
@@ -16,12 +16,15 @@ The cross-platform contrast is not controlled for ISA alone. ISA, microarchitect
 |---|---|---|---|
 | Local observation | One timed invocation | `data/raw/` | `local_measurement` |
 | Local run context | One acquisition session | `data/raw/` | `local_measurement` |
-| Historical row/aggregate | One reported external value | `data/baselines/` | `published_aggregate` or `upstream_recording` |
+| Historical source evidence | One external publication or pinned upstream recording | `data/baselines/plauska_sources_v1.csv` (locator manifest; source bytes not vendored) | `published_aggregate` or `upstream_recording` |
+| Derived historical summary | One published-table transcription or aggregate calculated from upstream rows | `data/processed/plauska_*_historical_summary.csv` with original lineage | `published_aggregate` or `upstream_recording_derived_summary` |
 | Build metric | One build artifact | `artifacts/builds/` and derived CSV | `local_build` |
 | Assembly metric | One object/function/configuration | `artifacts/assembly/` and derived CSV | `static_analysis` |
 | Energy window | One long meter interval | Dedicated raw bundle/derived CSV | `board_level_measurement` |
 
 Origins and grains are mandatory fields; directory names are not a substitute for metadata.
+
+Decision 0014 (approved 2026-09-24) clarifies the source/derivation boundary without moving or editing accepted historical summary or lineage files. The baseline directory records exact external locators and the hashes of their derived summaries; it does not contain third-party source bytes.
 
 ## 3. Benchmark scope
 

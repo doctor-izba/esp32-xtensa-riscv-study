@@ -6,6 +6,9 @@ Thumbs.db
 .idea/
 .vscode/
 
+# Local agent/operator instructions are not a research artifact.
+/AGENTS.md
+
 # Secrets and machine-specific settings
 .env
 .env.*

@@ -110,14 +110,18 @@ The new source-locator manifest is prospective metadata at version `1.0.0`;
 the methodology mapping is clarified at version `0.3.0`. No recollection is
 required. Redistribution and repository-license decisions remain release gates.
 
-Pre-existing processed-summary SHA-256 values pinned at this decision:
+Pre-existing processed-summary **canonical Git blob** SHA-256 values pinned at
+this decision. The first manifest draft accidentally hashed local checkout
+bytes; Windows line-ending conversion made those values worktree-dependent.
+The follow-up correction changed only the manifest and its builder, never the
+processed files or historical values:
 
 | Workload | SHA-256 |
 |---|---|
-| CRC-32 | `1253633a501da85ffcee0ef1346ca27e2bfdcea9a6789d53483d695fd7051935` |
-| SHA-256 | `aafb90d2319b4c5dbe7a8b9db19ff0429b187247104013ca6b7697837e5a1503` |
-| FFT | `70c900dabfbb0713b78f39ff6d28ea91c1c42904aa31d71bbeb8220d27057512` |
-| FIR | `b3e6579eaca42fa5c22183f9681b24c1319551a8cfae938f0e504a175cf062fe` |
-| IIR | `78441b07a150f54a9e76cdbed9e84b07ac8f73a090a5d5b42fc8c5d217a06f99` |
+| CRC-32 | `ae3cff214ed0e7c65dd291d0d2dc69a1d2574c7ae4d4f6ee8dcb1e2c1e26c3a3` |
+| SHA-256 | `7b9da45459afedadc08c15d2c2da775de30772c43693d827793e470901aacff5` |
+| FFT | `e8395c4f2254de53ad6c99c80039c2ebc080d470cbd781076f6d1039c3f2bfb5` |
+| FIR | `4c0942eed8f53c698ef44df857690ae5f1ef005fc2b1d8ff51f713850fb356d5` |
+| IIR | `f65503d4ac0a23e8641a2e79cf437565300025fa3e2b4df571cdb61d51adeb42` |
 
 Approver: repository owner, 2026-09-24.

@@ -4,7 +4,7 @@
 \begin{document}
 \begin{center}\Large\bfseries Supplement: Reproducing and Extending ESP32 Workload Benchmarks on ESP32-C6:\\ Performance and Generated-Code Results\end{center}
 \section{Reader map}
-Frozen protocols and vectors are under \path{benchmarks/historical/}; Mode B contracts are under \path{benchmarks/optimized/}; raw captures and metadata are under \path{data/raw/}; validated data are under \path{data/processed/}; exact binaries and hashes are under \path{artifacts/builds/}; disassemblies are under \path{artifacts/assembly/}; analysis is under \path{matlab/}. The figure manifest maps publication images to SHA-256 hashes.
+The accompanying analysis-only package v1.0.0 is prepared for Zenodo but not yet publicly deposited; it has no public record or DOI. Package paths below are relative to its root. \path{data/local_timings.csv} contains 21,600 accepted timing records, not the complete raw console evidence. \path{source_lineage.csv} and \path{manifest.csv} record source and package hashes. Run \path{analysis.py}, then \path{matlab/run_publication_analysis.m} to recompute timing results and all four publication figures. The Python script also regenerates result tables from timing summaries and imported static metrics. The complete private archive separately retains protocols, inputs, raw captures, exact builds, and disassemblies. Those files are not supplied or promised on request while redistribution review is unresolved. Numerical correctness and emitted instructions cannot be independently re-audited from this package.
 
 \section{Historical-contract limitations}
 \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.19\linewidth}>{\raggedright\arraybackslash}p{0.34\linewidth}>{\raggedright\arraybackslash}p{0.37\linewidth}@{}}
@@ -23,16 +23,15 @@ Exact C6 measured-build evidence is distinguished from matched reconstructed obj
 \section{Claim-to-evidence map}
 \small
 \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.17\linewidth}>{\raggedright\arraybackslash}p{0.32\linewidth}>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.14\linewidth}@{}}
-\toprule Claim layer & Evidence, artifact, and integrity locator & Reproduction command & Permitted use \\ \midrule\endhead
-Mode A timing & \path{data/processed/}; raw-bundle manifests under \path{data/raw/} & workload processor; \path{run_publication_analysis.m} & One-board observation\\
-Historical timing & external-source locator and derived hashes: \path{data/baselines/plauska_sources_v1.csv}; numeric summaries and original lineage: \path{data/processed/plauska_*_historical_*.csv} & \path{build_source_manifest.py}; \path{build_mode_a_cross_workload_summary.py} & Descriptive comparison\\
-FFT exact code & \path{artifacts/builds/fft/ARTIFACT_MANIFEST.md}; C++ ELF \texttt{2f563a88...90d165}; Rust \texttt{a3b83f33...8b4c8a} & verify manifest hashes; apply stored disassembly rules & Static measured-build evidence\\
-FIR exact code & \path{artifacts/builds/fir/ARTIFACT_MANIFEST.md}; C++ ELF \texttt{fea5db04...81649}; Rust \texttt{6b7d13c1...0a70a4} & verify manifest hashes; apply stored disassembly rules & Static measured-build evidence\\
-IIR exact code & \path{artifacts/builds/iir/ARTIFACT_MANIFEST.md}; C++ ELF \texttt{b74b8ebe...e4a7d}; Rust \texttt{f3b13892...020b9} & verify manifest hashes; apply stored disassembly rules & Static measured-build evidence\\
-Matched targets & reconstruction manifests under \path{artifacts/static/} and \path{artifacts/assembly/} & pinned invocation beside each object & Mechanism only\\
-Mode B & \path{data/processed/mode_b_summary.csv}; exact profile builds & \path{run_mode_b_analysis.m} & Declared profile only\\
-Figures & \path{paper/PUBLICATION_FIGURE_MANIFEST.csv} & \path{run_publication_analysis.m}; \path{build_publication_assets.py} & Derived display\\
-Claims/citations & \path{paper/CLAIM_AUDIT_2.md} for this report; \path{paper/CLAIM_AUDIT.md} for the Markdown lineage; \path{paper/references.bib} & \path{validate_manuscript.py}; \path{validate_publication.py} & Audited statement\\
+\toprule Claim layer & Package/private evidence and integrity locator & Command or access boundary & Permitted use \\ \midrule\endhead
+Mode A timing & Package: \path{data/local_timings.csv}; hashes in \path{manifest.csv}. Private: original raw-bundle manifests. & \texttt{python analysis.py} & One-board observation\\
+Historical timing & Package: cited aggregates in \path{data/historical_means.csv}; external locators and hashes in \path{data/baselines/plauska_sources_v1.csv}. Source PDF/CSV not included. & \texttt{python analysis.py}; external source check remains separate & Descriptive comparison\\
+Exact C6 code & Private: native artifacts under \path{artifacts/builds/}. Package: full retained hashes/status in \path{data/retained_artifact_hashes.csv}, including the Rust CRC omission. & Binaries/disassembly excluded; hashes identify artifacts but cannot supply a re-audit & Static measured-build evidence\\
+Matched targets & Private: manifests under \path{artifacts/static/} and \path{artifacts/assembly/}. & Reconstruction sources/objects excluded & Mechanism only\\
+Mode B & Package: \path{data/local_timings.csv}; derived \path{data/processed/mode_b_summary.csv}. Exact profile builds retained privately. & \texttt{python analysis.py} & Declared profile only\\
+FFT transformation table & Package: imported numeric codegen metrics under \path{data/processed/}; source hashes in \path{source_lineage.csv}. & \texttt{python analysis.py}; does not regenerate metrics & Derived table only\\
+Figures & Package: \path{paper/figures/}; hashes in \path{manifest.csv}. & \path{matlab/run_publication_analysis.m} & Derived display\\
+Claims/citations & Package: \path{paper/CLAIM_AUDIT_2.md} and \path{paper/references.bib}; private full verification ledger. & \texttt{python verify\_package.py}; not a new primary-source audit & Stated evidence boundaries\\
 \bottomrule
 \end{longtable}
 \normalsize

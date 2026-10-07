@@ -22,7 +22,7 @@ displayNames=["C/C++","Rust","MicroPython"];
 for j=1:3, semilogy(1:5,M(:,j),LineStyle='none',Marker=mk(j),MarkerSize=7,MarkerFaceColor=[shades(j) shades(j) shades(j)],MarkerEdgeColor='k',DisplayName=displayNames(j)); end
 yline(1,'k--','equal mean','LabelHorizontalAlignment','left','HandleVisibility','off');
 set(gca,'YScale','log','YLim',[0.05 5],'XTick',1:5,'XTickLabel',labels,'FontSize',9,'TickLabelInterpreter','none');
-ylabel({'Published Plauska mean /','new C6 mean (log scale)'}); grid on; box on;
+ylabel({'Published Plauska mean /','new C6 mean (log scale)'}); xlim([0.65 5.35]); grid on; box on;
 legend('Location','northoutside','Orientation','horizontal');
 export_all(f,outDir,'mode_a_historical_local'); close(f);
 
@@ -36,7 +36,7 @@ for i=1:5
 end
 yline(1,'k--','parity','LabelHorizontalAlignment','right','HandleVisibility','off');
 set(gca,'XTick',1:7,'XTickLabel',{'16','32','64','128','256','512','1024'},'FontSize',9);
-xlabel('Frozen input size (workload units)'); ylabel('Rust median / C++ median'); ylim([0.62 1.34]); grid on; box on;
+xlabel('Frozen input size (workload units)'); ylabel('Rust median / C++ median'); xlim([0.7 7.3]); ylim([0.62 1.34]); grid on; box on;
 legend('Location','eastoutside');
 export_all(f,outDir,'mode_a_rust_cpp'); close(f);
 
@@ -49,7 +49,7 @@ plot(1:5,V(:,1),'-o',Color=[0.1 0.1 0.1],MarkerFaceColor='w',LineWidth=1.2,Displ
 plot(1:5,V(:,2),'--s',Color=[0.5 0.5 0.5],MarkerFaceColor=[0.5 0.5 0.5],MarkerEdgeColor='k',LineWidth=1.2,DisplayName='Rust: opt-level 3');
 yline(1,'k--','Mode A','LabelHorizontalAlignment','right','HandleVisibility','off');
 set(gca,'XTick',1:5,'XTickLabel',labels,'FontSize',9,'TickLabelInterpreter','none');
-ylabel('Performance profile / Mode A median'); ylim([0.70 1.10]); grid on; box on;
+ylabel('Performance profile / Mode A median'); xlim([0.65 5.35]); ylim([0.70 1.10]); grid on; box on;
 legend('Location','northoutside','Orientation','horizontal');
 export_all(f,outDir,'mode_b_compiler_response'); close(f);
 

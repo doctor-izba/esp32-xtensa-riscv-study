@@ -1,0 +1,25 @@
+{
+  "worksheet_status": "prepared_not_deposited",
+  "prepared_on": "2026-10-07",
+  "version": "1.0.0",
+  "title": "Analysis package for Reproducing and Extending ESP32 Workload Benchmarks on ESP32-C6: Performance and Generated-Code Results",
+  "resource_type": "dataset",
+  "creators": [
+    {
+      "given_name": "Izbassar",
+      "family_name": "Yesbol",
+      "orcid": "0009-0002-1737-7982"
+    }
+  ],
+  "description": "Analysis-only companion to an author-owned technical report, not an externally peer-reviewed publication. Contains 21,600 accepted ESP32-C6 timing records projected from validated datasets, local statistics and ratios, separately identified cited historical aggregates and imported numeric static metrics, original Python/MATLAB analysis, manuscript sources, and the report/supplement PDFs. Reproduces timing summaries, four publication figures, and generated result tables. Does not repeat numerical correctness validation, rebuild firmware, rerun hardware, or independently regenerate machine-code evidence. Upstream input/reference arrays, benchmark implementations, native artifacts, disassembly, full console captures, upstream full texts/source recordings, and private Git history are excluded. The complete evidence archive is retained privately pending redistribution review.",
+  "language": "eng",
+  "keywords": ["ESP32-C6", "ESP32", "RISC-V", "Xtensa", "embedded benchmarking", "C/C++", "Rust", "MicroPython", "reproducible analysis"],
+  "licenses": [
+    {"id": "cc-by-4.0", "scope": "author-owned data, text and figures"},
+    {"id": "mit", "scope": "original analysis/build/verification code"}
+  ],
+  "publication_date": null,
+  "doi": null,
+  "record_url": null,
+  "deposit_instructions": "This is a human-readable metadata worksheet, not a submitted API payload. Set the actual publication date only when separately authorized to deposit; reserve no DOI in this preparation pass. Add the actual permanent archive locator to the availability statement, rebuild and revalidate before publication. Do not invent affiliation or funding. A journal article DOI, if later assigned, is not the dataset DOI."
+}

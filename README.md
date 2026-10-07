@@ -1,10 +1,10 @@
 # ESP32 workload study: classic Xtensa and ESP32-C6
 
-Research by **Izbassar Yesbol** · 2026 · [Technical report (PDF)](paper/review-manuscript.pdf) · [Supplement (PDF)](paper/review-supplement.pdf)
+Research by **Izbassar Yesbol** · [ORCID 0009-0002-1737-7982](https://orcid.org/0009-0002-1737-7982) · 2026 · [Technical report (PDF)](paper/review-manuscript.pdf) · [Supplement (PDF)](paper/review-supplement.pdf)
 
 I reproduced five embedded workloads on a physical ESP32-C6, then compared the results with published measurements on the classic ESP32. The comparison is useful for understanding where the workloads changed; it does not isolate the instruction set. The two platforms also differ in memory, peripherals, toolchains, runtimes, and experimental procedure.
 
-This repository holds the protocols, measurements, build artifacts, disassemblies, analysis, and manuscript. The report is a **working technical report, not an externally peer-reviewed publication**. Before a public archive, [third-party vector redistribution and repository licensing](references/original-study/REDISTRIBUTION_REVIEW.md) require an explicit decision. The [reading ledger](literature/READING_LEDGER.md) is a discovery record, not a systematic literature review.
+This repository holds the protocols, measurements, build artifacts, disassemblies, analysis, and manuscript. The report is a **working technical report, not an externally peer-reviewed publication**. [Original software uses MIT and original data/documentation use CC BY 4.0](LICENSING.md), with explicit [third-party exceptions and notices](THIRD_PARTY_NOTICES.md). [Upstream permission and binary-dependency redistribution](references/original-study/REDISTRIBUTION_REVIEW.md) remain open before a public archive. The [reading ledger](literature/READING_LEDGER.md) is a discovery record, not a systematic literature review.
 
 ## What was measured
 

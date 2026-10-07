@@ -11,8 +11,8 @@
 \newcommand{\us}{\ensuremath{\mu\mathrm{s}}\xspace}
 \newcommand{\eclass}[1]{\textsc{#1}}
 \title{Reproducing and Extending ESP32 Workload Benchmarks on ESP32-C6:\\Performance and Generated-Code Results}
-\author{Izbassar Yesbol}
-\date{Technical report, September 2026}
+\author{Izbassar Yesbol\\[-0.2em]\small ORCID: \href{https://orcid.org/0009-0002-1737-7982}{0009-0002-1737-7982}}
+\date{Technical report, October 2026}
 
 \begin{document}
 \maketitle
@@ -48,7 +48,7 @@ Xtensa is explicitly configurable and extensible \citep{gonzalez2000xtensa}; a g
 
 Our engineering reading asks four concrete questions of each kernel: what is the representation, what is the critical loop, what memory and control operations surround it, and which abstraction costs survive compilation? This resembles performance-aware programming practice, but all academic claims rest on measured artifacts and primary architecture sources.
 
-Every claim in this report is labelled by the class of evidence that supports it (\cref{tab:evidence}), so that a measured observation is never presented as a published aggregate, an unexecuted reconstruction, or an inference.
+We distinguish the evidence classes in \cref{tab:evidence} and apply them explicitly in the mechanism discussion, keeping measured observations, published aggregates, unexecuted reconstructions, and inferences separate.
 
 \begin{table}[!htbp]
 \centering\small

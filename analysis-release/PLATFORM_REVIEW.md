@@ -1,10 +1,17 @@
 # Archival platform review — 2026-10-07
 
-Update 2026-10-20: the owner requested obtaining a real Zenodo DOI for the
-scoped v1.0.1 archive. The preparation-only status described below is the
-historical v1.0.0 approval, preserved unchanged in its sealed ZIP. Authentication
-and creation of the production Zenodo draft are pending. No DOI or public
-record is claimed until verified from the platform. See Decision 0018.
+Update 2026-10-20: the owner authorized direct public deposit of the scoped
+v1.0.1 archive in Zenodo while keeping the GitHub repository private. The
+authenticated production draft issued DOI `10.5281/zenodo.23493672` before
+the final build. Reservation is distinct from registration, which occurs upon
+publication. This file is a build-time review snapshot; consult the live record
+for current publication status. The DOI is for the analysis archive and
+accompanying technical report, not a journal article or peer-review decision.
+
+## Historical preparation review (v1.0.0, 2026-10-07)
+
+The following statements describe the earlier preparation approval, preserved
+unchanged in its sealed v1.0.0 ZIP; they do not describe v1.0.1 deposit status.
 
 Selected: **Zenodo**, for a dataset archive accompanied by the technical report
 and original analysis software. This is not a journal submission or external

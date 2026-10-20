@@ -1,5 +1,5 @@
 {
-  "worksheet_status": "doi_workflow_requested_awaiting_authenticated_draft",
+  "worksheet_status": "deposit_metadata_snapshot_doi_reserved_before_final_build",
   "prepared_on": "2026-10-20",
   "version": "1.0.1",
   "title": "A Change of Core: Revisiting ESP32 Benchmarks on ESP32-C6 — Analysis Archive and Technical Report",
@@ -18,8 +18,8 @@
     {"id": "cc-by-4.0", "scope": "author-owned data, text and figures"},
     {"id": "mit", "scope": "original analysis/build/verification code"}
   ],
-  "publication_date": null,
-  "doi": null,
-  "record_url": null,
-  "deposit_instructions": "The owner requested obtaining a DOI on 2026-10-20. This remains a human-readable worksheet until a production Zenodo draft is created. Record the exact platform-issued DOI and record URL, distinguish reservation from public registration, update the paper and supplement, and rebuild/revalidate the final package. Record the actual publication date for the published version. Do not invent affiliation or funding. A later journal article DOI is distinct from this dataset/report archive DOI."
+  "publication_date": "2026-10-20",
+  "doi": "10.5281/zenodo.23493672",
+  "record_url": "https://zenodo.org/records/23493672",
+  "deposit_instructions": "Production Zenodo draft 23493672 reserved this DOI on 2026-10-20 before the final package build. Registration occurs on publication; consult the live record for current status. The owner authorized direct deposit of the scoped package while the GitHub repository remains private. Do not invent affiliation or funding. A later journal article DOI is distinct from this dataset/report archive DOI."
 }

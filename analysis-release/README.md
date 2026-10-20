@@ -1,13 +1,14 @@
-# Analysis archive v1.0.1 — DOI workflow in preparation
+# Analysis archive v1.0.1
 
 Researcher: Izbassar Yesbol, https://orcid.org/0009-0002-1737-7982.
 The report is a technical report, not an externally peer-reviewed publication.
 
 This is a bounded analysis package, not the complete private research repository.
 It accompanies *A Change of Core: Revisiting ESP32 Benchmarks on ESP32-C6*,
-editorial revision 1.0.1. The owner requested the Zenodo DOI workflow on
-2026-10-20. Until an authenticated draft provides real identifiers, no record
-URL or DOI is claimed. This is not a journal acceptance or a public release
+editorial revision 1.0.1. Archive DOI: https://doi.org/10.5281/zenodo.23493672 .
+Record: https://zenodo.org/records/23493672 . Zenodo reserved this identifier
+before the final package build on 2026-10-20, allowing it to appear in the PDFs;
+registration occurs upon publication. This is not a journal acceptance or a public release
 of the complete private repository. The sealed v1.0.0 archive is retained
 separately with the preceding title and report.
 
@@ -84,7 +85,7 @@ distribution items are not granted a license here or promised upon request.
 Upstream clarification remains at:
 https://github.com/ignasp/ProgLangComp_onESP32/issues/2 .
 
-## Licenses and eventual deposit
+## Licenses and deposit
 
 Original author software: MIT (`LICENSE-MIT.txt`). Author-owned timing records,
 derived presentations, manuscript, and authored documentation: CC BY 4.0
@@ -92,8 +93,8 @@ derived presentations, manuscript, and authored documentation: CC BY 4.0
 of otherwise unprotected facts or external source documents. Historical
 sources remain cited with their provenance. No upstream code is included.
 
-`ZENODO_METADATA.json` is currently a preparation worksheet, **not** an
-API-created record. No affiliation, funding, publication date, URL or DOI is
-invented. The final DOI-bearing package must record the real platform-issued
-identifier, match its availability statements to the actual record state,
-and be rebuilt and revalidated before publication.
+`ZENODO_METADATA.json` records the intended deposit metadata and the identifier
+issued by the authenticated production Zenodo draft. It is a build-time snapshot;
+the live record is authoritative for publication status. No affiliation or funding
+is claimed. The repository remains private; this deposit contains only the
+scoped analysis package. The earlier sealed v1.0.0 package is retained privately.

@@ -1,9 +1,9 @@
 FILE review-manuscript.pdf
-SHA256 8ed874faba831784c1f750974518e84a22a637c0f15c405087f518284ee354a1
+SHA256 c48506ea5c3c1e6db8ff8f4154f58c278cd6f93e3a31bd7e81239fec76c51dd7
 COMMAND pdfinfo review-manuscript.pdf
 Creator:         LaTeX with hyperref
 Producer:        xdvipdfmx (0.1)
-CreationDate:    Tue Oct 20 12:27:06 2026 Кызылорда (зима)
+CreationDate:    Tue Oct 20 13:04:49 2026 Кызылорда (зима)
 Custom Metadata: no
 Metadata Stream: no
 Tagged:          no
@@ -15,7 +15,7 @@ Pages:           10
 Encrypted:       no
 Page size:       612 x 792 pts (letter)
 Page rot:        0
-File size:       192573 bytes
+File size:       192458 bytes
 Optimized:       no
 PDF version:     1.5
 
@@ -44,14 +44,14 @@ EAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes 
 NITCSQ+CMMI9                         Type 1C           Builtin          yes yes yes    143  0
 EAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes    151  0
 EAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes    176  0
-NOMARO+LMRoman7-Italic-Identity-H    CID Type 0C       Identity-H       yes yes yes    223  0
+NOMARO+LMRoman7-Italic-Identity-H    CID Type 0C       Identity-H       yes yes yes    224  0
 
 FILE review-supplement.pdf
-SHA256 2825793256ff7d071eaaff7db7af1237f01abfa761d23e0644290b2e7cb06953
+SHA256 c0b84bd666859d97de995b9fb301741c6e733e69be27979100625863347163d4
 COMMAND pdfinfo review-supplement.pdf
 Creator:         LaTeX with hyperref
 Producer:        xdvipdfmx (0.1)
-CreationDate:    Tue Oct 20 12:27:22 2026 Кызылорда (зима)
+CreationDate:    Tue Oct 20 13:04:49 2026 Кызылорда (зима)
 Custom Metadata: no
 Metadata Stream: no
 Tagged:          no
@@ -63,7 +63,7 @@ Pages:           2
 Encrypted:       no
 Page size:       612 x 792 pts (letter)
 Page rot:        0
-File size:       37924 bytes
+File size:       38292 bytes
 Optimized:       no
 PDF version:     1.5
 
@@ -72,7 +72,7 @@ name                                 type              encoding         emb sub 
 ------------------------------------ ----------------- ---------------- --- --- --- ---------
 IHAIZV+LMRoman12-Bold-Identity-H     CID Type 0C       Identity-H       yes yes yes      4  0
 BZIVMZ+LMRoman10-Regular-Identity-H  CID Type 0C       Identity-H       yes yes yes      6  0
-IXFAWU+LMMono10-Regular-Identity-H   CID Type 0C       Identity-H       yes yes yes      8  0
-TQTHRL+LMRoman9-Regular-Identity-H   CID Type 0C       Identity-H       yes yes yes     10  0
-YEUUOC+LMMono9-Regular-Identity-H    CID Type 0C       Identity-H       yes yes yes     12  0
-AKHCZK+CMMI9                         Type 1C           Builtin          yes yes yes     18  0
+IXFAWU+LMMono10-Regular-Identity-H   CID Type 0C       Identity-H       yes yes yes     10  0
+TQTHRL+LMRoman9-Regular-Identity-H   CID Type 0C       Identity-H       yes yes yes     12  0
+YEUUOC+LMMono9-Regular-Identity-H    CID Type 0C       Identity-H       yes yes yes     14  0
+AKHCZK+CMMI9                         Type 1C           Builtin          yes yes yes     19  0

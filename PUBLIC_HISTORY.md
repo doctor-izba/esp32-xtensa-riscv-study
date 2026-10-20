@@ -19,7 +19,13 @@ or disassembly audits. Inputs, kernels, native binaries, full disassemblies,
 console captures and internal review conversations are outside this public
 projection. Short attributed excerpts in the authored report remain.
 
-This is a local candidate for the existing GitHub repository, not a new GitHub
-repository. It is not public or deposited, and no DOI is claimed here. GitHub
-may retain old cached objects after a force push; local filtering alone does
-not certify their deletion from GitHub storage.
+Both filtered branches were pushed to the existing GitHub repository on
+20 October 2026. The repository remains private: authenticated checks still
+resolved excluded files through an old commit SHA after the branch rewrite.
+Local filtering does not certify deletion from GitHub storage. The original
+private working checkout must not be merged or pushed back into these branches.
+
+The scoped analysis archive v1.0.1 and report were published separately in
+Zenodo: https://doi.org/10.5281/zenodo.23493672 . That deposit does not contain
+Git history or the excluded experimental implementation artifacts. It does
+not imply that this GitHub repository or its full evidence archive is public.

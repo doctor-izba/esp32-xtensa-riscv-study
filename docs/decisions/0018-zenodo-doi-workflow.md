@@ -27,3 +27,14 @@ directory so that v1.0.0 validation records are not overwritten.
 Authentication, new-account registration and any platform-required acceptance
 of legal terms are completed by the owner when necessary. No credentials or
 tokens are recorded in the package or repository.
+
+## Direct-deposit selection, 2026-10-20
+
+After the filtered branch rewrite, excluded old GitHub objects remained
+resolvable to an authenticated account. The owner explicitly selected direct
+Zenodo upload of the scoped package while keeping the repository private.
+The authenticated production draft is `https://zenodo.org/uploads/23493672`;
+its reserved DOI is `10.5281/zenodo.23493672`. The report, supplement and
+deposit metadata now contain that actual identifier. At reservation time,
+no published record or DOI registration is claimed. A separate publication
+receipt will record the result after the platform confirms publication.

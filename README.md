@@ -1,5 +1,7 @@
 # A Change of Core: Revisiting ESP32 Benchmarks on ESP32-C6
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23493672.svg)](https://doi.org/10.5281/zenodo.23493672)
+
 Research by **Izbassar Yesbol** · [ORCID](https://orcid.org/0009-0002-1737-7982)
 · hello@izba.sarl · Technical report, editorial revision 1.0.1.
 
@@ -39,6 +41,14 @@ the cited publications or excluded third-party material.
 
 ## Publication status
 
-This is a local review candidate for the existing repository. Production
-Zenodo/GitHub integration and a release DOI have not yet been created. The
-sealed v1.0.0 ZIP is retained as an older snapshot; v1.0.1 is being prepared.
+Analysis archive **v1.0.1** and the accompanying report were published directly
+in [Zenodo on 20 October 2026](https://zenodo.org/records/23493672).
+Version DOI: [10.5281/zenodo.23493672](https://doi.org/10.5281/zenodo.23493672).
+The [all-versions DOI](https://doi.org/10.5281/zenodo.23493671) points to the
+latest archive version. See [publication receipt](publication/ZENODO_DEPOSIT_V1_0_1.json)
+for uploaded hashes and public download verification.
+
+This existing GitHub repository remains private while old excluded objects
+retained by GitHub are addressed. GitHub–Zenodo auto-archiving is not enabled;
+the DOI identifies the scoped Zenodo deposit, not this repository's full history.
+The earlier sealed v1.0.0 ZIP remains a private snapshot.

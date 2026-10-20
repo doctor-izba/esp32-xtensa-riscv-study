@@ -1,0 +1,171 @@
+LOCAL ANALYSIS-PACKAGE REPRODUCTION — actual commands and output
+No benchmarks, publication, DOI reservation, or private-archive release.
+COMMAND C:\Python314\python.exe --version
+Python 3.14.4
+
+
+EXIT 0
+COMMAND C:\Python314\python.exe verify_package.py
+PACKAGE_HASH_PASS files=40
+
+
+EXIT 0
+COMMAND C:\Python314\python.exe analysis.py
+ARCHIVE_ANALYSIS_PASS observations=21600 groups=216 ratios=176 tables=4
+
+
+EXIT 0
+COMMAND matlab -batch disp(version); addpath('matlab'); run_publication_analysis(string(pwd))
+24.2.0.2712019 (R2024b)
+PUBLICATION_MATLAB_PASS
+
+
+EXIT 0
+COMMAND C:\Python314\python.exe build_paper.py --sync-figures --tectonic C:\Users\izbas\Desktop\ESP32_comparison\.tools\tectonic\tectonic.exe
+note: Running TeX ...
+note: Running BibTeX on manuscript.aux ...
+note: Rerunning TeX because bibtex was run ...
+note: Rerunning TeX because "manuscript.aux" changed ...
+note: Running xdvipdfmx ...
+note: Writing `C:\Users\izbas\Desktop\ESP32_comparison\paper\build\zenodo-v1.0.1-final-reproduction\results\pdf\manuscript.log` (16.31640625 KiB)
+note: Writing `C:\Users\izbas\Desktop\ESP32_comparison\paper\build\zenodo-v1.0.1-final-reproduction\results\pdf\manuscript.blg` (200 B)
+note: Writing `C:\Users\izbas\Desktop\ESP32_comparison\paper\build\zenodo-v1.0.1-final-reproduction\results\pdf\manuscript.pdf` (187.947265625 KiB)
+note: Skipped writing 3 intermediate files (use --keep-intermediates to keep them)
+note: Running TeX ...
+note: Rerunning TeX because "supplement.out" changed ...
+note: Running xdvipdfmx ...
+note: Writing `C:\Users\izbas\Desktop\ESP32_comparison\paper\build\zenodo-v1.0.1-final-reproduction\results\pdf\supplement.log` (11.775390625 KiB)
+note: Writing `C:\Users\izbas\Desktop\ESP32_comparison\paper\build\zenodo-v1.0.1-final-reproduction\results\pdf\supplement.pdf` (37.39453125 KiB)
+note: Skipped writing 2 intermediate files (use --keep-intermediates to keep them)
+PACKAGE_PDF_BUILD_PASS
+
+Fontconfig error: Cannot load default config file: No such file: (null)
+Fontconfig error: Cannot load default config file: No such file: (null)
+
+EXIT 0
+COMMAND pdfinfo C:\Users\izbas\Desktop\ESP32_comparison\paper\build\zenodo-v1.0.1-final-reproduction\results\pdf\manuscript.pdf
+Creator:         LaTeX with hyperref
+Producer:        xdvipdfmx (0.1)
+CreationDate:    Tue Oct 20 13:09:45 2026 ��������� (����)
+Custom Metadata: no
+Metadata Stream: no
+Tagged:          no
+UserProperties:  no
+Suspects:        no
+Form:            none
+JavaScript:      no
+Pages:           10
+Encrypted:       no
+Page size:       612 x 792 pts (letter)
+Page rot:        0
+File size:       192458 bytes
+Optimized:       no
+PDF version:     1.5
+
+
+EXIT 0
+COMMAND pdffonts C:\Users\izbas\Desktop\ESP32_comparison\paper\build\zenodo-v1.0.1-final-reproduction\results\pdf\manuscript.pdf
+name                                 type              encoding         emb sub uni object ID
+------------------------------------ ----------------- ---------------- --- --- --- ---------
+IHAIZV+LMRoman17-Regular-Identity-H  CID Type 0C       Identity-H       yes yes yes      4  0
+BZIVMZ+LMRoman12-Regular-Identity-H  CID Type 0C       Identity-H       yes yes yes      6  0
+IXFAWU+LMRoman9-Regular-Identity-H   CID Type 0C       Identity-H       yes yes yes      8  0
+TQTHRL+LMRoman9-Bold-Identity-H      CID Type 0C       Identity-H       yes yes yes     13  0
+KPXLOM+CMSY9                         Type 1C           Builtin          yes yes yes     15  0
+YEUUOC+LMRoman12-Bold-Identity-H     CID Type 0C       Identity-H       yes yes yes     16  0
+AKHCZK+LMRoman10-Regular-Identity-H  CID Type 0C       Identity-H       yes yes yes     18  0
+VDVGTR+LMRoman10-Italic-Identity-H   CID Type 0C       Identity-H       yes yes yes     22  0
+CAFSZL+LMMono10-Regular-Identity-H   CID Type 0C       Identity-H       yes yes yes     36  0
+DDIEWW+LMRomanCaps10-Regular-Identity-H CID Type 0C       Identity-H       yes yes yes     42  0
+FKPJSN+LMRoman10-Bold-Identity-H     CID Type 0C       Identity-H       yes yes yes     55  0
+UTACNV+CMR10                         Type 1C           Builtin          yes yes yes     60  0
+FZDNHS+CMSY10                        Type 1C           Builtin          yes yes yes     61  0
+PVTTLK+LMRoman7-Regular-Identity-H   CID Type 0C       Identity-H       yes yes yes     68  0
+DZGKAF+CMMI7                         Type 1C           Builtin          yes yes yes     70  0
+GJMHKB+CMMI10                        Type 1C           Builtin          yes yes yes    107  0
+EAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes     71  0
+JAGKKY+LMMono8-Regular-Identity-H    CID Type 0C       Identity-H       yes yes yes    136  0
+EAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes    111  0
+NITCSQ+CMMI9                         Type 1C           Builtin          yes yes yes    143  0
+EAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes    151  0
+EAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes    176  0
+NOMARO+LMRoman7-Italic-Identity-H    CID Type 0C       Identity-H       yes yes yes    224  0
+
+
+EXIT 0
+COMMAND pdfinfo C:\Users\izbas\Desktop\ESP32_comparison\paper\build\zenodo-v1.0.1-final-reproduction\results\pdf\supplement.pdf
+Creator:         LaTeX with hyperref
+Producer:        xdvipdfmx (0.1)
+CreationDate:    Tue Oct 20 13:09:55 2026 ��������� (����)
+Custom Metadata: no
+Metadata Stream: no
+Tagged:          no
+UserProperties:  no
+Suspects:        no
+Form:            none
+JavaScript:      no
+Pages:           2
+Encrypted:       no
+Page size:       612 x 792 pts (letter)
+Page rot:        0
+File size:       38292 bytes
+Optimized:       no
+PDF version:     1.5
+
+
+EXIT 0
+COMMAND pdffonts C:\Users\izbas\Desktop\ESP32_comparison\paper\build\zenodo-v1.0.1-final-reproduction\results\pdf\supplement.pdf
+name                                 type              encoding         emb sub uni object ID
+------------------------------------ ----------------- ---------------- --- --- --- ---------
+IHAIZV+LMRoman12-Bold-Identity-H     CID Type 0C       Identity-H       yes yes yes      4  0
+BZIVMZ+LMRoman10-Regular-Identity-H  CID Type 0C       Identity-H       yes yes yes      6  0
+IXFAWU+LMMono10-Regular-Identity-H   CID Type 0C       Identity-H       yes yes yes     10  0
+TQTHRL+LMRoman9-Regular-Identity-H   CID Type 0C       Identity-H       yes yes yes     12  0
+YEUUOC+LMMono9-Regular-Identity-H    CID Type 0C       Identity-H       yes yes yes     14  0
+AKHCZK+CMMI9                         Type 1C           Builtin          yes yes yes     19  0
+
+
+EXIT 0
+COMMAND pdffonts C:\Users\izbas\Desktop\ESP32_comparison\paper\build\zenodo-v1.0.1-final-reproduction\artifacts\matlab\publication\mode_a_historical_local.pdf
+name                                 type              encoding         emb sub uni object ID
+------------------------------------ ----------------- ---------------- --- --- --- ---------
+EAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes     38  0
+
+
+EXIT 0
+COMMAND pdffonts C:\Users\izbas\Desktop\ESP32_comparison\paper\build\zenodo-v1.0.1-final-reproduction\artifacts\matlab\publication\mode_a_rust_cpp.pdf
+name                                 type              encoding         emb sub uni object ID
+------------------------------------ ----------------- ---------------- --- --- --- ---------
+EAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes     28  0
+
+
+EXIT 0
+COMMAND pdffonts C:\Users\izbas\Desktop\ESP32_comparison\paper\build\zenodo-v1.0.1-final-reproduction\artifacts\matlab\publication\mode_b_compiler_response.pdf
+name                                 type              encoding         emb sub uni object ID
+------------------------------------ ----------------- ---------------- --- --- --- ---------
+EAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes     28  0
+
+
+EXIT 0
+COMMAND pdffonts C:\Users\izbas\Desktop\ESP32_comparison\paper\build\zenodo-v1.0.1-final-reproduction\artifacts\matlab\publication\mode_b_sha_profiles.pdf
+name                                 type              encoding         emb sub uni object ID
+------------------------------------ ----------------- ---------------- --- --- --- ---------
+EAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes     40  0
+
+
+EXIT 0
+COMMAND git diff HEAD -- data/raw data/baselines data/processed benchmarks artifacts/builds artifacts/assembly artifacts/static
+
+
+EXIT 0
+COMMAND C:\Python314\python.exe paper/tools/validate_manuscript.py
+MANUSCRIPT_VALIDATION_PASS 3945 24 47
+
+
+EXIT 0
+COMMAND C:\Python314\python.exe paper/tools/validate_publication.py
+PUBLICATION_VALIDATION_PASS cited=25 figures=4
+
+
+EXIT 0
+REPRODUCTION_PASS timing_groups=216 ratios=176 tables=4 figures=4 PDFs=2 fonts_embedded=yes immutable_inputs=yes

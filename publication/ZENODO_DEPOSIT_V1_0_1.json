@@ -1,0 +1,43 @@
+{
+  "doi": "10.5281/zenodo.23493672",
+  "record_url": "https://zenodo.org/records/23493672",
+  "status": "published_open_verified",
+  "exercised_inputs_match_final_archive": true,
+  "files": [
+    {
+      "path": "publication/packages/esp32-study-analysis-v1.0.1-zenodo.zip",
+      "bytes": 1245130,
+      "sha256": "be10310eaa56c22ba86349a3a38a1b8ba2fb7dc3dca8c6f7749f367f21c2e902",
+      "md5": "4051025d8644d97441a3da1d8802007f"
+    },
+    {
+      "path": "publication/deposit-v1.0.1/a-change-of-core-v1.0.1.pdf",
+      "bytes": 192458,
+      "sha256": "c48506ea5c3c1e6db8ff8f4154f58c278cd6f93e3a31bd7e81239fec76c51dd7",
+      "md5": "ecd11ea6c14baf4df79a537909fea065"
+    },
+    {
+      "path": "publication/deposit-v1.0.1/a-change-of-core-supplement-v1.0.1.pdf",
+      "bytes": 38292,
+      "sha256": "c0b84bd666859d97de995b9fb301741c6e733e69be27979100625863347163d4",
+      "md5": "a6bc1fca87b53c72d090f4ee4f5600c2"
+    }
+  ],
+  "publication_date": "2026-10-20",
+  "concept_doi": "10.5281/zenodo.23493671",
+  "doi_resolution_url": "https://zenodo.org/records/23493672",
+  "public_download_checks": [
+    {
+      "file": "esp32-study-analysis-v1.0.1-zenodo.zip",
+      "sha256_matches": true
+    },
+    {
+      "file": "a-change-of-core-v1.0.1.pdf",
+      "sha256_matches": true
+    },
+    {
+      "file": "a-change-of-core-supplement-v1.0.1.pdf",
+      "sha256_matches": true
+    }
+  ]
+}

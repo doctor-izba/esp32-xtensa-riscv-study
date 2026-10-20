@@ -1,0 +1,11 @@
+{
+  "data/local_timings.csv": "3e3634e3dfc490d1afcf96aa58eeac1dae63a55b5b8aee02e8432c186be1b5f3",
+  "data/historical_means.csv": "c864fd4671c6d58eb37d6267b2593cf10ecd25217172e5f0f278dc0f9fb407ca",
+  "data/processed/mode_b_codegen_metrics.csv": "d65445b48452d95435f38fd3aa3661e08e3d24221c419ea6637943d57eda524e",
+  "data/processed/mode_b_fft_unchecked_codegen.csv": "452c36fa1d649ad3357f68dfa2aa7543e60941bd2661c55b3f8e810a45fdac65",
+  "analysis.py": "52ba562accba0bae6f6609b0b734a94bd2f3acb797a34ac7abc60a2d8db87bec",
+  "matlab/run_publication_analysis.m": "c75a5a980e2ce52b725d16532c33e61aa10db90a5a2abf6f1d01212748a50320",
+  "paper/manuscript.tex": "ed6ae529f2bb6c2bde4e0dd76b503e3b84cca23c4312109d86b31fd9beeaf783",
+  "paper/supplement/supplement.tex": "f38952c5e08439746cc3b0e31b3ae3ef21c4afab5977f78b5cdd2f9d608a4b3f",
+  "paper/references.bib": "ac6d97ea47e873425f9250667ab0fce708a63958ddb6f61f83920b46933827ce"
+}

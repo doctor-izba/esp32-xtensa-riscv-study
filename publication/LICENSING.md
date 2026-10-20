@@ -20,7 +20,6 @@ is included. Those materials are not relicensed through this package.
 The report retains short attributed generated-instruction excerpts; the
 license grants do not purport to relicense any underlying external work.
 
-Attribution: Izbassar Yesbol, *Reproducing and Extending ESP32 Workload
-Benchmarks on ESP32-C6: Performance and Generated-Code Results*, analysis
-package v1.0.0; identify modifications. This is a prepared technical-report
+Attribution: Izbassar Yesbol, *A Change of Core: Revisiting ESP32 Benchmarks
+on ESP32-C6*, analysis package v1.0.1; identify modifications. This is a technical-report
 archive, not a claim of external peer review or journal acceptance.

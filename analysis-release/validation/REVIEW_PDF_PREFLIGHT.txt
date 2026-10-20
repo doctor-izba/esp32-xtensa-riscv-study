@@ -1,0 +1,78 @@
+FILE review-manuscript.pdf
+SHA256 8ed874faba831784c1f750974518e84a22a637c0f15c405087f518284ee354a1
+COMMAND pdfinfo review-manuscript.pdf
+Creator:         LaTeX with hyperref
+Producer:        xdvipdfmx (0.1)
+CreationDate:    Tue Oct 20 12:27:06 2026 Кызылорда (зима)
+Custom Metadata: no
+Metadata Stream: no
+Tagged:          no
+UserProperties:  no
+Suspects:        no
+Form:            none
+JavaScript:      no
+Pages:           10
+Encrypted:       no
+Page size:       612 x 792 pts (letter)
+Page rot:        0
+File size:       192573 bytes
+Optimized:       no
+PDF version:     1.5
+
+COMMAND pdffonts review-manuscript.pdf
+name                                 type              encoding         emb sub uni object ID
+------------------------------------ ----------------- ---------------- --- --- --- ---------
+IHAIZV+LMRoman17-Regular-Identity-H  CID Type 0C       Identity-H       yes yes yes      4  0
+BZIVMZ+LMRoman12-Regular-Identity-H  CID Type 0C       Identity-H       yes yes yes      6  0
+IXFAWU+LMRoman9-Regular-Identity-H   CID Type 0C       Identity-H       yes yes yes      8  0
+TQTHRL+LMRoman9-Bold-Identity-H      CID Type 0C       Identity-H       yes yes yes     13  0
+KPXLOM+CMSY9                         Type 1C           Builtin          yes yes yes     15  0
+YEUUOC+LMRoman12-Bold-Identity-H     CID Type 0C       Identity-H       yes yes yes     16  0
+AKHCZK+LMRoman10-Regular-Identity-H  CID Type 0C       Identity-H       yes yes yes     18  0
+VDVGTR+LMRoman10-Italic-Identity-H   CID Type 0C       Identity-H       yes yes yes     22  0
+CAFSZL+LMMono10-Regular-Identity-H   CID Type 0C       Identity-H       yes yes yes     36  0
+DDIEWW+LMRomanCaps10-Regular-Identity-H CID Type 0C       Identity-H       yes yes yes     42  0
+FKPJSN+LMRoman10-Bold-Identity-H     CID Type 0C       Identity-H       yes yes yes     55  0
+UTACNV+CMR10                         Type 1C           Builtin          yes yes yes     60  0
+FZDNHS+CMSY10                        Type 1C           Builtin          yes yes yes     61  0
+PVTTLK+LMRoman7-Regular-Identity-H   CID Type 0C       Identity-H       yes yes yes     68  0
+DZGKAF+CMMI7                         Type 1C           Builtin          yes yes yes     70  0
+GJMHKB+CMMI10                        Type 1C           Builtin          yes yes yes    107  0
+EAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes     71  0
+JAGKKY+LMMono8-Regular-Identity-H    CID Type 0C       Identity-H       yes yes yes    136  0
+EAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes    111  0
+NITCSQ+CMMI9                         Type 1C           Builtin          yes yes yes    143  0
+EAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes    151  0
+EAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes    176  0
+NOMARO+LMRoman7-Italic-Identity-H    CID Type 0C       Identity-H       yes yes yes    223  0
+
+FILE review-supplement.pdf
+SHA256 2825793256ff7d071eaaff7db7af1237f01abfa761d23e0644290b2e7cb06953
+COMMAND pdfinfo review-supplement.pdf
+Creator:         LaTeX with hyperref
+Producer:        xdvipdfmx (0.1)
+CreationDate:    Tue Oct 20 12:27:22 2026 Кызылорда (зима)
+Custom Metadata: no
+Metadata Stream: no
+Tagged:          no
+UserProperties:  no
+Suspects:        no
+Form:            none
+JavaScript:      no
+Pages:           2
+Encrypted:       no
+Page size:       612 x 792 pts (letter)
+Page rot:        0
+File size:       37924 bytes
+Optimized:       no
+PDF version:     1.5
+
+COMMAND pdffonts review-supplement.pdf
+name                                 type              encoding         emb sub uni object ID
+------------------------------------ ----------------- ---------------- --- --- --- ---------
+IHAIZV+LMRoman12-Bold-Identity-H     CID Type 0C       Identity-H       yes yes yes      4  0
+BZIVMZ+LMRoman10-Regular-Identity-H  CID Type 0C       Identity-H       yes yes yes      6  0
+IXFAWU+LMMono10-Regular-Identity-H   CID Type 0C       Identity-H       yes yes yes      8  0
+TQTHRL+LMRoman9-Regular-Identity-H   CID Type 0C       Identity-H       yes yes yes     10  0
+YEUUOC+LMMono9-Regular-Identity-H    CID Type 0C       Identity-H       yes yes yes     12  0
+AKHCZK+CMMI9                         Type 1C           Builtin          yes yes yes     18  0

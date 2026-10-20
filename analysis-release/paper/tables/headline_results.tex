@@ -1,0 +1,12 @@
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Workload & C/C++ median & Rust median & MicroPython median \\
+ & \multicolumn{3}{c}{Local C6 time (\(\mu\)s)} \\
+\midrule
+CRC-32 & 104.000 & 72.000 & 25078 \\
+SHA-256 & 670.000 & 711.000 & 596238 \\
+FFT (Q15) & 1185.562 & 1493.750 & 241504 \\
+FIR (binary32) & 188774 & 186340 & 4157999 \\
+IIR (binary32) & 3268.000 & 3277.500 & 84702 \\
+\bottomrule
+\end{tabular}

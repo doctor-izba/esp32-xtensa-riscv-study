@@ -1,12 +1,15 @@
-# Analysis archive v1.0.0 — prepared, not publicly deposited
+# Analysis archive v1.0.1 — DOI workflow in preparation
 
 Researcher: Izbassar Yesbol, https://orcid.org/0009-0002-1737-7982.
 The report is a technical report, not an externally peer-reviewed publication.
 
 This is a bounded analysis package, not the complete private research repository.
-It is prepared for a future Zenodo dataset deposit with the report and analysis
-as associated files. The owner explicitly withheld publication on 2026-10-07:
-no record URL, DOI, public GitHub repository, or journal acceptance is claimed.
+It accompanies *A Change of Core: Revisiting ESP32 Benchmarks on ESP32-C6*,
+editorial revision 1.0.1. The owner requested the Zenodo DOI workflow on
+2026-10-20. Until an authenticated draft provides real identifiers, no record
+URL or DOI is claimed. This is not a journal acceptance or a public release
+of the complete private repository. The sealed v1.0.0 archive is retained
+separately with the preceding title and report.
 
 ## Reproduce
 
@@ -71,7 +74,7 @@ The package does not independently repeat correctness tests, rebuild firmware,
 rerun hardware, or regenerate the static-code evidence. It does reproduce
 timing statistics/ratios, four publication figures, result tables, and both
 PDFs from supplied authored manuscript sources.
-The unchanged report retains its short, attributed generated-instruction
+The report retains its short, attributed generated-instruction
 excerpts as scientific evidence; these are not full disassemblies or executable
 benchmark implementations. Excerpt source paths refer to the private archive.
 
@@ -89,8 +92,8 @@ derived presentations, manuscript, and authored documentation: CC BY 4.0
 of otherwise unprotected facts or external source documents. Historical
 sources remain cited with their provenance. No upstream code is included.
 
-`ZENODO_METADATA.json` is a preparation worksheet, **not** an API-created
-record. It deliberately has no invented affiliation, funding, publication
-date, URL or DOI. Before a separately authorized deposit, set the actual
-publication date and add the permanent archive locator to the paper's
-availability statement; rebuild and revalidate the deposited version.
+`ZENODO_METADATA.json` is currently a preparation worksheet, **not** an
+API-created record. No affiliation, funding, publication date, URL or DOI is
+invented. The final DOI-bearing package must record the real platform-issued
+identifier, match its availability statements to the actual record state,
+and be rebuilt and revalidated before publication.

@@ -1,0 +1,3 @@
+profile,instruction_count,code_span_bytes,branch_count,call_count,bounds_panic_refs
+COMPILER_PERF,125,398,18,5,5
+RUST_UNCHECKED,83,246,8,0,0

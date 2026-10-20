@@ -14,6 +14,8 @@ ROOT = Path(__file__).resolve().parents[2]
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--package", type=Path, required=True)
 parser.add_argument("--work", type=Path, required=True)
+parser.add_argument("--manuscript-pages", type=int, default=9)
+parser.add_argument("--validation-output", type=Path, default=ROOT / "publication/validation")
 args = parser.parse_args()
 source, work = args.package.resolve(), args.work.resolve()
 assert ROOT in source.parents and ROOT in work.parents and not work.exists()
@@ -46,7 +48,7 @@ run([sys.executable, "build_paper.py", "--sync-figures", "--tectonic", str(ROOT 
 for name in ("manuscript", "supplement"):
     path = work / "results/pdf" / (name + ".pdf")
     info = run(["pdfinfo", str(path)])
-    expected = 9 if name == "manuscript" else 2
+    expected = args.manuscript_pages if name == "manuscript" else 2
     assert re.search(rf"Pages:\s+{expected}\b", info), (name, "unexpected pagination")
     fonts = run(["pdffonts", str(path)])
     entries = fonts.splitlines()[2:]
@@ -64,7 +66,8 @@ assert not diff, "frozen evidence changed"
 run([sys.executable, "paper/tools/validate_manuscript.py"], cwd=ROOT)
 run([sys.executable, "paper/tools/validate_publication.py"], cwd=ROOT)
 log.append("REPRODUCTION_PASS timing_groups=216 ratios=176 tables=4 figures=4 PDFs=2 fonts_embedded=yes immutable_inputs=yes")
-validation = ROOT / "publication/validation"
+validation = args.validation_output.resolve()
+assert ROOT in validation.parents
 validation.mkdir(parents=True, exist_ok=True)
 (validation / "REPRODUCTION.txt").write_text("\n".join(log), encoding="utf-8")
 (validation / "EXERCISED_INPUT_HASHES.json").write_text(json.dumps(before, indent=2) + "\n", encoding="utf-8")

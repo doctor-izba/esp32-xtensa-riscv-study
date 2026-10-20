@@ -1,0 +1,23 @@
+\begin{longtable}{@{}llrrr@{}}
+\toprule
+Workload & Language & Local C6 median & Published mean & Published/local mean \\
+ & & \multicolumn{2}{c}{Time (\(\mu\)s)} & \\
+\midrule
+\endhead
+CRC-32 & C/C++ & 104.000 & 117.630 & 1.134 \\
+CRC-32 & Rust & 72.000 & 113.750 & 1.578 \\
+CRC-32 & MicroPython & 25078 & 47035 & 1.904 \\
+SHA-256 & C/C++ & 670.000 & 701.090 & 1.046 \\
+SHA-256 & Rust & 711.000 & 997.320 & 1.403 \\
+SHA-256 & MicroPython & 596238 & 1332951 & 2.236 \\
+FFT (Q15) & C/C++ & 1185.562 & 1821.500 & 1.536 \\
+FFT (Q15) & Rust & 1493.750 & 3525.500 & 2.360 \\
+FFT (Q15) & MicroPython & 241504 & 844855 & 3.498 \\
+FIR (binary32) & C/C++ & 188774 & 30055 & 0.159 \\
+FIR (binary32) & Rust & 186340 & 24219 & 0.130 \\
+FIR (binary32) & MicroPython & 4157999 & 9066768 & 2.181 \\
+IIR (binary32) & C/C++ & 3268.000 & 214.320 & 0.066 \\
+IIR (binary32) & Rust & 3277.500 & 248.930 & 0.076 \\
+IIR (binary32) & MicroPython & 84702 & 90164 & 1.064 \\
+\bottomrule
+\end{longtable}

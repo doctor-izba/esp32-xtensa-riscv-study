@@ -39,7 +39,7 @@ def write(path, rows, fields=None):
         writer.writeheader()
         writer.writerows(rows)
 
-def build(out):
+def build(out, preflight=None, validation_dir=None, no_seal=False):
     assert not out.exists(), "use a fresh destination; existing approved packages are not overwritten"
     assert ROOT in out.parents and out != ROOT
     out.mkdir(parents=True)
@@ -93,13 +93,13 @@ def build(out):
     copy("paper/references.bib")
     copy("paper/CLAIM_AUDIT_2.md")
     copy("paper/supplement/supplement.tex")
-    copy("paper/preflight/PDF_PREFLIGHT_ANALYSIS_ARCHIVE_2026_10_07.txt", "validation/REVIEW_PDF_PREFLIGHT.txt")
+    copy(preflight or "paper/preflight/PDF_PREFLIGHT_ANALYSIS_ARCHIVE_2026_10_07.txt", "validation/REVIEW_PDF_PREFLIGHT.txt")
     copy("data/baselines/plauska_sources_v1.csv")
     source = ROOT / "paper/tables/experimental_inventory.csv"
     fields = ["workload", "mode", "profile", "language", "accepted_samples", "exact_elf_status", "exact_elf_sha256"]
     write(out / "data/retained_artifact_hashes.csv", [{field: row[field] for field in fields} for row in read(source)], fields)
     record(source, "data/retained_artifact_hashes.csv", "artifact identity/count/status facts only; underlying binary/code not supplied")
-    validation = ROOT / "publication/validation"
+    validation = ROOT / (validation_dir or "publication/validation")
     if validation.exists():
         for path in sorted(validation.iterdir()):
             if path.is_file() and path.suffix in {".txt", ".json", ".md"}:
@@ -132,7 +132,8 @@ def build(out):
     write(out / "source_lineage.csv", lineage)
     assert all(sha(ROOT / r["source_path"]) == r["source_sha256"] for r in lineage)
     print("FROZEN_STATISTICS_AND_TABLES_MATCH_PASS groups=216 tables=4")
-    seal(out)
+    if not no_seal:
+        seal(out)
 
 def seal(out):
     files = sorted(p for p in out.rglob("*") if p.is_file() and p.name != "manifest.csv" and "__pycache__" not in p.parts)
@@ -156,7 +157,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--seal", action="store_true", help="seal an already built and validated local staging directory")
+    parser.add_argument("--preflight", help="repository-relative preflight report for the current PDFs")
+    parser.add_argument("--validation-dir", help="repository-relative validation directory for this version")
+    parser.add_argument("--no-seal", action="store_true", help="prepare staging only; no ZIP until DOI/metadata are final")
     args = parser.parse_args()
     destination = args.output.resolve()
     assert ROOT in destination.parents and destination != ROOT
-    seal(destination) if args.seal else build(destination)
+    seal(destination) if args.seal else build(destination, args.preflight, args.validation_dir, args.no_seal)

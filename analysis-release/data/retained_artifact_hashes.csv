@@ -1,0 +1,28 @@
+workload,mode,profile,language,accepted_samples,exact_elf_status,exact_elf_sha256
+CRC32,A,none,c_cpp,800,exact measured,55d7fecf32c01afbb2e5f26edecd6c74cfbc7ed512bf0b4a203d30ddb02f2a1d
+CRC32,A,none,rust,800,not retained; reconstructed,
+CRC32,A,none,micropython,800,not applicable (interpreted),
+SHA256,A,none,c_cpp,800,exact measured,f44d6132c99f03e7e96e6b12a8a6c6bfd3780dbf9a6f15f02ae18b6527e7b6c1
+SHA256,A,none,rust,800,exact measured,f83412db9ed15fcb9ac9cce6bac0bd67f07596488c0a2ba3fef31d4f08f2b531
+SHA256,A,none,micropython,800,not applicable (interpreted),
+FFT_I16,A,none,c_cpp,800,exact measured,2f563a88c6609bd2af52d6b8ae7858e79869d254c272af9ab70d59e44590d165
+FFT_I16,A,none,rust,800,exact measured,a3b83f337056616f2482d333acd1d9fb2002850dc021c398256d045b288b4c8a
+FFT_I16,A,none,micropython,800,not applicable (interpreted),
+FIR_F32,A,none,c_cpp,800,exact measured,fea5db0431ac96b787348c55b33aa4cb4453b8ce140fbd89d72170e2a8481649
+FIR_F32,A,none,rust,800,exact measured,6b7d13c188d08a51b9145fd3a798f72b40f64176d59731c8455829b41d0a70a4
+FIR_F32,A,none,micropython,800,not applicable (interpreted),
+IIR_BQ_F32,A,none,c_cpp,800,exact measured,b74b8ebef9e529748f0a9bb24b53b80cf5457dc52f479c50a66fc85d136e4a7d
+IIR_BQ_F32,A,none,rust,800,exact measured,f3b138929323b1815cec0c2772c0768bbc1b94f118eec2ad4e0657907be020b9
+IIR_BQ_F32,A,none,micropython,800,not applicable (interpreted),
+CRC32,B,COMPILER_PERF,c_cpp,800,exact measured,c583189a462a718e923d5491c66b1483ea441e22a33dc2e8fc5f6c280db4a582
+CRC32,B,COMPILER_PERF,rust,800,exact measured,28d73b1212ad95ba9680376994ec707f31f746a9ba3ee212b414aec171204f0a
+FFT_I16,B,COMPILER_PERF,c_cpp,800,exact measured,755b3ce326d4bddf1d0106cd08176e1fa4698a644e9dadd961c679860c038cfc
+FFT_I16,B,COMPILER_PERF,rust,800,exact measured,7361579f3270c43c2be64a1f2c60a136611054c6cca7fd0a88305e7493678c76
+FFT_I16_UNCHECKED,B,RUST_UNCHECKED,rust,800,exact measured,380f7f7791ed8a2b861c43e19db805faadedb7df5bcb916f3fdebbf066692a4b
+FIR_F32,B,COMPILER_PERF,c_cpp,800,exact measured,71192f9085b0c71cf902f021ab23be244586bfad2634174ffd0392c858b15d04
+FIR_F32,B,COMPILER_PERF,rust,800,exact measured,09dd326b33936ac0735fe72f9486b114a78c0074eeeaa153f944d1e83356c202
+IIR_BQ_F32,B,COMPILER_PERF,c_cpp,800,exact measured,aec4d47a745065a60af0c4f39575f6e2c6757d9d67979b7311c09c077cd86492
+IIR_BQ_F32,B,COMPILER_PERF,rust,800,exact measured,c473d17f6d07abaa608ec8c2917edc52cae526dacc48efe0276d5f084c95ab34
+SHA256,B,COMPILER_PERF,c_cpp,800,exact measured,6550542b76163209a5d1e78624dce09fef005b00a6f6a98c3cd6005d38864b02
+SHA256,B,COMPILER_PERF,rust,800,exact measured,70e786e67574f292980d7cc4ab7d20e2550ceb6b7430b09bbdc12f5a51ddd112
+SHA256_HW,B,HW_SHA,c_cpp,800,exact measured,ba7c45cd1fea1508bdbb05aa5d5061a95eb250cc7f99711a81700b5a5ee02c29

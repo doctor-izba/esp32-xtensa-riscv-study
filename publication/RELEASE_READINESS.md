@@ -1,5 +1,12 @@
 # Preparation complete — no public deposit
 
+**2026-10-20 editorial note:** the sealed v1.0.0 ZIP below retains the preceding
+report title and text. The canonical manuscript now has the approved title
+*A Change of Core: Revisiting ESP32 Benchmarks on ESP32-C6* and editorial revision
+1.0.1. That revision has not yet been packaged. The checks recorded below apply
+to the sealed v1.0.0 bytes, not automatically to a future replacement archive.
+See Decision 0017 and `paper/reviews/EDITORIAL_AND_CITATION_REVIEW_2026_10_20.md`.
+
 Decision 0016 implements the owner's explicit preparation-only approval.
 The exact ZIP retained under `packages/` is identified by
 `APPROVED_PACKAGE.json`; it is committed only to the private research repository.

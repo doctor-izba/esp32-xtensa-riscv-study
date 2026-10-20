@@ -1,5 +1,16 @@
 # Verification Ledger
 
+## Citation recheck — 20 October 2026
+
+These rows add exact source locators without rewriting the frozen experimental record.
+
+| Claim ID | Atomic claim | Scope | Evidence class | Status | Source and exact locator | Qualification |
+|---|---|---|---|---|---|---|
+| AUD-20261020-001 | The classic ESP32 datasheet specifies LX6 processors with FPU support. | Documented ESP32 configuration | PRIMARY_TECHNICAL | VERIFIED | `espressifESP32Datasheet` v5.3 §4.1.1, p.26 | Configuration statement, not a measured floating-point latency. |
+| AUD-20261020-002 | The C6 HP core is RV32IMAC with up to 160 MHz operation. | Documented ESP32-C6 HP core | PRIMARY_TECHNICAL | VERIFIED | `espressifESP32C6Datasheet` v1.5 §4.1.1.1, p.37; `espressifESP32C6TRM` v1.2 §1.2, p.39 | Does not establish the frequency of a particular run; readback remains local evidence. |
+| AUD-20261020-003 | The C6 HP-core MISA F field is fixed to zero. | Documented absence of standard single-precision extension | PRIMARY_TECHNICAL | VERIFIED | `espressifESP32C6TRM` v1.2 register 1.6 `misa` (0x301), p.45 | A device-specific statement, not an inference from generic optional RISC-V features. |
+| LIT-030 | Trancă et al. compare twelve scalar C workloads on classic ESP32, RP2040 and STM32F446 under maximum-clock and common-160-MHz profiles. | Related-work scope | PEER_REVIEWED | VERIFIED | `tranca2026workload`, DOI 10.3390/app16199478, Abstract and §3.1; publisher text checked 2026-10-20 | Adjacent latency/active-energy study; no physical C6 comparison or three-language reconstruction. Metadata snapshot: `artifacts/reviews/editorial_2026_10_20/new_related_crossref.json`. |
+
 Checked date for initial entries: 2026-08-07.
 
 ## Status vocabulary

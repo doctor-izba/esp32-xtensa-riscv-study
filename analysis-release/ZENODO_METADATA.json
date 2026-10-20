@@ -1,0 +1,25 @@
+{
+  "worksheet_status": "doi_workflow_requested_awaiting_authenticated_draft",
+  "prepared_on": "2026-10-20",
+  "version": "1.0.1",
+  "title": "A Change of Core: Revisiting ESP32 Benchmarks on ESP32-C6 — Analysis Archive and Technical Report",
+  "resource_type": "dataset",
+  "creators": [
+    {
+      "given_name": "Izbassar",
+      "family_name": "Yesbol",
+      "orcid": "0009-0002-1737-7982"
+    }
+  ],
+  "description": "Analysis-only companion to an author-owned technical report, not an externally peer-reviewed publication. Contains 21,600 accepted ESP32-C6 timing records projected from validated datasets, local statistics and ratios, separately identified cited historical aggregates and imported numeric static metrics, original Python/MATLAB analysis, manuscript sources, and the report/supplement PDFs. Reproduces timing summaries, four publication figures, and generated result tables. Does not repeat numerical correctness validation, rebuild firmware, rerun hardware, or independently regenerate machine-code evidence. Upstream input/reference arrays, benchmark implementations, native artifacts, disassembly, full console captures, upstream full texts/source recordings, and private Git history are excluded. The complete evidence archive is retained privately pending redistribution review.",
+  "language": "eng",
+  "keywords": ["ESP32-C6", "ESP32", "RISC-V", "Xtensa", "embedded benchmarking", "C/C++", "Rust", "MicroPython", "reproducible analysis"],
+  "licenses": [
+    {"id": "cc-by-4.0", "scope": "author-owned data, text and figures"},
+    {"id": "mit", "scope": "original analysis/build/verification code"}
+  ],
+  "publication_date": null,
+  "doi": null,
+  "record_url": null,
+  "deposit_instructions": "The owner requested obtaining a DOI on 2026-10-20. This remains a human-readable worksheet until a production Zenodo draft is created. Record the exact platform-issued DOI and record URL, distinguish reservation from public registration, update the paper and supplement, and rebuild/revalidate the final package. Record the actual publication date for the published version. Do not invent affiliation or funding. A later journal article DOI is distinct from this dataset/report archive DOI."
+}

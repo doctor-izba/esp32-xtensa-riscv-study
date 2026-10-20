@@ -1,5 +1,11 @@
 # Archival platform review — 2026-10-07
 
+Update 2026-10-20: the owner requested obtaining a real Zenodo DOI for the
+scoped v1.0.1 archive. The preparation-only status described below is the
+historical v1.0.0 approval, preserved unchanged in its sealed ZIP. Authentication
+and creation of the production Zenodo draft are pending. No DOI or public
+record is claimed until verified from the platform. See Decision 0018.
+
 Selected: **Zenodo**, for a dataset archive accompanied by the technical report
 and original analysis software. This is not a journal submission or external
 peer review. The owner approved preparation only; no upload, account action,

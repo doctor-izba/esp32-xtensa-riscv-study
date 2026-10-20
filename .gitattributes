@@ -1,0 +1,5 @@
+# Preserve the independently hashed analysis snapshot across Windows/Linux clones.
+/analysis-release/** -text
+/publication/packages/*.zip -text
+*.pdf -text
+*.png -text
